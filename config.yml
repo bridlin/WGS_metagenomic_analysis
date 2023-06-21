@@ -1,4 +1,4 @@
-nput_list=("3328-A_" "3328-B_" "3777_")
-directory=fastq_run9
-output_dir=kraken2-results_run9
-kraken2_db=Kraken2_db
+input_list=("2681_S1_" "1513_S2_" "3934_S3_" "3111_S4_")
+directory=run6_nonhuman-reads
+output_dir=kraken2-results_run6/Standard
+kraken2_db=Kraken2_db/Standard
