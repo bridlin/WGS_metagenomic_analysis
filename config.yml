@@ -1,0 +1,4 @@
+nput_list=("3328-A_" "3328-B_" "3777_")
+directory=fastq_run9
+output_dir=kraken2-results_run9
+kraken2_db=Kraken2_db

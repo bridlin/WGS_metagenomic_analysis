@@ -18,10 +18,9 @@ module load  bowtie2/2.4.1
 module load  samtools/1.13
 module load  kraken2/2.1.2
 
-input_list=("3328-A_" "3328-B_" "3777_")
-directory=fastq_run9
-output_dir=kraken2-results_run9
-kraken2_db=Kraken2_db
+
+source config.yml
+
 
 mkdir $output_dir
 for x in "${input_list[@]}"; do
