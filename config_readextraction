@@ -1,0 +1,4 @@
+id_list=("1239" "201174" "1224")
+input_list=("3777_S1_" )
+kraken_results=kraken2-results_run9/Standard
+read_directory=fastq_run9
