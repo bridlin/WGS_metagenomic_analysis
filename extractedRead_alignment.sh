@@ -20,7 +20,10 @@ echo $read_directory
 echo $inputlist
 echo $genome
 
-for x in "${input_list[@]}"; do
+
+for x in "${inputlist[@]}"; do
+echo $read_directory\/$inputlist\.1.fa &&
+echo $read_directory\/$inputlist\.2.fa &&
 bowtie2 -x $genome -f -p 8  -1 $read_directory\/$inputlist\.1.fa  -2 $read_directory\/$inputlist\.2.fa  -S $read_directory\/$inputlist\_aligned.sam &&
 samtools view -S -b $read_directory\/$inputlist\_aligned.sam > $read_directory\/$inputlist\_aligned.bam  &&
 samtools sort  $read_directory\/$inputlist\_aligned.bam  -o  $read_directory\/$inputlist\_aligned_sorted.bam  &&
