@@ -18,9 +18,9 @@ source WGS_metagenomic_analysis/config-align.txt
 
 
 for x in "${input_list[@]}"; do
-bowtie2 -x $genome -f -p 8  -1 $inputlist\.1.fq  -2 $inputlist\.2.fq  -S $inputlist\_aligned.sam &&
-samtools view -S -b $inputlist\_aligned.sam > $inputlist\_aligned.bam  &&
-samtools sort  $inputlist\_aligned.bam  -o  $inputlist\_aligned_sorted.bam  &&
-samtools index $inputlist\_aligned_sorted.bam   &&
-rm -f $inputlist\\_aligned.sam &&
-rm -f $inputlist\_aligned.bam ; done
+bowtie2 -x $genome -f -p 8  -1 $read_directory\$inputlist\.1.fq  -2 $read_directory\$inputlist\.2.fq  -S $read_directory\$inputlist\_aligned.sam &&
+samtools view -S -b $read_directory\$inputlist\_aligned.sam > $read_directory\$inputlist\_aligned.bam  &&
+samtools sort  $read_directory\$inputlist\_aligned.bam  -o  $read_directory\$inputlist\_aligned_sorted.bam  &&
+samtools index $read_directory\$inputlist\_aligned_sorted.bam   &&
+rm -f $read_directory\$inputlist\_aligned.sam &&
+rm -f $read_directory\$inputlist\_aligned.bam ; done
