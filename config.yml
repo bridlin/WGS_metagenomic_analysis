@@ -1,5 +1,5 @@
 input_list=("MC520_S1_" "MC530_S3_" "MC5T20_S2_" "MC5T30_S4_")
-directory=fastq_run10
+directory=fastq_run10_2
 output_dir=kraken2-results_run10/
 kraken_output_dir=kraken2-results_run10/PlusPF
 kraken_output_dir_2=kraken2-results_run10/EuPathDB48

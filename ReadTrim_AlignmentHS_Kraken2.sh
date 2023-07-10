@@ -14,10 +14,10 @@
 module load cutadapt/4.0
 module load trimmomatic/0.39
 module load fastqc/0.11.9
-module load  bowtie2/2.4.1
-module load  samtools/1.13
-module load  kraken2/2.1.2
-
+module load bowtie2/2.4.1
+module load samtools/1.13
+module load kraken2/2.1.2
+module load multiqc/1.13
 
 source WGS_metagenomic_analysis/config.yml
 
@@ -39,3 +39,5 @@ rm -f  $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam &&
 rm -f  $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
 kraken2 --db $kraken2_db --threads 8 --minimum-hit-groups 3  --report-minimizer-data --report $kraken_output_dir/$x\.k2report  --paired $directory/$x\nonhuman_reads.1.fastq $directory/$x\nonhuman_reads.2.fastq > $kraken_output_dir/$x\.kraken2 &&
 kraken2 --db $kraken2_db_2 --threads 8 --minimum-hit-groups 3  --report-minimizer-data --report $kraken_output_dir_2/$x\.k2report  --paired $directory/$x\nonhuman_reads.1.fastq $directory/$x\nonhuman_reads.2.fastq > $kraken_output_dir_2/$x\.kraken2; done
+
+multiqc $directory $output_dir $kraken_output_dir $kraken_output_dir_2
