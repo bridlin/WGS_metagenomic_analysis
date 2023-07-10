@@ -31,7 +31,7 @@ cutadapt  -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA   -A AGATCGGAAGAGCGTCGTGTAGGGAAAG
 trimmomatic PE -threads 4 -trimlog $directory/$x\trim $directory/$x\L001_R1_001_3trimmed.fastq.gz $directory/$x\L001_R2_001_3trimmed.fastq.gz $directory/$x\L001_R1_001_3trimmed_q20.fastq.gz   $directory/$x\L001_R1_001_3trimmed_q20_un.fastq.gz $directory/$x\L001_R2_001_3trimmed_q20.fastq.gz  $directory/$x\L001_R2_001_3trimmed_q20_un.fastq.gz SLIDINGWINDOW:4:20 MINLEN:40 &&
 fastqc $directory/$x\L001_R1_001_3trimmed_q20.fastq.gz &&
 fastqc $directory/$x\L001_R2_001_3trimmed_q20.fastq.gz &&
-bowtie2 -x ../../bank/bowtie2/Homo_sapiens.GRCh38.dna.toplevel -1 $directory/$x\L001_R1_001_3trimmed_q20.fastq.gz -2 $directory/$x\L001_R2_001_3trimmed_q20.fastq.gz  --un-conc $directory/$x\nonhuman_reads.fastq -S $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam &&
+bowtie2 -x ../../bank/bowtie2/Homo_sapiens.GRCh38.dna.toplevel -1 $directory/$x\L001_R1_001_3trimmed_q20.fastq.gz -2 $directory/$x\L001_R2_001_3trimmed_q20.fastq.gz  --un-conc $directory/$x\nonhuman_reads.fastq -S $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam 2> $directory/$x\.log &&
 samtools view -S -b $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam > $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
 samtools sort $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam -o $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam &&
 samtools index $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam &&
