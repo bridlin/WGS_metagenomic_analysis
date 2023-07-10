@@ -23,6 +23,7 @@ source WGS_metagenomic_analysis/config.yml
 
 
 mkdir $output_dir
+mkdir $output_dir_2
 for x in "${input_list[@]}"; do
 fastqc $directory/$x\L001_R1_001.fastq.gz &&
 fastqc $directory/$x\L001_R2_001.fastq.gz &&
@@ -36,5 +37,5 @@ samtools sort $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam -o $
 samtools index $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam &&
 rm -f  $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam &&
 rm -f  $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
-kraken2 --db $kraken2_db --threads 8 --minimum-hit-groups 3  --report-minimizer-data --report $output_dir/$x\_PluPF.k2report  --paired $directory/$x\nonhuman_reads.1.fastq $directory/$x\nonhuman_reads.2.fastq > $output_dir/$x\_PluPF.kraken2 &&
-kraken2 --db $kraken2_db_2 --threads 8 --minimum-hit-groups 3  --report-minimizer-data --report $output_dir/$x\_EupathDB.k2report  --paired $directory/$x\nonhuman_reads.1.fastq $directory/$x\nonhuman_reads.2.fastq > $output_dir/$x\_EupathDB.kraken2; done
+kraken2 --db $kraken2_db --threads 8 --minimum-hit-groups 3  --report-minimizer-data --report $output_dir/$x\.k2report  --paired $directory/$x\nonhuman_reads.1.fastq $directory/$x\nonhuman_reads.2.fastq > $output_dir/$x\.kraken2 &&
+kraken2 --db $kraken2_db_2 --threads 8 --minimum-hit-groups 3  --report-minimizer-data --report $output_dir_2/$x\.k2report  --paired $directory/$x\nonhuman_reads.1.fastq $directory/$x\nonhuman_reads.2.fastq > $output_dir_2/$x\.kraken2; done
