@@ -1,4 +1,5 @@
 input_list=("3328-A_S2_" "3328-B_S3_" "3777_S1_")
-directory=fastq_run9
-output_dir=kraken2-results_run9/PlusPF
+directory=fastq_run10
+output_dir=kraken2-results_run10/PlusPF
 kraken2_db=Kraken2_db/PlusPF
+kraken2_db_2=Kraken2_db/EuPathDB48/
