@@ -22,8 +22,8 @@ module load multiqc/1.13
 source WGS_metagenomic_analysis/config.yml
 
 mkdir $output_dir
-mkdir $kraken_output_dir
-mkdir $kraken_output_dir_2
+mkdir $output_dir/$kraken_output_dir
+mkdir $output_dir/$kraken_output_dir_2
 for x in "${input_list[@]}"; do
 fastqc $directory/$x\L001_R1_001.fastq.gz --outdir $output_dir &&
 fastqc $directory/$x\L001_R2_001.fastq.gz --outdir $output_dir &&
