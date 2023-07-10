@@ -1,4 +1,4 @@
-id_list=("1239" "201174" "1224")
-input_list=("3777_S1_" )
-kraken_results=kraken2-results_run9/Standard
-read_directory=fastq_run9
+id_list=("5658" "5810" "29382" "186826" "85009" "1224")
+input_list=("3577-2_S4_" )
+kraken_results=kraken2-results_run8/PlusPF
+read_directory=run8_nonhuman-reads
