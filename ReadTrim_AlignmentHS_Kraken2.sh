@@ -25,9 +25,9 @@ mkdir $output_dir
 mkdir $kraken_output_dir
 mkdir $kraken_output_dir_2
 for x in "${input_list[@]}"; do
-fastqc $directory/$x\L001_R1_001.fastq.gz &&
-fastqc $directory/$x\L001_R2_001.fastq.gz &&
-cutadapt  -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA   -A AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT  -o $directory/$x\L001_R1_001_3trimmed.fastq.gz -p $directory/$x\L001_R2_001_3trimmed.fastq.gz  $directory/$x\L001_R1_001.fastq.gz  $directory/$x\L001_R2_001.fastq.gz --minimum-length 40 2> $directory/$x\_report.txt &&
+fastqc $directory/$x\L001_R1_001.fastq.gz --outdir $output_dir &&
+fastqc $directory/$x\L001_R2_001.fastq.gz --outdir $output_dir &&
+cutadapt  -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA   -A AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT  -o $directory/$x\L001_R1_001_3trimmed.fastq.gz -p $directory/$x\L001_R2_001_3trimmed.fastq.gz  $directory/$x\L001_R1_001.fastq.gz  $directory/$x\L001_R2_001.fastq.gz --minimum-length 40 > $directory/$x\report.txt &&
 trimmomatic PE -threads 4 -trimlog $directory/$x\trim $directory/$x\L001_R1_001_3trimmed.fastq.gz $directory/$x\L001_R2_001_3trimmed.fastq.gz $directory/$x\L001_R1_001_3trimmed_q20.fastq.gz   $directory/$x\L001_R1_001_3trimmed_q20_un.fastq.gz $directory/$x\L001_R2_001_3trimmed_q20.fastq.gz  $directory/$x\L001_R2_001_3trimmed_q20_un.fastq.gz SLIDINGWINDOW:4:20 MINLEN:40 &&
 fastqc $directory/$x\L001_R1_001_3trimmed_q20.fastq.gz &&
 fastqc $directory/$x\L001_R2_001_3trimmed_q20.fastq.gz &&
