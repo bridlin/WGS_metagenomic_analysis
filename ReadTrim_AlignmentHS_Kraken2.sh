@@ -40,4 +40,4 @@ rm -f  $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
 kraken2 --db $kraken2_db --threads 8 --minimum-hit-groups 3  --report-minimizer-data --report $output_dir/$kraken_output_dir/$x\.k2report  --paired $directory/$x\nonhuman_reads.1.fastq $directory/$x\nonhuman_reads.2.fastq > $output_dir/$kraken_output_dir/$x\.kraken2 &&
 kraken2 --db $kraken2_db_2 --threads 8 --minimum-hit-groups 3  --report-minimizer-data --report $output_dir/$kraken_output_dir_2/$x\.k2report  --paired $directory/$x\nonhuman_reads.1.fastq $directory/$x\nonhuman_reads.2.fastq > $output_dir/$kraken_output_dir_2/$x\.kraken2; done
 
-multiqc $directory $output_dir $kraken_output_dir $kraken_output_dir_2
+multiqc $directory $output_dir $output_dir/$kraken_output_dir $output_dir/$kraken_output_dir_2
