@@ -1,0 +1,8 @@
+
+directory: "run10"
+output_dir: "kraken2-results_run10_2"
+kraken_output_dir: "PlusPF"
+kraken_output_dir_2: "EuPathDB48"
+kraken2_db: "Kraken2_db/PlusPF"
+kraken2_db_2: "Kraken2_db/EuPathDB48"
+
