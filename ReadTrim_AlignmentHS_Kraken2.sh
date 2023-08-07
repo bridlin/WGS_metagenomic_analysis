@@ -18,6 +18,7 @@ module load bowtie2/2.4.1
 module load samtools/1.13
 module load kraken2/2.1.2
 module load multiqc/1.13
+module load picard/2.23.5
 
 source WGS_metagenomic_analysis/config.yml
 
@@ -35,6 +36,9 @@ bowtie2 -x ../../bank/bowtie2/Homo_sapiens.GRCh38.dna.toplevel -1 $directory/$x\
 samtools view -S -b $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam > $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
 samtools sort $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam -o $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam &&
 samtools index $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam &&
+samtools reheader -c 'grep -v ^@PG' $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam  > $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered.bam &&
+picard CollectInsertSizeMetrics   -I $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered.bam  -O $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered_insert_size_metrics.txt  -H $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered_insert_size_histogram.pdf  -M 0.5  &&
+rm -f  $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered.bam &&
 rm -f  $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam &&
 rm -f  $directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
 kraken2 --db $kraken2_db --threads 8 --minimum-hit-groups 3  --report-minimizer-data --report $output_dir/$kraken_output_dir/$x\.k2report  --paired $directory/$x\nonhuman_reads.1.fastq $directory/$x\nonhuman_reads.2.fastq > $output_dir/$kraken_output_dir/$x\.kraken2 &&
