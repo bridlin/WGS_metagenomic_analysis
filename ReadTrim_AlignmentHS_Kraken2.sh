@@ -37,7 +37,7 @@ samtools view -S -b $fastq_directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.
 samtools sort $fastq_directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam -o $fastq_directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam &&
 samtools index $fastq_directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam &&
 samtools reheader -c 'grep -v ^@PG' $fastq_directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam  > $fastq_directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered.bam &&
-picard CollectInsertSizeMetrics   -I $fastq_directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered.bam  -O $fastq_directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered_insert_size_metrics.txt  -H $fastq_directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered_insert_size_histogram.pdf  -M 0.5  &&
+picard CollectInsertSizeMetrics   -I $fastq_directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered.bam  -O $output_dir/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered_insert_size_metrics.txt  -H $output_dir/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered_insert_size_histogram.pdf  -M 0.5  &&
 rm -f  $fastq_directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered.bam &&
 rm -f  $fastq_directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam &&
 rm -f  $fastq_directory/$x\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
