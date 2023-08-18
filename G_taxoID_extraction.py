@@ -2,8 +2,7 @@ import pandas as pd
 import os
 
 
-
-
+#### Methodes ####
 
 def get_sample_names(file_path):
     sample_names = []
@@ -19,21 +18,37 @@ def read_report(report, column_names):
     return(df_report)
  
 
-
-
-
-def get_G_taxoIDs(df, sample):
+def get_G_taxoIDs(df, sample): # returns a dataframe with taxoID, patho_name, reads and sample for all Genuses
     df_filtered = df.loc[df['rank'] == 'G' ]
     df_taxoIDs = pd.DataFrame()
-    #df_taxoIDs['taxoID', 'name', 'reads'] = df['taxoID', 'sci_name', 'num_frag' ]
-    
     df_taxoIDs['taxoID'] = df_filtered['taxoID']
     df_taxoIDs['name'] = df_filtered['sci_name']
     df_taxoIDs['reads'] = df_filtered['num_frag']
     df_taxoIDs['sample'] = sample
     return(df_taxoIDs)
 
+def make_config(df, sample_names): # returns a config file for the read-extraction script
+    f= open("config_redextraction.txt","w+")
+    taxo_per_sample = {}
+    for sample  in sample_names:
+        #print(sample)
+        taxoIDs= []
+        for ind in df.index:
+            if df['sample'].values[ind] == sample :
+                taxoID = df['taxoID'].values[ind]
+                taxoIDs.append(taxoID)   
 
+        taxo_per_sample[sample] = taxoIDs
+    #print(taxo_per_sample)
+    for keys in taxo_per_sample:
+        print(keys)
+        print(taxo_per_sample[keys])
+        f.write("\n" + keys + '= ('  )
+        for  item in taxo_per_sample[keys]:
+            print(item)
+            f.write('"' + str(item) + '" ')
+        f.write(')')
+    f.close()
     
 
 
@@ -49,13 +64,11 @@ def main():
             if os.path.splitext(file)[1] == ".k2report":                                                    # identification of the Kraken2 reports that have to be read
                 report = root + file
                 sample = os.path.splitext(file)[0]
-                df_filtered = get_G_taxoIDs(read_report(report, column_names),sample)
-                #print(df_filtered)
-                pd.concat([df_taxoIDs_all, df_filtered], keys=['sample' ,'taxoID', 'name', 'reads'])       
-                df_taxoIDs_all = pd.concat([df_taxoIDs_all, df_filtered])
-    print(df_taxoIDs_all)
-
-
+                df_filtered = get_G_taxoIDs(read_report(report, column_names),sample)  
+                df_taxoIDs_all = pd.concat([df_taxoIDs_all, df_filtered], ignore_index=True)
+    #print(df_taxoIDs_all)
+    df_taxoIDs_all.to_csv("TaxoIDs_per_sample.tsv", sep="\t")
+    make_config(df_taxoIDs_all,get_sample_names(file_path))
 
 
 
