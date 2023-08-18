@@ -28,7 +28,7 @@ def get_G_taxoIDs(df, sample): # returns a dataframe with taxoID, patho_name, re
     return(df_taxoIDs)
 
 def make_config(df, sample_names): # returns a config file for the read-extraction script
-    f= open("config_redextraction.txt","w+")
+    f= open("config_readextraction.txt","w+")
     taxo_per_sample = {}
     for sample  in sample_names:
         #print(sample)
