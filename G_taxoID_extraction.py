@@ -47,7 +47,7 @@ def make_config(df, sample_names): # returns a config file for the read-extracti
     for keys in taxo_per_sample:
         #print(keys)
         #print(taxo_per_sample[keys])
-        f.write("\n" + keys + '= ('  )
+        f.write("\n" + keys + '=('  )
         for  item in taxo_per_sample[keys]:
             print(item)
             f.write('"' + str(item) + '" ')
