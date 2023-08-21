@@ -8,6 +8,7 @@ def get_sample_names(file_path):
     sample_names = []
     for root, dirs, files in os.walk(file_path):
         for names in files:
+            #print(files)
             if os.path.splitext(names)[1] == ".k2report":
                  sample_names.append(os.path.splitext(names)[0])
     return sample_names    
@@ -20,6 +21,10 @@ def read_report(report, column_names):
 
 def get_G_taxoIDs(df, sample): # returns a dataframe with taxoID, patho_name, reads and sample for all Genuses
     df_filtered = df.loc[df['rank'] == 'G' ]
+    print(df_filtered)
+    #df_filtered = df_filtered_1.loc[df_filtered_1['taxoID'] != '9605' ]
+    df_filtered = df_filtered[df_filtered['sci_name'].str.contains('Homo') == False]
+    print(df_filtered)
     df_taxoIDs = pd.DataFrame()
     df_taxoIDs['taxoID'] = df_filtered['taxoID']
     df_taxoIDs['name'] = df_filtered['sci_name']
@@ -41,8 +46,8 @@ def make_config(df, sample_names): # returns a config file for the read-extracti
         taxo_per_sample[sample] = taxoIDs
     #print(taxo_per_sample)
     for keys in taxo_per_sample:
-        print(keys)
-        print(taxo_per_sample[keys])
+        #print(keys)
+        #print(taxo_per_sample[keys])
         f.write("\n" + keys + '= ('  )
         for  item in taxo_per_sample[keys]:
             print(item)
@@ -53,7 +58,7 @@ def make_config(df, sample_names): # returns a config file for the read-extracti
 
 
 def main():
-    file_path = '../kraken2-results_run11_5prime-trimmed/PlusPF/'                                        # file path to kraken_results
+    file_path = '../../kraken2-results_run11_5prime-trimmed/PlusPF/'                                        # file path to kraken_results
     print(get_sample_names(file_path))
     column_names = ['perc_frag', 'num_frag', 'num_frag_taxo', 'x' , 'y' , 'rank' , 'taxoID', 'sci_name']    # column names for Kraken2 reports
     
