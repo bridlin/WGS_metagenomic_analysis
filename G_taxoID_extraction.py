@@ -22,7 +22,6 @@ def read_report(report, column_names):
 def get_G_taxoIDs(df, sample): # returns a dataframe with taxoID, patho_name, reads and sample for all Genuses
     df_filtered = df.loc[df['rank'] == 'G' ]
     print(df_filtered)
-    #df_filtered = df_filtered_1.loc[df_filtered_1['taxoID'] != '9605' ]
     df_filtered = df_filtered[df_filtered['sci_name'].str.contains('Homo') == False]
     print(df_filtered)
     df_taxoIDs = pd.DataFrame()
