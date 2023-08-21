@@ -41,7 +41,7 @@ picard CollectInsertSizeMetrics   -I $fastq_directory/$sample\aln-pe_Homo_sapien
 rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered.bam &&
 rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam &&
 rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
-kraken2 --db $kraken2_db --threads 8 --minimum-hit-groups 3  --report-minimizer-data --report $output_dir/$kraken_output_dir/$sample\.k2report  --paired $fastq_directory/$sample\nonhuman_reads.1.fastq $fastq_directory/$sample\nonhuman_reads.2.fastq > $output_dir/$kraken_output_dir/$sample\.kraken2 &&
+kraken2 --db $kraken2_db --threads 8 --minimum-hit-groups 3  --report-minimizer-data --report $sample\.k2report  --paired $fastq_directory/$sample\nonhuman_reads.1.fastq $fastq_directory/$sample\nonhuman_reads.2.fastq > $output_dir/$kraken_output_dir/$sample\.kraken2 &&
 kraken2 --db $kraken2_db_2 --threads 8 --minimum-hit-groups 3  --report-minimizer-data --report $output_dir/$kraken_output_dir_2/$sample\.k2report  --paired $fastq_directory/$sample\nonhuman_reads.1.fastq $fastq_directory/$sample\nonhuman_reads.2.fastq > $output_dir/$kraken_output_dir_2/$sample\.kraken2; done
 
 multiqc  $fastq_directory $output_dir $output_dir/$kraken_output_dir $output_dir/$kraken_output_dir_2 --outdir $output_dir
