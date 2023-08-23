@@ -1,9 +1,9 @@
-input_list=("MC520_S1_" "MC530_S3_" "MC5T20_S2_" "MC5T30_S4_")
-fastq_directory=run10_nonhuman-reads
-output_dir=kraken2-results_run10_5prime-trimmed
+input_list=("3328-A_S2_" "3328-B_S3_" "3777_S1_")
+fastq_directory=run9
+output_dir=kraken2-results_run9_5prime-trimmed
 kraken_output_dir=PlusPF
 kraken_output_dir_2=EuPathDB48
 kraken2_db=Kraken2_db/PlusPF
 kraken2_db_2=Kraken2_db/EuPathDB48
-kraken_results=kraken2-results_run11_5prime-trimmed/PlusPF
-read_directory=run11_nonhuman-reads
+#kraken_results=kraken2-results_run11_5prime-trimmed/PlusPF
+#read_directory=run9_nonhuman-reads
