@@ -73,7 +73,7 @@ def run_script_redextraction(dict,):
 
 
 def main():
-    file_path = '../../kraken2-results_run11_5prime-trimmed-2/PlusPF/'                                        # file path to kraken_results
+    file_path = '../../kraken2-results_run9_5prime-trimmed/PlusPF/'                                        # file path to kraken_results
     print(get_sample_names(file_path))
     column_names = ['perc_frag', 'num_frag', 'num_frag_taxo', 'x' , 'y' , 'rank' , 'taxoID', 'sci_name']    # column names for Kraken2 reports
     
