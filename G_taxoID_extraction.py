@@ -9,6 +9,7 @@ def get_sample_names(file_path):
     for root, dirs, files in os.walk(file_path):
         for names in files:
             #print(files)
+            #print(names)
             if os.path.splitext(names)[1] == ".k2report":
                  sample_names.append(os.path.splitext(names)[0])
     return sample_names    
@@ -72,23 +73,26 @@ def run_script_redextraction(dict,):
 
 
 def main():
-    file_path = '../../kraken2-results_run11_5prime-trimmed/PlusPF/'                                        # file path to kraken_results
+    file_path = '../../kraken2-results_run11_5prime-trimmed-2/PlusPF/'                                        # file path to kraken_results
     print(get_sample_names(file_path))
     column_names = ['perc_frag', 'num_frag', 'num_frag_taxo', 'x' , 'y' , 'rank' , 'taxoID', 'sci_name']    # column names for Kraken2 reports
     
     df_taxoIDs_all = pd.DataFrame(columns=['sample' ,'taxoID', 'name', 'reads'])                            # empty df to be filled 
     
-    for root, dirs, files in os.walk(file_path):
+    for root, dirs, files in os.walk(file_path): 
         for file in files: 
             if os.path.splitext(file)[1] == ".k2report":                                                    # identification of the Kraken2 reports that have to be read
                 report = root + file
                 sample = os.path.splitext(file)[0]
                 df_filtered = get_G_taxoIDs(read_report(report, column_names),sample)  
                 df_taxoIDs_all = pd.concat([df_taxoIDs_all, df_filtered], ignore_index=True)
-    #print(df_taxoIDs_all)
-    df_taxoIDs_all.to_csv("TaxoIDs_per_sample.tsv", sep="\t")
+        print(df_taxoIDs_all)
+        df_taxoIDs_all.to_csv(root+"G_TaxoIDs_per_sample.tsv", sep="\t")
     dict_taxo_per_sample = make_taxoID_sample_dict(df_taxoIDs_all,get_sample_names(file_path))
-    run_script_redextraction(dict_taxo_per_sample)
+    print(dict_taxo_per_sample)
+    make_config(dict_taxo_per_sample)
+    #run_script_redextraction(dict_taxo_per_sample)
+
 
 
 
