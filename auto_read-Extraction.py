@@ -95,8 +95,8 @@ class Args():
 
 #### Main ####
 def main():
-    read_file_path = '../fastq_run9/'
-    kraken_file_path = '../kraken2-results_run9_5prime-trimmed/EuPathDB48/'                                        # file path to kraken_results
+    read_file_path = '/fastq_run9/'
+    kraken_file_path = '/kraken2-results_run9_5prime-trimmed/EuPathDB48/'                                        # file path to kraken_results
     print(get_sample_names(kraken_file_path))
     
 
