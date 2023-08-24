@@ -19,7 +19,7 @@ def get_sample_names(kraken_file_path):
 
 def strip_samplenames(sample_name,kraken_file_path):
     substring = kraken_file_path.split('/')
-    striped_name = sample_name.split(substring[3])
+    striped_name = sample_name.split(substring[1])
     return striped_name[0]
 
 def read_report(report, column_names):
