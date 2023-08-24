@@ -126,8 +126,8 @@ def main():
                     striped_sample = (strip_samplenames(sample, kraken_file_path))
                     print(striped_sample)
                     kraken_file = kraken_file_path + sample + '.kraken2'
-                    seq_file1 = read_file_path + striped_sample + 'nonhuman_reads.1.fastq'
-                    seq_file2 = read_file_path + striped_sample + 'nonhuman_reads.2.fastq'
+                    seq_file1 = read_file_path + striped_sample + 'nonhuman_reads_5trimmed.1.fastq'
+                    seq_file2 = read_file_path + striped_sample + 'nonhuman_reads_5trimmed.2.fastq'
                     report_file = kraken_file_path + sample + '.k2report'
                     output_file = sample + '.tid' + str(item) + '.1.fa'
                     output_file2 = sample + '.tid' + str(item) + '.2.fa'
@@ -149,43 +149,6 @@ def main():
                     )
                     print(args)
                     KT_run_extraction(args)
-
-
-    # @dataclass
-    # class Args():
-    #     kraken_file: str
-    #     seq_file1: str
-    #     seq_file2: str
-    #     taxid: list[int]
-    #     report_file: str
-    #     output_file: str
-    #     output_file2: str
-    #     parents: bool = False
-    #     exclude: bool = False
-    #     children: bool = True
-    #     max_reads: int = 100000000
-        
-    
-   
-    
-    # kraken_file = kraken_file_path + '3328-A_S2_EuPathDB48' + '.kraken2'
-    # seq_file1 = read_file_path + '3328-A_S2_' + 'nonhuman_reads.1.fastq'
-    # seq_file2 = read_file_path + '3328-A_S2_' + 'nonhuman_reads.2.fastq'
-    # report_file = kraken_file_path + '3328-A_S2_EuPathDB48' + '.k2report'
-    # output_file = '3328-A_S2_EuPathDB48' + '.tid' + 'taxID' + '.1.fa'
-    # output_file2 = '3328-A_S2_EuPathDB48' + '.tid' + 'taxID' + '.2.fa'
-
-    # args = Args(kraken_file, \
-    #             #True , \
-    #             seq_file1, \
-    #             seq_file2, \
-    #             [5810], \
-    #             report_file, \
-    #             output_file, \
-    #             output_file2
-    #             )
-    # print(args)
-    # KT_run_extraction(args)
 
 
 
