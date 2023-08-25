@@ -131,8 +131,8 @@ def main():
                     seq_file1 = read_file_path + striped_sample + 'nonhuman_reads_5trimmed.1.fastq'
                     seq_file2 = read_file_path + striped_sample + 'nonhuman_reads_5trimmed.2.fastq'
                     report_file = kraken_file_path + sample + '.k2report'
-                    output_file = sample + '.tid' + str(item) + '.1.fa'
-                    output_file2 = sample + '.tid' + str(item) + '.2.fa'
+                    output_file = kraken_file_path + sample + '.tid' + str(item) + '.1.fa'
+                    output_file2 = kraken_file_path + sample + '.tid' + str(item) + '.2.fa'
                     taxid = [item]
                     print(kraken_file)
                     print(seq_file1)
