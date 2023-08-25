@@ -19,7 +19,7 @@ def get_sample_names(kraken_file_path):
 
 def strip_samplenames(sample_name,kraken_file_path):
     substring = kraken_file_path.split('/')
-    striped_name = sample_name.split(substring[3])
+    striped_name = sample_name.split(substring[-2])
     return striped_name[0]
 
 def read_report(report, column_names):
@@ -97,11 +97,13 @@ class Args():
 
 #### Main ####
 def main():
-    read_file_path = '../../run9_test/'
-    kraken_file_path = '../../Kraken2_results_run9_5prime-trimmed_test/EuPathDB48/'                                        # file path to kraken_results
+    if len(sys.argv) == 1:
+        print('read file and Kraken output file paths are missing as command line arguments!!!')
+    read_file_path = sys.argv[1]
+    kraken_file_path = sys.argv[2] 
+    # file path to  read file and kraken_results via command line args
     print(get_sample_names(kraken_file_path))
     
-
     column_names = ['perc_frag', 'num_frag', 'num_frag_taxo', 'x' , 'y' , 'rank' , 'taxoID', 'sci_name']    # column names for Kraken2 reports
     
     df_taxoIDs_all = pd.DataFrame(columns=['sample' ,'taxoID', 'name', 'reads'])                            # empty df to be filled 
@@ -150,7 +152,7 @@ def main():
                     output_file2
                     )
                     print(args)
-                    KT_run_extraction(args)
+                    #KT_run_extraction(args)
 
 
 
