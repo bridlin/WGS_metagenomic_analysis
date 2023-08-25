@@ -19,7 +19,7 @@ def get_sample_names(kraken_file_path):
 
 def strip_samplenames(sample_name,kraken_file_path):
     substring = kraken_file_path.split('/')
-    striped_name = sample_name.split(substring[1])
+    striped_name = sample_name.split(substring[3])
     return striped_name[0]
 
 def read_report(report, column_names):
@@ -89,14 +89,16 @@ class Args():
     parents: bool = False
     exclude: bool = False
     children: bool = True
+    append: bool = False
+    fastq_out: bool = False
     max_reads: int = 100000000
 
     
 
 #### Main ####
 def main():
-    read_file_path = 'run9/'
-    kraken_file_path = 'kraken2-results_run9_5prime-trimmed/EuPathDB48/'                                        # file path to kraken_results
+    read_file_path = '../../run9_test/'
+    kraken_file_path = '../../Kraken2_results_run9_5prime-trimmed_test/EuPathDB48/'                                        # file path to kraken_results
     print(get_sample_names(kraken_file_path))
     
 
