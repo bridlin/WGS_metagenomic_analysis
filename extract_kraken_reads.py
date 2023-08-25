@@ -455,7 +455,7 @@ def run_extraction(args):
     #End of program
     time = strftime("%m-%d-%Y %H:%M:%S", gmtime())
     logger.info("PROGRAM END TIME: " + time + '\n')
-    sys.exit(0)
+    #sys.exit(0)
 
 #################################################################################
 
