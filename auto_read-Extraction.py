@@ -91,7 +91,7 @@ class Args():
     children: bool = True
     append: bool = False
     fastq_out: bool = False
-    max_reads: int = 100000000
+    max_reads: int = 100
 
     
 

@@ -12,7 +12,7 @@
 
 module load blast/2.14.0
 
-kraken_file_path= '../Kraken2_results_run9_5prime-trimmed_test/EuPathDB48/'
+kraken_file_path=../Kraken2_results_run9_5prime-trimmed_test/EuPathDB48/
 
 mkdir $kraken_file_path\blast_results
 
