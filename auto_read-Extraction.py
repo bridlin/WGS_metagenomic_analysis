@@ -152,7 +152,7 @@ def main():
                     output_file2
                     )
                     print(args)
-                    KT_run_extraction(args)
+                    #KT_run_extraction(args)
 
 
 
