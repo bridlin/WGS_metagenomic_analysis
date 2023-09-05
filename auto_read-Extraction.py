@@ -91,7 +91,7 @@ class Args():
     children: bool = True
     append: bool = False
     fastq_out: bool = False
-    max_reads: int = 100
+    max_reads: int = 10
 
     
 
@@ -152,7 +152,7 @@ def main():
                     output_file2
                     )
                     print(args)
-                    #KT_run_extraction(args)
+                    KT_run_extraction(args)
 
 
 
