@@ -15,7 +15,7 @@ module load blast/2.14.0
 
 #kraken_file_path=../kraken2-results_run13_5prime-trimmed/PlusPF/
 mkdir ../kraken2-results_run13_5prime-trimmed/PlusPF/blast_result
-for files in ../kraken2-results_run13_5prime-trimmed/PlusPF/run13_extractedReads_PlusPF/extracted_reads_3204/*.1.fa ; do file=$( echo $files | cut -d / -f 5) && echo $files && echo $file  && echo $file\_blast && blastn -db nt -query $files -out $file\_blast  -max_target_seqs 5 -max_hsps 5   -outfmt "7 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" -remote && mv $file\_blast ../kraken2-results_run13_5prime-trimmed/PlusPF/blast_result ; done
+for files in ../kraken2-results_run13_5prime-trimmed/PlusPF/run13_extractedReads_PlusPF/extracted_reads_3204/*.1.fa ; do file=$( echo $files | cut -d / -f 6) && echo $files && echo $file  && echo $file\_blast && blastn -db nt -query $files -out $file\_blast  -max_target_seqs 5 -max_hsps 5   -outfmt "7 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" -remote && mv $file\_blast ../kraken2-results_run13_5prime-trimmed/PlusPF/blast_result ; done
 
 
 
