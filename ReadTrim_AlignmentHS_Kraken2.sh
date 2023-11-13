@@ -22,10 +22,10 @@ module load picard/2.23.5
 
 source WGS_metagenomic_analysis/config.yml
 
-# mkdir $output_dir
-# mkdir $output_dir/$kraken_output_dir
-# mkdir $output_dir/$kraken_output_dir_2
-# for sample in "${input_list[@]}"; do
+mkdir $output_dir
+mkdir $output_dir/$kraken_output_dir
+mkdir $output_dir/$kraken_output_dir_2
+for sample in "${input_list[@]}"; do
 # fastqc $fastq_directory/$sample\L001_R1_001.fastq.gz --outdir $output_dir &&
 # fastqc $fastq_directory/$sample\L001_R2_001.fastq.gz --outdir $output_dir &&
 # cutadapt  -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA   -A AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT  -o $fastq_directory/$sample\L001_R1_001_3trimmed.fastq.gz -p $fastq_directory/$sample\L001_R2_001_3trimmed.fastq.gz  $fastq_directory/$sample\L001_R1_001.fastq.gz  $fastq_directory/$sample\L001_R2_001.fastq.gz --minimum-length 40 > $output_dir/$sample\_cutadapt_report.txt &&
