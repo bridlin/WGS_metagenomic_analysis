@@ -26,7 +26,7 @@ db=PlusPF
 
 source WGS_metagenomic_analysis/config_readextraction
 
-for sample in "${input_list[@]}"; do for id in "${$sample[@]}"; do 
+for sample in "${input_list[@]}"; do for id in "${$id_list[@]}"; do 
 python KrakenTools-master/extract_kraken_reads.py -k $output_dir/$db/$sample\_$db.kraken2 --include-children -s $read_directory/$sample\nonhuman_reads_5trimmed.1.fastq -s2 $read_directory/$sample\nonhuman_reads_5trimmed.2.fastq -t $id\  -r $output_dir/$db/$sample\_$db.k2report -o $sample\.tid$id\.1.fa  -o2 $sample\.tid$id\.2.fa  ; done ; done
 
 
