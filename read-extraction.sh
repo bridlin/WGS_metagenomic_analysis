@@ -12,13 +12,6 @@
 
 module load python/3.9
 
-id_list=("475")
-input_list=("3737_S4_" "3735_S3_")
-kraken_results=kraken2-results_run8/PlusPF
-read_directory=run8_nonhuman-reads
-output_dir=kraken2-results_run14_5prime-trimmed
-db=PlusPF
-#db_2=EuPathDB48
 
 
 
