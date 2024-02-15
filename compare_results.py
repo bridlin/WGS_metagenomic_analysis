@@ -19,9 +19,9 @@ def get_sample_names(results_path):
                  sample_names.append(os.path.splitext(names)[0])
     return sample_names    
 
-def strip_samplenames(sample_names,results_path):
-    substring = results_path.split('/')
-    striped_name = sample_names.split(substring[-2])
+def strip_samplenames(sample_name,kraken_file_path):
+    substring = kraken_file_path.split('/')
+    striped_name = sample_name.split(substring[-2])
     return striped_name[0]
 
 
