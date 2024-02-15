@@ -1,4 +1,4 @@
-input_list=("cut150_1513-1_S1_" "cut150_1513-2_S2_" "cut150_3111-1_S3_" "cut150_3111-2_S4_")
+input_list=("cut150_1407d_S1_" "cut150_1407Td_S2_" "cut150_1528d_S3_" "cut150_1528Td_S4_")
 fastq_directory=run17_fastq
 output_dir=kraken2-results_run17-cut150_5prime-trimmed
 kraken_output_dir=PlusPF
