@@ -1,6 +1,6 @@
-input_list=("cut150_1528_S1_" "cut150_1528T_S2_" "cut150_3153_S3_" "cut150_3153T_S4_")
-fastq_directory=run15_fastq
-output_dir=kraken2-results_run15-cut150_5prime-trimmed
+input_list=("cut150_3111-2_S4_")
+fastq_directory=run7_fastq
+output_dir=kraken2-results_run7-cut150_5prime-trimmed
 kraken_output_dir=PlusPF
 kraken_output_dir_2=EuPathDB48
 kraken2_db=Kraken2_db/PlusPF
