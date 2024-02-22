@@ -15,11 +15,11 @@ def get_sample_names(results_path):
         print(root)
         print(dirs)
         print(files)
-        for names in files:
+        for file in files:
             #print(files)
             #print(names)
-            if os.path.splitext(names)[1] == ".k2report":
-                 sample_names.append(os.path.splitext(names)[0])
+            if os.path.splitext(file)[1] == ".k2report":
+                 sample_names.append(os.path.splitext(file)[0])
     return sample_names    
 
 def strip_samplenames(sample_name,kraken_file_path):
@@ -36,14 +36,22 @@ def read_G_taxoIDs(results_path):
     for root, dirs, files in os.walk(results_path):
         for file in files:
             if file == "G_TaxoIDs_per_sample.tsv" :
-                G_taxo = results_path +'/'+ file
+                G_taxo = results_path + '/' + file
                 print(G_taxo)
-                df_report = pd.read_table(G_taxo,index_col=0)
-            else :
-                print('there is no G-Taxo file at the indicated result path')
+                df_report = pd.read_table(G_taxo,index_col=0)       
     return df_report    
-
-
+        
+def read_blast_result(results_path,sample_name, taxoID):
+    for root, dirs, files in os.walk(results_path):
+        for file in files:
+            #print(files)
+            #print(names)
+            if (os.path.splitext(file)[1] == ".fa_blast") :
+                print(os.path.splitext(file)[0])
+                blast_result = results_path + '/' + 'blast_result/' + file
+                print(blast_result)
+                df_blast_result = pd.read_table(blast_result)
+    return df_blast_result
 
 
 
@@ -64,7 +72,7 @@ def main():
     column_names_G_taxo = ['sample','taxoID','name','reads']
     print(read_G_taxoIDs(results_path))
 
-
+    print(read_blast_result(results_path,'1528_S1_EuPathDB48', '4842' ))
 
 
 
