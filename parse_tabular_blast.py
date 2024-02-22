@@ -8,25 +8,25 @@ from Bio.SeqRecord import SeqRecord
 from Bio import SeqIO
 
 # if all of your genome sequences are within one multifasta file
-recs = [rec for rec in SeqIO.parse('all_genomes.fasta', 'fasta')]
+#recs = [rec for rec in SeqIO.parse('all_genomes.fasta', 'fasta')]
 
 # if they are within multiple multifasta files:
 # fasta_files contains the paths to all of your multifasta files
-fasta_files = [] 
-recs = [rec for f in fasta_files for rec in SeqIO.parse(f, 'fasta')] 
+# fasta_files = [] 
+# recs = [rec for f in fasta_files for rec in SeqIO.parse(f, 'fasta')] 
 # in this case, each multifasta could have multiple contigs so each contig may
 # have a different id/name. This id/name would be it's identifier for BLAST.
 
 # get a dictionary of your strain/contig names and the corresponding SeqRecord 
 # so that you can retrieve the SeqRecord using the name of that SeqRecord
-strain_name_seq_rec = {rec.name:rec for rec in recs}
+#strain_name_seq_rec = {rec.name:rec for rec in recs}
 
 
 # The lengths can be stored in a dictionary where the query id/name can be
 # used to retrieve the length of that query.
 # query_files contains all of the query multifasta file paths
-query_files = []
-query_lengths = {rec.name:len(rec.seq) for q_file in query_files for rec in SeqIO.parse(q_file, 'fasta')}
+#query_files = []
+#query_lengths = {rec.name:len(rec.seq) for q_file in query_files for rec in SeqIO.parse(q_file, 'fasta')}
 
 def adjust_subject_indices(q_s_i, q_e_i, s_s_i, s_e_i, q_len, revcomp):
     """
@@ -110,15 +110,19 @@ def parse_tabular_blast_results(blast_results_file):
             sp = line.split('\t')
             # get query id
             q = sp[0]
-            q_len = query_lengths[q]
+            #q_len = query_lengths[q]
             # get subject id
             s = sp[1]
+            # get scientific name
+            sscinames = sp[2]
             # get the subject SeqRecord object
-            sseq = strain_name_seq_rec[s]
+            #sseq = strain_name_seq_rec[s]
             # get % identity and convert to decimal (e.g. 96.7 -> 0.967)
-            pid = float(sp[2])/100.0
+            pid = float(sp[3])/100.0
+            # get coverage %
+            qcovs = int(sp[4])
             # get alignment length
-            aln_len = int(sp[3])
+            aln_len = int(sp[6])
             # get query start index
             q_s_i = int(sp[6])
             # get query end index
@@ -127,6 +131,8 @@ def parse_tabular_blast_results(blast_results_file):
             s_s_i = int(sp[8])
             # get subject end index
             s_e_i = int(sp[9])
+            # get subject end index
+            taxoid = int(sp[15])
             # try to get the extended subject sequence based on the full length 
             # of the query. If not able to grab the full length, grab as much
             # as possible. 
@@ -142,9 +148,12 @@ def parse_tabular_blast_results(blast_results_file):
             # in this example, a dictionary is made where different results have
             # different identifiers for instance
             result_dict = {
-            'aln_len':aln_len, 
-            'q_len':q_len,
-            'pid':pid, 
+            'sscinames':sscinames,
+            #'q_len':q_len,
+            'pid':pid,
+            'qcovs':qcovs, 
+            'aln_len':aln_len,
+            'taxoid':taxoid,
             #'extracted_seq': extracted_seq
             }
             # could add more items to this BLAST result dictionary
