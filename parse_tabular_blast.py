@@ -4,7 +4,7 @@
 # Biopython is required for reading multifasta files and storing sequences.
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
-from Bio.Alphabet import IUPAC
+#from Bio.Alphabet import IUPAC
 from Bio import SeqIO
 
 # if all of your genome sequences are within one multifasta file
@@ -130,12 +130,12 @@ def parse_tabular_blast_results(blast_results_file):
             # try to get the extended subject sequence based on the full length 
             # of the query. If not able to grab the full length, grab as much
             # as possible. 
-            extracted_seq = extract_extended_seq(sseq, 
-                q_s_i, 
-                q_e_i, 
-                s_s_i, 
-                s_e_i,
-                q_len)
+            # extracted_seq = extract_extended_seq(sseq, 
+            #     q_s_i, 
+            #     q_e_i, 
+            #     s_s_i, 
+            #     s_e_i,
+            #     q_len)
             # number of identities (count of positive sequence matches)
             identities = int(aln_len*pid)
             # the results for a particular query could be whatever you need
@@ -145,7 +145,7 @@ def parse_tabular_blast_results(blast_results_file):
             'aln_len':aln_len, 
             'q_len':q_len,
             'pid':pid, 
-            'extracted_seq': extracted_seq
+            #'extracted_seq': extracted_seq
             }
             # could add more items to this BLAST result dictionary
             if q not in results:
