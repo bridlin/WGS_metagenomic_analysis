@@ -4,7 +4,7 @@ import os
 # from dataclasses import dataclass
 #from auto_read-Extraction import get_sample_names
 #from auto_read-Extraction import strip_samplenames
-
+from parse_tabular_blast import parse_tabular_blast_results
 
 #### Methodes ####
 
@@ -72,8 +72,10 @@ def main():
     column_names_G_taxo = ['sample','taxoID','name','reads']
     print(read_G_taxoIDs(results_path))
 
-    print(read_blast_result(results_path,'1528_S1_EuPathDB48', '4842' ))
+   
 
+
+    print(parse_tabular_blast_results('../../kraken2-results_run15_5prime-trimmed/test-1528-tid4842-6_formatted_3'))
 
 
 if __name__ == "__main__":
