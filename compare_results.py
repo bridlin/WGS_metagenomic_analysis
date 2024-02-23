@@ -51,7 +51,12 @@ def read_blast_result(results_path,sample_name, taxoID):
                 df_blast_result = pd.read_table(blast_result)
     return df_blast_result
 
-    
+    def recover_read_names(df_blast_result):
+        read_names = []
+        for index, row in df_blast_result.iterrows():
+            if row['name'].startswith('>'):
+                read_names.append(row['name'][1:])
+        return read_names
 
 #### Main ####
 def main():
