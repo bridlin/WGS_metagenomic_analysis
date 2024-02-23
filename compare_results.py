@@ -44,8 +44,6 @@ def read_G_taxoIDs(results_path):
 def read_blast_result(results_path,sample_name, taxoID):
     for root, dirs, files in os.walk(results_path):
         for file in files:
-            #print(files)
-            #print(names)
             if (os.path.splitext(file)[1] == ".fa_blast") :
                 print(os.path.splitext(file)[0])
                 blast_result = results_path + '/' + 'blast_result/' + file
@@ -53,7 +51,7 @@ def read_blast_result(results_path,sample_name, taxoID):
                 df_blast_result = pd.read_table(blast_result)
     return df_blast_result
 
-
+    
 
 #### Main ####
 def main():
@@ -72,7 +70,7 @@ def main():
     column_names_G_taxo = ['sample','taxoID','name','reads']
     print(read_G_taxoIDs(results_path))
 
-   
+    
 
 
     print(parse_tabular_blast_results('../../kraken2-results_run15_5prime-trimmed/test-1528-tid4842-6_formatted_3'))
