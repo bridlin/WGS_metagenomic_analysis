@@ -41,7 +41,7 @@ def read_G_taxoIDs(results_path):
                 df_report = pd.read_table(G_taxo,index_col=0)       
     return df_report    
         
-def read_blast_result(results_path,sample_name, taxoID):
+def read_blast_result(results_path):
     for root, dirs, files in os.walk(results_path):
         for file in files:
             if (os.path.splitext(file)[1] == ".fa_blast") :
