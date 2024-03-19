@@ -43,6 +43,7 @@ fastqc $fastq_directory/$sample\L001_R2_001_3trimmed_q20.fastq.gz --outdir $outp
 # rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
 # cutadapt  -g AGATCGGAAGAGCACACGTCTGAACTCCAGTCA   -G AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT -o $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq  -p $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq  $fastq_directory/$sample\nonhuman_reads.1.fastq  $fastq_directory/$sample\nonhuman_reads.2.fastq --minimum-length 60 > $output_dir/$sample\nonhuman_reads_cutadapt_report.txt &&
 # kraken2 --db $kraken2_db --threads 8 --minimum-hit-groups 3  --report-minimizer-data --report $output_dir/$kraken_output_dir/$sample$kraken_output_dir\.k2report  --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq > $output_dir/$kraken_output_dir/$sample$kraken_output_dir\.kraken2 &&
-# kraken2 --db $kraken2_db_2 --threads 8 --minimum-hit-groups 3  --report-minimizer-data --report $output_dir/$kraken_output_dir_2/$sample$kraken_output_dir_2\.k2report  --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq > $output_dir/$kraken_output_dir_2/$sample$kraken_output_dir_2\.kraken2; done
+# kraken2 --db $kraken2_db_2 --threads 8 --minimum-hit-groups 3  --report-minimizer-data --report $output_dir/$kraken_output_dir_2/$sample$kraken_output_dir_2\.k2report  --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq > $output_dir/$kraken_output_dir_2/$sample$kraken_output_dir_2\.kraken2 \
+; done
 
 multiqc   $output_dir $output_dir/$kraken_output_dir $output_dir/$kraken_output_dir_2 --outdir $output_dir
