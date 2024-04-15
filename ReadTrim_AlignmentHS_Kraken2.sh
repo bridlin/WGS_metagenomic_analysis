@@ -25,6 +25,7 @@ source WGS_metagenomic_analysis/config.yml
 mkdir $output_dir
 mkdir $output_dir/$kraken_output_dir
 mkdir $output_dir/$kraken_output_dir_2
+
 for sample in "${input_list[@]}"; do
 fastqc $fastq_directory/$sample\L001_R1_001.fastq.gz \
     --outdir $output_dir &&
@@ -83,9 +84,10 @@ kraken2 --db $kraken2_db_2 \
     --minimum-hit-groups 3  \
     --report-minimizer-data \
     --report $output_dir/$kraken_output_dir_2/$sample$kraken_output_dir_2\.k2report  \
-    --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq > $output_dir/$kraken_output_dir_2/$sample$kraken_output_dir_2\.kraken2 &&
+    --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq > $output_dir/$kraken_output_dir_2/$sample$kraken_output_dir_2\.kraken2 ; done
+
 multiqc   \
     $output_dir \
     $output_dir/$kraken_output_dir \
     $output_dir/$kraken_output_dir_2 \
-    --outdir $output_dir ; done
+    --outdir $output_dir 
