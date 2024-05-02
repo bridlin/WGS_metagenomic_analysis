@@ -14,7 +14,7 @@
 module load bowtie2/2.5.1
 module load  samtools/1.13
 
-source WGS_metagenomic_analysis/config_align
+source WGS_metagenomic_analysis/config_align.txt
 
 echo $read_directory
 echo $inputlist
