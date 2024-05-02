@@ -1,4 +1,4 @@
-id_list=("134")
+id_list=("5658")
 input_list=("1993_S1_")
 read_directory=run21_fastq
 output_dir=kraken2-results_run21_5prime-trimmed
