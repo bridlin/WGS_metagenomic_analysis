@@ -23,4 +23,4 @@ bowtie2 \
     -1 $fastq_directory/$sample\nonhuman_reads.1.fastq -2 $fastq_directory/$sample\nonhuman_reads.2.fastq  \
     --un-conc $fastq_directory/$sample\nonhuman_nonPhix_reads.fastq \
     -S $fastq_directory/$sample\aln-pe_Phix.sam \
-    2> $output_dir/$sample\_phix_bowtie.log &&
+    2> $output_dir/$sample\_phix_bowtie.log ;done
