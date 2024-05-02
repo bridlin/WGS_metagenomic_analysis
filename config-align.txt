@@ -1,4 +1,4 @@
 genome=genome/L_donovani/index_bowtie2/TriTrypDB-54_LdonovaniBPK282A1_Genome
-read_directory=extracted_reads_run21_kraken2_EuPathDB_Leish\
+read_directory=extracted_reads_run21_kraken2_EuPathDB_Leish
 inputlist=("1993_S1_.tid5658")
 
