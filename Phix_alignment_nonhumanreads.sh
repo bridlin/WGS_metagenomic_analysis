@@ -23,4 +23,26 @@ bowtie2 \
     -1 $fastq_directory/$sample\nonhuman_reads.1.fastq -2 $fastq_directory/$sample\nonhuman_reads.2.fastq  \
     --un-conc $fastq_directory/$sample\nonhuman_nonPhix_reads.fastq \
     -S $fastq_directory/$sample\aln-pe_Phix.sam \
-    2> $output_dir/$sample\_phix_bowtie.log ;done
+    2> $output_dir/$sample\_phix_bowtie.log 
+cutadapt  \
+    -g AGATCGGAAGAGCACACGTCTGAACTCCAGTCA   -G AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT \
+    -o $fastq_directory/$sample\nonhuman_nonPhix_reads_5trimmed.1.fastq  \
+    -p $fastq_directory/$sample\nonhuman_nonPhix_reads_5trimmed.2.fastq  \
+    $fastq_directory/$sample\nonhuman_nonPhix_reads.1.fastq  $fastq_directory/$sample\nonhuman_nonPhix_reads.2.fastq \
+    --minimum-length 60 \
+    > $output_dir/$sample\nonhuman_nonPhix_reads_cutadapt_report.txt &&
+kraken2 \
+    --db $kraken2_db \
+    --threads 8 \
+    --minimum-hit-groups 3  \
+    --report-minimizer-data \
+    --report $output_dir/$kraken_output_dir/$sample$kraken_output_dir\_nonPhix.k2report  \
+    --paired $fastq_directory/$sample\nonhuman_nonPhix_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_nonPhix_reads_5trimmed.2.fastq \
+    > $output_dir/$kraken_output_dir/$sample$kraken_output_dir\_nonPhix.kraken2 &&
+kraken2 \
+    --db $kraken2_db_2 \
+    --threads 8 \
+    --minimum-hit-groups 3  \
+    --report-minimizer-data \
+    --report $output_dir/$kraken_output_dir_2/$sample$kraken_output_dir_2\_nonPhix.k2report  \
+    --paired $fastq_directory/$sample\nonhuman_nonPhix_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_nonPhix_reads_5trimmed.2.fastq > $output_dir/$kraken_output_dir_2/$sample$kraken_output_dir_2\_nonPhix.kraken2 ; done
