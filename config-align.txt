@@ -1,8 +1,4 @@
-genome=genome/ToxoDB-62_TgondiiARI_Genome/index_bowtie2/ToxoDB-62_TgondiiARI_Genome
-<<<<<<< HEAD
-read_directory=kraken2-results_run9/extracted_reads_run9_kraken2_EuPathDB\
-inputlist=("3328-A_S2_.tid5811" "3328-B_S3_.tid5810")
-=======
-read_directory=kraken2-results_run9/extracted_reads_run9_kraken2_EuPathDB
-inputlist=("3328-A_S2_.tid5811" "3328-B_S3_.tid5810")
->>>>>>> d54ea75bc52502cbd43beadecd4d62179a1e5c8b
+genome=genome/L_donovani/index_bowtie2/TriTrypDB-54_LdonovaniBPK282A1_Genome
+read_directory=extracted_reads_run21_kraken2_EuPathDB_Leish\
+inputlist=("1993_S1_.tid5658")
+
