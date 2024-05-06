@@ -47,4 +47,5 @@ kraken2 \
     --minimum-hit-groups 3  \
     --report-minimizer-data \
     --report $output_dir/$kraken_output_dir_2/$sample$kraken_output_dir_2\_nonPhix.k2report  \
-    --paired $fastq_directory/$sample\nonhuman_nonPhix_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_nonPhix_reads_5trimmed.2.fastq > $output_dir/$kraken_output_dir_2/$sample$kraken_output_dir_2\_nonPhix.kraken2 ; done
+    --paired $fastq_directory/$sample\nonhuman_nonPhix_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_nonPhix_reads_5trimmed.2.fastq \
+    > $output_dir/$kraken_output_dir_2/$sample$kraken_output_dir_2\_nonPhix.kraken2 ; done
