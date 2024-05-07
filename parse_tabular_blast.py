@@ -133,6 +133,8 @@ def parse_tabular_blast_results(blast_results_file):
             s_e_i = int(sp[9])
             # get subject end index
             taxoid = int(sp[15])
+            # get the taxoid
+            bitscore = float(sp[14])               
             # try to get the extended subject sequence based on the full length 
             # of the query. If not able to grab the full length, grab as much
             # as possible. 
@@ -154,6 +156,7 @@ def parse_tabular_blast_results(blast_results_file):
             'qcovs':qcovs, 
             'aln_len':aln_len,
             'taxoid':taxoid,
+            'bitscore':bitscore,
             #'extracted_seq': extracted_seq
             }
             # could add more items to this BLAST result dictionary
