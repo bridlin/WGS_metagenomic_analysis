@@ -109,16 +109,16 @@ def parse_tabular_blast_results(blast_results_file):
             line = line.rstrip()
             sp = line.split('\t')
             # get query id
-            q = sp[0]
+            query = sp[0]
             #q_len = query_lengths[q]
             # get subject id
-            s = sp[1]
+            subject = sp[1]
             # get scientific name
             sscinames = sp[2]
             # get the subject SeqRecord object
             #sseq = strain_name_seq_rec[s]
             # get % identity and convert to decimal (e.g. 96.7 -> 0.967)
-            pid = float(sp[3])/100.0
+            pid = float(sp[3])#/100.0
             # get coverage %
             qcovs = int(sp[4])
             # get alignment length
@@ -160,11 +160,11 @@ def parse_tabular_blast_results(blast_results_file):
             #'extracted_seq': extracted_seq
             }
             # could add more items to this BLAST result dictionary
-            if q not in results:
-                results[q] = {s:[result_dict]}
+            if query not in results:
+                results[query] = {subject:[result_dict]}
             else:
-                if s not in results[q]:
-                    results[q][s] = [result_dict]
+                if subject not in results[query]:
+                    results[query][subject] = [result_dict]
                 else:
-                    results[q][s].append(result_dict)
+                    results[query][subject].append(result_dict)
     return results
