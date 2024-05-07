@@ -28,10 +28,6 @@ def strip_samplenames(sample_name,kraken_file_path):
     striped_name = sample_name.split(substring[-2])
     return striped_name[0]
 
-
-
-
-
 def read_G_taxoIDs(results_path):
     for root, dirs, files in os.walk(results_path):
         for file in files:
@@ -40,7 +36,7 @@ def read_G_taxoIDs(results_path):
                 print(G_taxo)
                 df_report = pd.read_table(G_taxo,index_col=0)       
     return df_report    
-        
+
 def read_blast_result(results_path):
     for root, dirs, files in os.walk(results_path):
         for file in files:
