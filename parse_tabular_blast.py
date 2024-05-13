@@ -132,7 +132,7 @@ def parse_tabular_blast_results(blast_results_file):
             # get subject end index
             s_e_i = int(sp[9])
             # get subject end index
-            taxoid = int(sp[15])
+            taxoid = sp[15]
             # get the taxoid
             bitscore = float(sp[14])               
             # try to get the extended subject sequence based on the full length 
