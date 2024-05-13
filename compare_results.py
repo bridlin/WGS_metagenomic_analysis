@@ -47,19 +47,21 @@ def read_blast_result(results_path):
                 df_blast_result = pd.read_table(blast_result)
     return df_blast_result
 
+
 def blast_result_as_df(taxoid,sample_name,result_path):
     blastfile = result_path + '/blast_result_6/' + sample_name + '.tid' + str(taxoid) + '.1.fa_blast'       
     dict_blast = parse_tabular_blast_results(blastfile)
     if not dict_blast:
         df_blast = pd.DataFrame()
         
-    else :
+    else:
         df_blast = pd.DataFrame.from_dict(dict_blast, orient='index').stack().apply(pd.Series).stack().apply(pd.Series)
         df_blast["taxoID_kraken2"] = taxoid
         df_blast["sample_kraken2"] = sample_name
         df_blast.reset_index(inplace=True)  
     return(df_blast)
-   
+
+
 #### Main ####
 def main():
     # if len(sys.argv) == 1:
@@ -76,7 +78,6 @@ def main():
     df_G_taxo = read_G_taxoIDs(results_path)
     print(df_G_taxo)
     
- 
     dfresult = []
     for sample in get_sample_names(results_path):
         print(sample)
@@ -86,21 +87,15 @@ def main():
             print(taxoid)
             blast_result_df = blast_result_as_df(taxoid,sample,results_path)
             if not blast_result_df.empty:
-                df_temp=pd.merge(df_G_taxo, blast_result_df, how='inner',  left_on=['taxoID','sample'], right_on=['taxoID_kraken2','sample_kraken2'],left_index=False, right_index=False, sort=True,suffixes=('_x', '_y'), indicator=False)
-            dfresult_taxoid.append(df_temp)
-            print(dfresult_taxoid)
-        final_taxo = pd.concat(dfresult_taxoid, ignore_index=True)         
+                df_temp = pd.merge(df_G_taxo, blast_result_df, how='inner', left_on=['taxoID','sample'], right_on=['taxoID_kraken2','sample_kraken2'],left_index=False, right_index=False, sort=True,suffixes=('_x', '_y'), indicator=False)
+                dfresult_taxoid.append(df_temp)
+                print(dfresult_taxoid)
+        final_taxo = pd.concat(dfresult_taxoid, ignore_index=True)
+        dfresult.append(final_taxo)
         #print(final_taxo)
-    dfresult = pd.concat(dfresult_taxoid, ignore_index=True)    
-    print(dfresult) 
+    dfresult = pd.concat(dfresult, ignore_index=True)
+    print(dfresult)
 
-
-
-
-
-   
-
-    
 
 if __name__ == "__main__":
     main()
