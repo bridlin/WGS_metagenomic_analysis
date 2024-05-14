@@ -40,12 +40,12 @@ def read_blast_result(results_path):
 
 def blast_result_as_df(taxoid,sample_name,result_path):
     blastfile = result_path + 'blast_result/' + sample_name + '.tid' + str(taxoid) + '.1.fa_blast'       
-    dict_blast = parse_tabular_blast_results(blastfile)
-    if not dict_blast:
+    list_blast = parse_tabular_blast_results(blastfile)
+    if not list_blast:
         df_blast = pd.DataFrame()
         
     else:
-        df_blast = pd.DataFrame.from_dict(dict_blast, orient='index').stack().apply(pd.Series).stack().apply(pd.Series)
+        df_blast = pd.DataFrame.from_list(list_blast, orient='index').stack().apply(pd.Series).stack().apply(pd.Series)
         df_blast["taxoID_kraken2"] = taxoid
         df_blast["sample_kraken2"] = sample_name
         df_blast.reset_index(inplace=True)  
@@ -86,23 +86,25 @@ def main():
     
 
     # getting the blast results as df from blastn outputformat 6 (modified script from https://gist.github.com/peterk87/5513274) and merge tham with the kraken2 results into a single df
-    dfresult_dict = []
+    # script blocks if there are no blast results as the list of df is empty and the concat function does not work with empty lists
+    dfresult_list = []
     for sample in get_sample_names(results_path):
         print(sample)
         taxoids = df_G_taxo.loc[df_G_taxo['sample'] == sample, 'taxoID']
-        dfresult_taxoid_dict = []
+        dfresult_taxoid_list = []
         for taxoid in taxoids:
             print(taxoid)
             blast_result_df = blast_result_as_df(taxoid,sample,results_path)
             if not blast_result_df.empty:
                 df_temp = pd.merge(df_G_taxo, blast_result_df, how='inner', left_on=['taxoID','sample'], right_on=['taxoID_kraken2','sample_kraken2'],left_index=False, right_index=False, sort=True,suffixes=('_x', '_y'), indicator=False)
-                dfresult_taxoid_dict.append(df_temp)
-                #print(dfresult_taxoid_dict)
-        print(dfresult_taxoid_dict)       
-        dfresult_taxoid = pd.concat(dfresult_taxoid_dict, ignore_index=True)
-        dfresult_dict.append(dfresult_taxoid)
+                dfresult_taxoid_list.append(df_temp)
+                #print(dfresult_taxoid_list)
+        print(dfresult_taxoid_list) 
+        #if not dfresult_taxoid_list.empty:      
+        dfresult_taxoid = pd.concat(dfresult_taxoid_list, ignore_index=True)
+        dfresult_list.append(dfresult_taxoid)
         #print(dfresult_taxoid)
-    dfresult = pd.concat(dfresult_dict, ignore_index=True)
+    dfresult = pd.concat(dfresult_list, ignore_index=True)
     
     # formatting the dfresult
     dfresult = format_dfresult(dfresult)
