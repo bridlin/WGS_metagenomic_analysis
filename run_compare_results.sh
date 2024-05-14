@@ -12,6 +12,6 @@
 
 module load python/3.9
 
-python3 WGS_metagenomic_analysis/compare_results.py  '../../run15_WGS_test/kraken2-results_run15_5prime-trimmed/EuPathDB48/'
+python3 WGS_metagenomic_analysis/compare_results.py  'kraken2-results_run23_5prime-trimmed/EuPathDB48/'
 
-python3 WGS_metagenomic_analysis/compare_results.py  '../../run15_WGS_test/kraken2-results_run15_5prime-trimmed/PlusPF/'
+#python3 WGS_metagenomic_analysis/compare_results.py  'kraken2-results_run23_5prime-trimmed/PlusPF/'
