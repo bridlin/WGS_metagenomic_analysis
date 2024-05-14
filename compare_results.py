@@ -96,7 +96,7 @@ def main():
                 df_temp = pd.merge(df_G_taxo, blast_result_df, how='inner', left_on=['taxoID','sample'], right_on=['taxoID_kraken2','sample_kraken2'],left_index=False, right_index=False, sort=True,suffixes=('_x', '_y'), indicator=False)
                 dfresult_taxoid_dict.append(df_temp)
                 #print(dfresult_taxoid_dict)
-        print(dfresult_taxoid_dict)       
+        #print(dfresult_taxoid_dict)       
         dfresult_taxoid = pd.concat(dfresult_taxoid_dict, ignore_index=True)
         dfresult_dict.append(dfresult_taxoid)
         #print(dfresult_taxoid)
