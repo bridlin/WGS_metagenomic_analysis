@@ -78,7 +78,7 @@ def main():
     results_path = sys.argv[1]
     
 
-    #results_path = '../../run15_WGS_test/kraken2-results_run15_5prime-trimmed/EuPathDB48/'
+    # results_path = '../../run15_WGS_test/kraken2-results_run15_5prime-trimmed/EuPathDB48/'
 
     # getting the Kraken results from the Genus taxon file as df
     df_G_taxo = read_G_taxoIDs(results_path)
@@ -88,14 +88,16 @@ def main():
     # getting the blast results as df from blastn outputformat 6 (modified script from https://gist.github.com/peterk87/5513274) and merge tham with the kraken2 results into a single df
     dfresult_dict = []
     for sample in get_sample_names(results_path):
+        print(sample)
         taxoids = df_G_taxo.loc[df_G_taxo['sample'] == sample, 'taxoID']
         dfresult_taxoid_dict = []
         for taxoid in taxoids:
+            print(taxoid)
             blast_result_df = blast_result_as_df(taxoid,sample,results_path)
             if not blast_result_df.empty:
                 df_temp = pd.merge(df_G_taxo, blast_result_df, how='inner', left_on=['taxoID','sample'], right_on=['taxoID_kraken2','sample_kraken2'],left_index=False, right_index=False, sort=True,suffixes=('_x', '_y'), indicator=False)
                 dfresult_taxoid_dict.append(df_temp)
-                print(dfresult_taxoid_dict)
+                #print(dfresult_taxoid_dict)
         print(dfresult_taxoid_dict)       
         dfresult_taxoid = pd.concat(dfresult_taxoid_dict, ignore_index=True)
         dfresult_dict.append(dfresult_taxoid)
@@ -117,7 +119,7 @@ def main():
 
     # selecting the rows where the name comparison is True and the bitscore is the highest
     dfresult_true_sorted = dfresult_true[dfresult_true.groupby(['sample','taxoID','name','read-count','read'])['bitscore'].transform('max') == dfresult_true['bitscore']]
-    print(dfresult_true_sorted)
+    #print(dfresult_true_sorted)
     dfresult_true_sorted.to_csv(results_path+'kraken_blast_comparison_true_highetscore.tsv', sep='\t', index=False, header=True)
 
 
