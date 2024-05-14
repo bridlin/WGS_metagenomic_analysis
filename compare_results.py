@@ -6,15 +6,9 @@ from parse_tabular_blast import parse_tabular_blast_results #https://gist.github
 #### FUNCTIONS ####
 
 def get_sample_names(results_path):
-    #print(results_path)
     sample_names = []
     for root, dirs, files in os.walk(results_path):
-        # print(root)
-        # print(dirs)
-        # print(files)
         for file in files:
-            #print(files)
-            #print(names)
             if os.path.splitext(file)[1] == ".k2report":
                  sample_names.append(os.path.splitext(file)[0])
     return sample_names    
@@ -30,7 +24,6 @@ def read_G_taxoIDs(results_path):
         for file in files:
             if file == "G_TaxoIDs_per_sample.tsv" :
                 G_taxo = results_path + '/' + file
-                #print(G_taxo)
                 df_report = pd.read_table(G_taxo,index_col=0)       
     return df_report    
 
@@ -86,20 +79,15 @@ def main():
 
     #results_path = '../../run15_WGS_test/kraken2-results_run15_5prime-trimmed/EuPathDB48/'
 
-    print(get_sample_names(results_path))
-    #print(strip_samplenames(get_sample_names(results_path),results_path))
-
-    #column_names_G_taxo = ['sample','taxoID','name','reads']
+    
     df_G_taxo = read_G_taxoIDs(results_path)
-    print(df_G_taxo)
+    #print(df_G_taxo)
     
     dfresult_dict = []
     for sample in get_sample_names(results_path):
-        #print(sample)
         taxoids = df_G_taxo.loc[df_G_taxo['sample'] == sample, 'taxoID']
         dfresult_taxoid_dict = []
         for taxoid in taxoids:
-            #print(taxoid)
             blast_result_df = blast_result_as_df(taxoid,sample,results_path)
             if not blast_result_df.empty:
                 df_temp = pd.merge(df_G_taxo, blast_result_df, how='inner', left_on=['taxoID','sample'], right_on=['taxoID_kraken2','sample_kraken2'],left_index=False, right_index=False, sort=True,suffixes=('_x', '_y'), indicator=False)
@@ -119,7 +107,7 @@ def main():
     dfresult.to_csv(results_path+'kraken_blast_comparison.tsv', sep='\t', index=False, header=True)
 
     dfresult_true = dfresult[dfresult.name_comparison == True].copy()
-    print(dfresult_true)
+    #print(dfresult_true)
     dfresult_true.to_csv(results_path+'kraken_blast_comparison_true.tsv', sep='\t', index=False, header=True)
 
     dfresult_true_sorted = dfresult_true[dfresult_true.groupby(['sample','taxoID','name','read-count','read'])['bitscore'].transform('max') == dfresult_true['bitscore']]
