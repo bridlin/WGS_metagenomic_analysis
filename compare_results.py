@@ -1,9 +1,6 @@
 import pandas as pd
 import os
-# import sys
-# from dataclasses import dataclass
-#from auto_read-Extraction import get_sample_names
-#from auto_read-Extraction import strip_samplenames
+import sys
 from parse_tabular_blast import parse_tabular_blast_results #https://gist.github.com/peterk87/5513274
 
 #### FUNCTIONS ####
@@ -82,12 +79,12 @@ def compare_names(dfresult):
 
 #### Main ####
 def main():
-    # if len(sys.argv) == 1:
-    #     print('read file and Kraken output file paths are missing as command line arguments!!!')
-    # read_file_path = sys.argv[1]
-    # kraken_file_path = sys.argv[2] 
+    if len(sys.argv) == 0:
+        print('read file and Kraken output file paths are missing as command line arguments!!!')
+    results_path = sys.argv[1]
+    
 
-    results_path = '../../run15_WGS_test/kraken2-results_run15_5prime-trimmed/EuPathDB48/'
+    #results_path = '../../run15_WGS_test/kraken2-results_run15_5prime-trimmed/EuPathDB48/'
 
     print(get_sample_names(results_path))
     #print(strip_samplenames(get_sample_names(results_path),results_path))
