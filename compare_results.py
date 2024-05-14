@@ -4,9 +4,9 @@ import os
 # from dataclasses import dataclass
 #from auto_read-Extraction import get_sample_names
 #from auto_read-Extraction import strip_samplenames
-from parse_tabular_blast import parse_tabular_blast_results
+from parse_tabular_blast import parse_tabular_blast_results #https://gist.github.com/peterk87/5513274
 
-#### Methodes ####
+#### FUNCTIONS ####
 
 def get_sample_names(results_path):
     #print(results_path)
@@ -62,6 +62,24 @@ def blast_result_as_df(taxoid,sample_name,result_path):
     return(df_blast)
 
 
+def format_dfresult(dfresult):
+    # rename columns
+    dfresult.rename(columns={"reads": "read-count","level_0": "read", "level_1": "subject", "level_2": "blast_result_num"}, inplace=True)
+    # delete columns
+    dfresult.drop(columns=['blast_result_num','taxoID_kraken2','sample_kraken2'],axis=1, inplace=True)
+    # split the sscientific name column to be able to compare it with the kraken@ name output
+    dfresult[['name_prefix_blast', 'name_rest']] = dfresult['sscinames'].str.split(' ', expand=True, n=1)
+    #stripping whitespace from the name column   
+    dfresult['name'] = dfresult['name'].apply(lambda x: x.strip())
+    # comparing the name and the name_prefix_blast columns generating a new column with the comparison result
+    return(dfresult)
+
+
+def compare_names(dfresult):
+    #dfresult['name_comparison']=dfresult['name_prefix_blast'].equals(dfresult['name'])
+    dfresult['name_comparison']=(dfresult['name_prefix_blast'] == dfresult['name'])
+    return(dfresult)    
+
 #### Main ####
 def main():
     # if len(sys.argv) == 1:
@@ -78,23 +96,38 @@ def main():
     df_G_taxo = read_G_taxoIDs(results_path)
     print(df_G_taxo)
     
-    dfresult = []
+    dfresult_dict = []
     for sample in get_sample_names(results_path):
-        print(sample)
+        #print(sample)
         taxoids = df_G_taxo.loc[df_G_taxo['sample'] == sample, 'taxoID']
-        dfresult_taxoid = []
+        dfresult_taxoid_dict = []
         for taxoid in taxoids:
-            print(taxoid)
+            #print(taxoid)
             blast_result_df = blast_result_as_df(taxoid,sample,results_path)
             if not blast_result_df.empty:
                 df_temp = pd.merge(df_G_taxo, blast_result_df, how='inner', left_on=['taxoID','sample'], right_on=['taxoID_kraken2','sample_kraken2'],left_index=False, right_index=False, sort=True,suffixes=('_x', '_y'), indicator=False)
-                dfresult_taxoid.append(df_temp)
-                print(dfresult_taxoid)
-        final_taxo = pd.concat(dfresult_taxoid, ignore_index=True)
-        dfresult.append(final_taxo)
-        #print(final_taxo)
-    dfresult = pd.concat(dfresult, ignore_index=True)
-    print(dfresult)
+                dfresult_taxoid_dict.append(df_temp)
+                #print(dfresult_taxoid_dict)
+        dfresult_taxoid = pd.concat(dfresult_taxoid_dict, ignore_index=True)
+        dfresult_dict.append(dfresult_taxoid)
+        #print(dfresult_taxoid)
+    dfresult = pd.concat(dfresult_dict, ignore_index=True)
+    
+    # formatting the dfresult
+    dfresult = format_dfresult(dfresult)
+    
+    # comparing the names from the blast and kraken2 outputs
+    dfresult = compare_names(dfresult)
+    #print(dfresult)
+    dfresult.to_csv(results_path+'kraken_blast_comparison.tsv', sep='\t', index=False, header=True)
+
+    dfresult_true = dfresult[dfresult.name_comparison == True].copy()
+    print(dfresult_true)
+    dfresult_true.to_csv(results_path+'kraken_blast_comparison_true.tsv', sep='\t', index=False, header=True)
+
+    dfresult_true_sorted = dfresult_true[dfresult_true.groupby(['sample','taxoID','name','read-count','read'])['bitscore'].transform('max') == dfresult_true['bitscore']]
+    print(dfresult_true_sorted)
+    dfresult_true_sorted.to_csv(results_path+'kraken_blast_comparison_true_highetscore.tsv', sep='\t', index=False, header=True)
 
 
 if __name__ == "__main__":
