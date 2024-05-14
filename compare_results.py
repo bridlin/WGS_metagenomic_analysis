@@ -82,7 +82,7 @@ def main():
 
     # getting the Kraken results from the Genus taxon file as df
     df_G_taxo = read_G_taxoIDs(results_path)
-    #print(df_G_taxo)
+    print(df_G_taxo)
     
 
     # getting the blast results as df from blastn outputformat 6 (modified script from https://gist.github.com/peterk87/5513274) and merge tham with the kraken2 results into a single df
