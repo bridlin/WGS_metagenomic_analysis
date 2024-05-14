@@ -39,7 +39,7 @@ def read_blast_result(results_path):
 
 
 def blast_result_as_df(taxoid,sample_name,result_path):
-    blastfile = result_path + '/blast_result_6/' + sample_name + '.tid' + str(taxoid) + '.1.fa_blast'       
+    blastfile = result_path + 'blast_result/' + sample_name + '.tid' + str(taxoid) + '.1.fa_blast'       
     dict_blast = parse_tabular_blast_results(blastfile)
     if not dict_blast:
         df_blast = pd.DataFrame()
