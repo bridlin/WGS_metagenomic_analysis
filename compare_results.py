@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 import sys
-from parse_tabular_blast import parse_tabular_blast_results #https://gist.github.com/peterk87/5513274
+from parse_tabular_blast import parse_tabular_blast_results #https://gist.github.com/peterk87/5513274 I made some changes to include more fields from the blast results to be parsed
 
 #### FUNCTIONS ####
 
@@ -70,6 +70,7 @@ def compare_names(dfresult):
     dfresult['name_comparison']=(dfresult['name_prefix_blast'] == dfresult['name'])
     return(dfresult)    
 
+
 #### Main ####
 def main():
     if len(sys.argv) == 0:
@@ -79,10 +80,12 @@ def main():
 
     #results_path = '../../run15_WGS_test/kraken2-results_run15_5prime-trimmed/EuPathDB48/'
 
-    
+    # getting the Kraken results from the Genus taxon file as df
     df_G_taxo = read_G_taxoIDs(results_path)
     #print(df_G_taxo)
     
+
+    # getting the blast results as df from blastn outputformat 6 (modified script from https://gist.github.com/peterk87/5513274) and merge tham with the kraken2 results into a single df
     dfresult_dict = []
     for sample in get_sample_names(results_path):
         taxoids = df_G_taxo.loc[df_G_taxo['sample'] == sample, 'taxoID']
@@ -106,10 +109,12 @@ def main():
     #print(dfresult)
     dfresult.to_csv(results_path+'kraken_blast_comparison.tsv', sep='\t', index=False, header=True)
 
+    # selecting the rows where the name comparison is True
     dfresult_true = dfresult[dfresult.name_comparison == True].copy()
     #print(dfresult_true)
     dfresult_true.to_csv(results_path+'kraken_blast_comparison_true.tsv', sep='\t', index=False, header=True)
 
+    # selecting the rows where the name comparison is True and the bitscore is the highest
     dfresult_true_sorted = dfresult_true[dfresult_true.groupby(['sample','taxoID','name','read-count','read'])['bitscore'].transform('max') == dfresult_true['bitscore']]
     print(dfresult_true_sorted)
     dfresult_true_sorted.to_csv(results_path+'kraken_blast_comparison_true_highetscore.tsv', sep='\t', index=False, header=True)
