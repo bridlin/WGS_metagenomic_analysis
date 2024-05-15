@@ -48,7 +48,7 @@ def blast_result_as_df(taxoid,sample_name,result_path):
         df_blast = pd.DataFrame.from_dict(dict_blast, orient='index').stack().apply(pd.Series).stack().apply(pd.Series)
         df_blast["taxoID_kraken2"] = taxoid
         df_blast["sample_kraken2"] = sample_name
-        df_blast.reset_index(inplace=True)  
+        df_blast.reset_index(inplace=True) # to get the index as columns 
     return(df_blast)
 
 
@@ -78,7 +78,7 @@ def main():
     results_path = sys.argv[1]
     
 
-    # results_path = '../../run15_WGS_test/kraken2-results_run15_5prime-trimmed/EuPathDB48/'
+    #results_path = '../../run15_WGS_test/kraken2-results_run15_5prime-trimmed/EuPathDB48/'
 
     # getting the Kraken results from the Genus taxon file as df
     df_G_taxo = read_G_taxoIDs(results_path)
