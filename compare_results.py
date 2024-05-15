@@ -61,11 +61,13 @@ def format_dfresult(dfresult):
     dfresult[['name_prefix_blast', 'name_rest']] = dfresult['sscinames'].str.split(' ', expand=True, n=1)
     #stripping whitespace from the name column   
     dfresult['name'] = dfresult['name'].apply(lambda x: x.strip())
-    # comparing the name and the name_prefix_blast columns generating a new column with the comparison result
+    # dropping all duplicates that can arise as we do not parse all fields from the blast results
+    dfresult.drop_duplicates(inplace=True)
     return(dfresult)
 
 
 def compare_names(dfresult):
+    # comparing the name and the name_prefix_blast columns generating a new column with the comparison result
     #dfresult['name_comparison']=dfresult['name_prefix_blast'].equals(dfresult['name'])
     dfresult['name_comparison']=(dfresult['name_prefix_blast'] == dfresult['name'])
     return(dfresult)    
@@ -112,9 +114,6 @@ def main():
     # comparing the names from the blast and kraken2 outputs and adding a column with the comparison result
     # this is not ideal as we can have true results that are not the best blast hit! I have to find a way to isolate first all higest blast hits and than the ture hits and see if hihgest blast hit is also highest true hit!
     dfresult = compare_names(dfresult)
-    # dropping all duplicates that can arise as we do not parse all fields from the blast results
-    dfresult.drop_duplicates(inplace=True)
-    print(dfresult)
     dfresult.to_csv(results_path+'kraken_blast_comparison.tsv', sep='\t', index=False, header=True)
 
     # selecting the rows where the name comparison is True
