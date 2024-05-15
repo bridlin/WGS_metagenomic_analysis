@@ -73,12 +73,12 @@ def compare_names(dfresult):
 
 #### Main ####
 def main():
-    # if len(sys.argv) == 0:
-    #     print('read file and Kraken output file paths are missing as command line arguments!!!')
-    # results_path = sys.argv[1]
+    if len(sys.argv) == 0:
+        print('read file and Kraken output file paths are missing as command line arguments!!!')
+    results_path = sys.argv[1]
     
 
-    results_path = '../../run15_WGS_test/kraken2-results_run15_5prime-trimmed/EuPathDB48/'
+    #results_path = '../../run15_WGS_test/kraken2-results_run15_5prime-trimmed/EuPathDB48/'
 
     # getting the Kraken results from the Genus taxon file as df
     df_G_taxo = read_G_taxoIDs(results_path)
