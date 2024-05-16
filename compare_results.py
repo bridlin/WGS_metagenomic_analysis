@@ -2,6 +2,9 @@ import pandas as pd
 import os
 import sys
 from parse_tabular_blast import parse_tabular_blast_results #https://gist.github.com/peterk87/5513274 I made some changes to include more fields from the blast results to be parsed
+from ete3 import NCBITaxa
+ncbi = NCBITaxa()
+#ncbi.update_taxonomy_database()
 
 #### FUNCTIONS ####
 
@@ -68,9 +71,17 @@ def format_dfresult(dfresult):
 
 def compare_names(dfresult):
     # comparing the name and the name_prefix_blast columns generating a new column with the comparison result
-    #dfresult['name_comparison']=dfresult['name_prefix_blast'].equals(dfresult['name'])
     dfresult['name_comparison']=(dfresult['name_prefix_blast'] == dfresult['name'])
     return(dfresult)    
+
+#def get_genus_taxID(dfresult):
+    # get the genus taxID from the taxoID column
+    # dfresult['genus_taxID'] = dfresult['taxoid'].apply(lambda x: ncbi.get_lineage(x)[6])
+
+    #return(dfresult)
+
+
+
 
 def get_highestbitscore_results(dfresult):
     # get the alignment with highest bitscore (if multiple results the first) for each read independed if name comparison is true or not
@@ -128,7 +139,26 @@ def main():
     
     # formatting the dfresult
     dfresult = format_dfresult(dfresult)
-    
+    print(dfresult)
+    #dfresult = get_genus_taxID(dfresult)
+
+    #dfresult['genus_taxID'] = dfresult['taxoid'].apply(lambda x: ncbi.get_lineage(x)[2])
+    #print(dfresult)
+    for taxid in dfresult['taxoid']:
+        print(taxid)
+        print(ncbi.get_lineage(taxid))
+        
+        lineage = ncbi.get_lineage(taxid) 
+        assert lineage is not None  
+        if len(lineage) >= 7:
+            print(lineage[7])
+            dfresult['genus_taxID'] = lineage[7]  # this is changing the whole column and not only the field!!! I have to find a way to change only the field of the current row
+        else:
+            dfresult['genus_taxID'] = 'NaN'
+    print(dfresult)
+    #print(ncbi.get_lineage(5658))
+    #print(ncbi.get_lineage(44271))
+
     # comparing the names from the blast and kraken2 outputs and adding a column with the comparison result
     # this is not ideal as we can have true results that are not the best blast hit! I have to find a way to isolate first all higest blast hits and than the ture hits and see if hihgest blast hit is also highest true hit!
     dfresult = compare_names(dfresult)
@@ -146,7 +176,7 @@ def main():
     dfresult_true_bitscoremax_concat = add_highest_bitscore_if_false(dfresult,dfresult_true_bitscoremax)   
     print(dfresult_true_bitscoremax_concat)
     dfresult_true_bitscoremax_concat.to_csv(results_path+'kraken_blast_comparison_true_bitscoremax_plusfalsemax.tsv', sep='\t', index=False, header=True)
-
+ 
 
 if __name__ == "__main__":
     main()
