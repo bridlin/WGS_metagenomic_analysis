@@ -72,15 +72,33 @@ def compare_names(dfresult):
     dfresult['name_comparison']=(dfresult['name_prefix_blast'] == dfresult['name'])
     return(dfresult)    
 
+def get_highestbitscore_results(dfresult):
+    # get the alignment with highest bitscore (if multiple results the first) for each read independed if name comparison is true or not
+    dfresult_bitscoremax = dfresult[dfresult.groupby(['sample','taxoID','name','read-count','read'])['bitscore'].transform('max') == dfresult['bitscore']]
+    # select the first max bitscore per read when more than one results have the same max bitscore
+    dfresult_bitscoremax_opr = dfresult_bitscoremax.groupby(['sample','taxoID','name','read-count','read','bitscore']).head(1)
+    return(dfresult_bitscoremax_opr)
+
+def add_highest_bitscore_if_false(dfresult,dfresult_true_bitscoremax):
+    dfresult_bitscoremax_opr = get_highestbitscore_results(dfresult)
+    # selecting the rows in dfresult_bitscoremax_opr that are also in dfresult_true_bitscoremax
+    dfresult_bitscoremax_opr_intrue = dfresult_bitscoremax_opr[dfresult_bitscoremax_opr['read'].isin(dfresult_true_bitscoremax['read'])]
+    #print(dfresult_bitscoremax_opr_intrue)
+    # joining the two dfs and dropping all duplicate rows, so that in the end the final df containes all name comparison=true with the highest bitscore rows and all false  rows with the higher bitscore for the same reads if they exist 
+    dfresult_true_bitscoremax_concat = pd.concat([dfresult_bitscoremax_opr_intrue, dfresult_true_bitscoremax],ignore_index=True)
+    dfresult_true_bitscoremax_concat.drop_duplicates(inplace=True)
+    return(dfresult_true_bitscoremax_concat)
+
+
 
 #### Main ####
 def main():
-    if len(sys.argv) == 0:
-        print('read file and Kraken output file paths are missing as command line arguments!!!')
-    results_path = sys.argv[1]
+    # if len(sys.argv) == 0:
+    #     print('read file and Kraken output file paths are missing as command line arguments!!!')
+    # results_path = sys.argv[1]
     
 
-    #results_path = '../../run15_WGS_test/kraken2-results_run15_5prime-trimmed/EuPathDB48/'
+    results_path = '../../test-run23/kraken2-results_run23_5prime-trimmed/PlusPF/'
 
     # getting the Kraken results from the Genus taxon file as df
     df_G_taxo = read_G_taxoIDs(results_path)
@@ -124,24 +142,10 @@ def main():
     # selecting the rows where the name comparison is True and the bitscore is the highest
     dfresult_true_bitscoremax = dfresult_true[dfresult_true.groupby(['sample','taxoID','name','read-count','read'])['bitscore'].transform('max') == dfresult_true['bitscore']]
     #print(dfresult_true_bitscoremax)
-    dfresult_true_bitscoremax.to_csv(results_path+'kraken_blast_comparison_true_highetscore.tsv', sep='\t', index=False, header=True)
-    
-    
-    # selecting the rows where the bitscore is the highest for each read independed if name comparison is true or not
-    dfresult_bitscoremax = dfresult[dfresult.groupby(['sample','taxoID','name','read-count','read'])['bitscore'].transform('max') == dfresult['bitscore']]
-    # select the first max bitscore per read when more than one results have the same max bitscore
-    dfresult_bitscoremax_opr = dfresult_bitscoremax.groupby(['sample','taxoID','name','read-count','read','bitscore']).head(1)
-    #print(dfresult_bitscoremax_opr) 
-    #dfresult_bitscoremax_opr.to_csv(results_path+'kraken_blast_comparison_bitscoremax_opr.tsv', sep='\t', index=False, header=True) 
-    
-    # selecting the rows in dfresult_bitscoremax_opr that are also in dfresult_true_bitscoremax
-    dfresult_bitscoremax_opr_intrue = dfresult_bitscoremax_opr[dfresult_bitscoremax_opr['read'].isin(dfresult_true_bitscoremax['read'])]
-    #print(dfresult_bitscoremax_opr_intrue)
-    # joining the two dfs and dropping all duplicate rows, so that in the end the final df containes all name comparison=true with the highest bitscore rows and all false  rows with the higher bitscore for the same reads if they exist 
-    dfresult_true_bitscoremax_concat = pd.concat([dfresult_bitscoremax_opr_intrue, dfresult_true_bitscoremax],ignore_index=True)
-    dfresult_true_bitscoremax_concat.drop_duplicates(inplace=True)
-    #print(dfresult_true_bitscoremax_concat)
-    dfresult_true_bitscoremax_concat.to_csv(results_path+'kraken_blast_comparison_true_bitscoremax_concat.tsv', sep='\t', index=False, header=True)
+    #dfresult_true_bitscoremax.to_csv(results_path+'kraken_blast_comparison_true_highetscore.tsv', sep='\t', index=False, header=True)  
+    dfresult_true_bitscoremax_concat = add_highest_bitscore_if_false(dfresult,dfresult_true_bitscoremax)   
+    print(dfresult_true_bitscoremax_concat)
+    dfresult_true_bitscoremax_concat.to_csv(results_path+'kraken_blast_comparison_true_bitscoremax_plusfalsemax.tsv', sep='\t', index=False, header=True)
 
 
 if __name__ == "__main__":
