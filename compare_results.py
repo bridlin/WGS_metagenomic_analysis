@@ -182,8 +182,12 @@ def main():
     #dfresult_true_bitscoremax.to_csv(results_path+'kraken_blast_comparison_true_highetscore.tsv', sep='\t', index=False, header=True)  
     dfresult_true_bitscoremax_concat = add_highest_bitscore_if_false(dfresult,dfresult_true_bitscoremax)   
     print(dfresult_true_bitscoremax_concat)
+    
+    dfresult_true_bitscoremax_concat = dfresult_true_bitscoremax_concat.sort_values(by=['sample', 'taxoID','read'])
+    
     dfresult_true_bitscoremax_concat.to_csv(results_path+'kraken_blast_comparison_true_bitscoremax_plusfalsemax.tsv', sep='\t', index=False, header=True)
  
+    
 
 if __name__ == "__main__":
     main()
