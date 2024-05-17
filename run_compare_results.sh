@@ -11,7 +11,8 @@
 #SBATCH --mem 64GB
 
 module load python/3.9
+module load ete3/3.1.2
 
-python3 WGS_metagenomic_analysis/compare_results.py  'kraken2-results_run23_5prime-trimmed/EuPathDB48/'
+python3 WGS_metagenomic_analysis/compare_results.py  'kraken2-results_run24_5prime-trimmed/EuPathDB48/'
 
-python3 WGS_metagenomic_analysis/compare_results.py  'kraken2-results_run23_5prime-trimmed/PlusPF/'
+python3 WGS_metagenomic_analysis/compare_results.py  'kraken2-results_run24_5prime-trimmed/PlusPF/'
