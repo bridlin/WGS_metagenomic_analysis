@@ -144,18 +144,18 @@ def main():
 
     #dfresult['genus_taxID'] = dfresult['taxoid'].apply(lambda x: ncbi.get_lineage(x)[2])
     #print(dfresult)
-    for taxid in dfresult['taxoid']:
-        print(taxid)
-        print(ncbi.get_lineage(taxid))
+    # for taxid in dfresult['taxoid']:
+    #     print(taxid)
+    #     print(ncbi.get_lineage(taxid))
         
-        lineage = ncbi.get_lineage(taxid) 
-        assert lineage is not None  
-        if len(lineage) >= 7:
-            print(lineage[7])
-            dfresult['genus_taxID'] = lineage[7]  # this is changing the whole column and not only the field!!! I have to find a way to change only the field of the current row
-        else:
-            dfresult['genus_taxID'] = 'NaN'
-    print(dfresult)
+    #     lineage = ncbi.get_lineage(taxid) 
+    #     assert lineage is not None  
+    #     if len(lineage) >= 7:
+    #         print(lineage[7])
+    #         dfresult['genus_taxID'] = lineage[7]  # this is changing the whole column and not only the field!!! I have to find a way to change only the field of the current row
+    #     else:
+    #         dfresult['genus_taxID'] = 'NaN'
+    # print(dfresult)
     #print(ncbi.get_lineage(5658))
     #print(ncbi.get_lineage(44271))
 
