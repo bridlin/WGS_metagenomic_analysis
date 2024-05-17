@@ -66,21 +66,36 @@ def format_dfresult(dfresult):
     dfresult['name'] = dfresult['name'].apply(lambda x: x.strip())
     # dropping all duplicates that can arise as we do not parse all fields from the blast results
     dfresult.drop_duplicates(inplace=True)
+    dfresult = dfresult.reset_index(drop=True)
     return(dfresult)
 
+def get_genus_taxID(dfresult):
+    # get the genus taxID from the taxoID column
+    for i,taxid in enumerate(dfresult['taxoid']): 
+        #print(dfresult.loc[i,'taxoID'])
+        kraken_genus_lineage = ncbi.get_lineage(dfresult.loc[i,'taxoID']) 
+        #print(kraken_genus_lineage)
+        #print(taxid)
+        blast_lineage = ncbi.get_lineage(taxid)
+        #print(blast_lineage)
+        if blast_lineage is not None and kraken_genus_lineage is not None:  
+            genus_position = len(kraken_genus_lineage)
+            if (len(blast_lineage) >= genus_position) :
+                #print(lineage)
+                dfresult.at[i,'genus_taxid'] = blast_lineage[genus_position -1] 
+            else:
+                dfresult.at[i,'genus_taxid'] = 'NaN'
+    return(dfresult)
 
 def compare_names(dfresult):
     # comparing the name and the name_prefix_blast columns generating a new column with the comparison result
     dfresult['name_comparison']=(dfresult['name_prefix_blast'] == dfresult['name'])
     return(dfresult)    
 
-#def get_genus_taxID(dfresult):
-    # get the genus taxID from the taxoID column
-    # dfresult['genus_taxID'] = dfresult['taxoid'].apply(lambda x: ncbi.get_lineage(x)[6])
-
-    #return(dfresult)
-
-
+def compare_genus_taxid(dfresult):
+    # comparing the genus taxoid from kraken2 result with the genus taxid from the blast result and generating a new column with the comparison result
+    dfresult['taxoid_comparison']=(dfresult['taxoID'] == dfresult['genus_taxid'])
+    return(dfresult) 
 
 
 def get_highestbitscore_results(dfresult):
@@ -139,33 +154,25 @@ def main():
     
     # formatting the dfresult
     dfresult = format_dfresult(dfresult)
-    print(dfresult)
-    #dfresult = get_genus_taxID(dfresult)
-
-    #dfresult['genus_taxID'] = dfresult['taxoid'].apply(lambda x: ncbi.get_lineage(x)[2])
-    #print(dfresult)
-    # for taxid in dfresult['taxoid']:
-    #     print(taxid)
-    #     print(ncbi.get_lineage(taxid))
-        
-    #     lineage = ncbi.get_lineage(taxid) 
-    #     assert lineage is not None  
-    #     if len(lineage) >= 7:
-    #         print(lineage[7])
-    #         dfresult['genus_taxID'] = lineage[7]  # this is changing the whole column and not only the field!!! I have to find a way to change only the field of the current row
-    #     else:
-    #         dfresult['genus_taxID'] = 'NaN'
-    # print(dfresult)
-    #print(ncbi.get_lineage(5658))
-    #print(ncbi.get_lineage(44271))
-
+    
+    dfresult = get_genus_taxID(dfresult)
+    
     # comparing the names from the blast and kraken2 outputs and adding a column with the comparison result
     # this is not ideal as we can have true results that are not the best blast hit! I have to find a way to isolate first all higest blast hits and than the ture hits and see if hihgest blast hit is also highest true hit!
     dfresult = compare_names(dfresult)
+    dfresult = compare_genus_taxid(dfresult)
     dfresult.to_csv(results_path+'kraken_blast_comparison.tsv', sep='\t', index=False, header=True)
-
+    print(dfresult)
     # selecting the rows where the name comparison is True
-    dfresult_true = dfresult[dfresult.name_comparison == True].copy()
+    #dfresult_true = dfresult[dfresult.name_comparison == True].copy()
+    
+    # selecting the rows where the name comparison is True
+    #dfresult_true = dfresult[dfresult.taxoid_comparison == True].copy()
+    
+    # selecting the rows where the name comparison is True or the taxoid comparison is True 
+    dfresult_true = dfresult[(dfresult.taxoid_comparison == True) | (dfresult.name_comparison == True)]
+
+
     #print(dfresult_true)
     #dfresult_true.to_csv(results_path+'kraken_blast_comparison_true.tsv', sep='\t', index=False, header=True)
     
