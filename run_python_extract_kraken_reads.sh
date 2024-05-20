@@ -12,6 +12,6 @@
 
 module load python/3.9
 
-python3 WGS_metagenomic_analysis/auto_read-Extraction.py 'run23_fastq/' 'kraken2-results_run23_5prime-trimmed/PlusPF/'
+python3 WGS_metagenomic_analysis/auto_read-Extraction.py 'run24_fastq/' 'kraken2-results_run24_5prime-trimmed/PlusPF/'
 
-python3 WGS_metagenomic_analysis/auto_read-Extraction.py 'run23_fastq/' 'kraken2-results_run23_5prime-trimmed/EuPathDB48/'
+python3 WGS_metagenomic_analysis/auto_read-Extraction.py 'run24_fastq/' 'kraken2-results_run24_5prime-trimmed/EuPathDB48/'
