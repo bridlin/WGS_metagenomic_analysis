@@ -124,7 +124,7 @@ def main():
         results_path = sys.argv[1]
     
 
-    # results_path = '../../test-run23/kraken2-results_run23_5prime-trimmed/PlusPF/'
+    #results_path = '../../test-run23/kraken2-results_run23_5prime-trimmed/PlusPF/'
 
     # getting the Kraken results from the Genus taxon file as df
     df_G_taxo = read_G_taxoIDs(results_path)
