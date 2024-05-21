@@ -1,4 +1,4 @@
-input_list=("1993_S1_" )
+input_list=("Undetermined_S0_" )
 fastq_directory=run24_fastq
 output_dir=kraken2-results_run24_5prime-trimmed
 kraken_output_dir=PlusPF
