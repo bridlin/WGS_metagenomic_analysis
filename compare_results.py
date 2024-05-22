@@ -162,7 +162,7 @@ def main():
     # this is not ideal as we can have true results that are not the best blast hit! I have to find a way to isolate first all higest blast hits and than the ture hits and see if hihgest blast hit is also highest true hit!
     dfresult = compare_names(dfresult)
     dfresult = compare_genus_taxid(dfresult)
-    dfresult.to_csv(results_path+'kraken_blast_comparison.tsv', sep='\t', index=False, header=True)
+    dfresult.to_csv(results_path+'kraken_blast_comparison_all.tsv', sep='\t', index=False, header=True)
     print(dfresult)
     # selecting the rows where the name comparison is True
     #dfresult_true = dfresult[dfresult.name_comparison == True].copy()
@@ -186,7 +186,7 @@ def main():
     
     dfresult_true_bitscoremax_concat = dfresult_true_bitscoremax_concat.sort_values(by=['sample', 'taxoID','read'])
     
-    dfresult_true_bitscoremax_concat.to_csv(results_path+'kraken_blast_comparison_true_bitscoremax_plusfalsemax.tsv', sep='\t', index=False, header=True)
+    dfresult_true_bitscoremax_concat.to_csv(results_path+'kraken_blast_comparison_true_or_bitscoremax.tsv', sep='\t', index=False, header=True)
  
     
 
