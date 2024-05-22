@@ -119,10 +119,11 @@ def add_highest_bitscore_if_false(dfresult,dfresult_true_bitscoremax):
 
 #### Main ####
 def main():
-    if len(sys.argv) == 0:
-        print('read file and Kraken output file paths are missing as command line arguments!!!')
+    if len(sys.argv) == 1:
+        print('input file paths are missing as command line arguments!!!')
+    else:
         results_path = sys.argv[1]
-    
+
 
     #results_path = '../../test-run23/kraken2-results_run23_5prime-trimmed/PlusPF/'
 
