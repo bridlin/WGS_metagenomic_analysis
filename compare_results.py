@@ -159,7 +159,6 @@ def main():
     dfresult = get_genus_taxID(dfresult)
     
     # comparing the names from the blast and kraken2 outputs and adding a column with the comparison result
-    # this is not ideal as we can have true results that are not the best blast hit! I have to find a way to isolate first all higest blast hits and than the ture hits and see if hihgest blast hit is also highest true hit!
     dfresult = compare_names(dfresult)
     dfresult = compare_genus_taxid(dfresult)
     dfresult.to_csv(results_path+'kraken_blast_comparison_all.tsv', sep='\t', index=False, header=True)
