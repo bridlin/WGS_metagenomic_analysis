@@ -75,9 +75,12 @@ def get_genus_taxID(dfresult):
         #print(dfresult.loc[i,'taxoID'])
         kraken_genus_lineage = ncbi.get_lineage(dfresult.loc[i,'taxoID']) 
         #print(kraken_genus_lineage)
-        #print(taxid)
-        blast_lineage = ncbi.get_lineage(taxid)
-        #print(blast_lineage)
+        print(taxid)
+        if taxid.isdigit(): # check if string is only numbers,sometines the taxid is in this format 1111;1112
+            blast_lineage = ncbi.get_lineage(taxid)
+        else:
+            split_taxid = taxid.split(';')  
+            blast_lineage = ncbi.get_lineage(split_taxid[0])
         if blast_lineage is not None and kraken_genus_lineage is not None:  
             genus_position = len(kraken_genus_lineage)
             if (len(blast_lineage) >= genus_position) :
