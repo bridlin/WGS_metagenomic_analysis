@@ -1,3 +1,0 @@
-genome=genome/ToxoDB-62_TgondiiARI_Genome/index_bowtie2/ToxoDB-62_TgondiiARI_Genome
-read_directory=kraken2-results_run9/extracted_reads_run9_kraken2_EuPathDB
-inputlist=("3328-A_S2_.tid5811" "3328-B_S3_.tid5810")
