@@ -61,6 +61,7 @@ for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do \
         -remote && \
 mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result ; done
 
+cd ..
 
 ### run python script to compare the results of the blast with the kraken2 results
 
