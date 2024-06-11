@@ -7,14 +7,26 @@
 #
 #
 #SBATCH --partition fast
-#SBATCH --cpus-per-task 4
-#SBATCH --mem  128GB
+#SBATCH --cpus-per-task 6
+#SBATCH --mem 64GB
 
+module load python/3.9
 module load blast/2.14.0
+
+
 
 source WGS_metagenomic_analysis/config.txt
 
+### run python script to extract 10 reads per genus from the kraken2 results
 
+python3 WGS_metagenomic_analysis/auto_read-Extraction.py '$run\_fastq/' 'kraken2-results_$run\_5prime-trimmed/PlusPF/'
+
+python3 WGS_metagenomic_analysis/auto_read-Extraction.py '$run\_fastq/' 'kraken2-results_$run\_5prime-trimmed/EuPathDB48/'
+
+
+### run blast on the extracted reads
+
+cd auto_blast_folder/
 
 mkdir ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result
 for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do \
@@ -50,4 +62,8 @@ for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do \
 mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result ; done
 
 
+### run python script to compare the results of the blast with the kraken2 results
 
+python3 WGS_metagenomic_analysis/compare_results.py  'kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result'
+
+python3 WGS_metagenomic_analysis/compare_results.py  'kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result'

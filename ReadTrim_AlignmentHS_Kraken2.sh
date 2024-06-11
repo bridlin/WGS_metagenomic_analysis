@@ -20,7 +20,7 @@ module load kraken2/2.1.2
 module load multiqc/1.13
 module load picard/2.23.5
 
-source WGS_metagenomic_analysis/config_ReadTrim_Alignment.txt
+source WGS_metagenomic_analysis/config.txt
 
 mkdir $output_dir
 mkdir $output_dir/$kraken_output_dir

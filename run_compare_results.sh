@@ -12,7 +12,7 @@
 
 module load python/3.9
 
-source WGS_metagenomic_analysis/config_ReadTrim_Alignment.txt
+source WGS_metagenomic_analysis/config.txt
 
 
 
