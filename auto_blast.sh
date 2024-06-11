@@ -12,11 +12,12 @@
 
 module load blast/2.14.0
 
+source WGS_metagenomic_analysis/config_ReadTrim_Alignment.txt
 
-#kraken_file_path=../kraken2-results_run16_5prime-trimmed/PlusPF/
 
-mkdir ../kraken2-results_run26_5prime-trimmed/EuPathDB48/blast_result
-for files in ../kraken2-results_run26_5prime-trimmed/EuPathDB48/*.1.fa ; do \
+
+mkdir ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result
+for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do \
     file=$( echo $files | cut -d / -f 4) && \
     echo $files && \
     echo $file  && \
@@ -29,11 +30,11 @@ for files in ../kraken2-results_run26_5prime-trimmed/EuPathDB48/*.1.fa ; do \
         -max_hsps 5   \
         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
         -remote &&\
-mv $file\_blast ../kraken2-results_run26_5prime-trimmed/EuPathDB48/blast_result ; done
+mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result ; done
 
 
-mkdir ../kraken2-results_run26_5prime-trimmed/PlusPF/blast_result
-for files in ../kraken2-results_run26_5prime-trimmed/PlusPF/*.1.fa ; do \
+mkdir ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
+for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do \
     file=$( echo $files | cut -d / -f 4) && \
     echo $files && \
     echo $file  && \
@@ -46,7 +47,7 @@ for files in ../kraken2-results_run26_5prime-trimmed/PlusPF/*.1.fa ; do \
         -max_hsps 5   \
         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
         -remote && \
-mv $file\_blast ../kraken2-results_run26_5prime-trimmed/PlusPF/blast_result ; done
+mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result ; done
 
 
 

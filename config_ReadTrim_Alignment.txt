@@ -1,9 +1,8 @@
+run=run25
 input_list=("1993Td_S1_" "Undetermined_S0_" )
-fastq_directory=run26_fastq
-output_dir=kraken2-results_run26_5prime-trimmed
+fastq_directory=run25_fastq
+output_dir=kraken2-results_run25_5prime-trimmed
 kraken_output_dir=PlusPF
 kraken_output_dir_2=EuPathDB48
 kraken2_db=Kraken2_db/PlusPF
 kraken2_db_2=Kraken2_db/EuPathDB48
-#kraken_results=kraken2-results_run11_5prime-trimmed/PlusPF
-#read_directory=run9_nonhuman-reads
