@@ -16,6 +16,6 @@ source WGS_metagenomic_analysis/config.txt
 
 
 
-python3 WGS_metagenomic_analysis/compare_results.py  'kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result'
+python3 WGS_metagenomic_analysis/compare_results.py  'kraken2-results_'+ $run +'_5prime-trimmed/EuPathDB48/blast_result'
 
-python3 WGS_metagenomic_analysis/compare_results.py  'kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result'
+python3 WGS_metagenomic_analysis/compare_results.py  'kraken2-results_'+ $run +'_5prime-trimmed/PlusPF/blast_result'

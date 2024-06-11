@@ -19,9 +19,9 @@ source WGS_metagenomic_analysis/config.txt
 
 ### run python script to extract 10 reads per genus from the kraken2 results
 
-python3 WGS_metagenomic_analysis/auto_read-Extraction.py '$run\_fastq/' 'kraken2-results_$run\_5prime-trimmed/PlusPF/'
+python3 WGS_metagenomic_analysis/auto_read-Extraction.py $run +'_fastq/' 'kraken2-results_'+ $run +'_5prime-trimmed/PlusPF/'
 
-python3 WGS_metagenomic_analysis/auto_read-Extraction.py '$run\_fastq/' 'kraken2-results_$run\_5prime-trimmed/EuPathDB48/'
+python3 WGS_metagenomic_analysis/auto_read-Extraction.py $run +'_fastq/' 'kraken2-results_'+ $run +'_5prime-trimmed/EuPathDB48/'
 
 
 ### run blast on the extracted reads
@@ -64,6 +64,6 @@ mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result ; do
 
 ### run python script to compare the results of the blast with the kraken2 results
 
-python3 WGS_metagenomic_analysis/compare_results.py  'kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result'
+python3 WGS_metagenomic_analysis/compare_results.py  'kraken2-results_'+ $run +'_5prime-trimmed/EuPathDB48/blast_result'
 
-python3 WGS_metagenomic_analysis/compare_results.py  'kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result'
+python3 WGS_metagenomic_analysis/compare_results.py  'kraken2-results_'+ $run +'_5prime-trimmed/PlusPF/blast_result'
