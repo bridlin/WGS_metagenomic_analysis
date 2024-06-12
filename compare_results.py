@@ -43,17 +43,20 @@ def read_blast_result(results_path):
 
 def blast_result_as_df(taxoid,sample_name,result_path):
     blastfile = result_path + 'blast_result/' + sample_name + '.tid' + str(taxoid) + '.1.fa_blast'       
-    dict_blast = parse_tabular_blast_results(blastfile)
-    if not dict_blast:
+    if not os.path.isfile(blastfile):
         df_blast = pd.DataFrame()
-        
-    else:
-        df_blast = pd.DataFrame.from_dict(dict_blast, orient='index').stack().apply(pd.Series).stack().apply(pd.Series)
-        df_blast["taxoID_kraken2"] = taxoid
-        df_blast["sample_kraken2"] = sample_name
-        df_blast.reset_index(inplace=True) # to get the index as columns 
+    else:        
+        dict_blast = parse_tabular_blast_results(blastfile)
+        if not dict_blast:
+            df_blast = pd.DataFrame()
+            
+        else:
+            df_blast = pd.DataFrame.from_dict(dict_blast, orient='index').stack().apply(pd.Series).stack().apply(pd.Series)
+            df_blast["taxoID_kraken2"] = taxoid
+            df_blast["sample_kraken2"] = sample_name
+            df_blast.reset_index(inplace=True) # to get the index as columns 
     return(df_blast)
-
+    
 
 def format_dfresult(dfresult):
     # rename columns
