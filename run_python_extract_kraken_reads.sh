@@ -16,6 +16,12 @@ source WGS_metagenomic_analysis/config.txt
 
 echo $run\_fastq/kraken2-results_$run\_5prime-trimmed/PlusPF/
 
-python3 WGS_metagenomic_analysis/auto_read-Extraction.py $run\_fastq/kraken2-results_$run\_5prime-trimmed/PlusPF/
+argument1=$run\_fastq/kraken2-results_$run\_5prime-trimmed/PlusPF/
+argument2=$run\_fastq/kraken2-results_$run\_5prime-trimmed/EuPathDB48/
 
-python3 WGS_metagenomic_analysis/auto_read-Extraction.py $run\_fastq/kraken2-results_$run\_5prime-trimmed/PlusPF/
+echo $argument1
+echo $argument2
+
+python3 WGS_metagenomic_analysis/auto_read-Extraction.py $argument1
+
+python3 WGS_metagenomic_analysis/auto_read-Extraction.py $argument2
