@@ -1,4 +1,4 @@
-run=run25
+run=run26
 input_list=("1993d_S1_" "Undetermined_S0_" )
 #fastq_directory=run25_fastq
 #output_dir=kraken2-results_run25_5prime-trimmed
