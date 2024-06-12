@@ -18,7 +18,7 @@ echo kraken2-results_$run\_5prime-trimmed/PlusPF/
 
 kraken_plus=kraken2-results_$run\_5prime-trimmed/PlusPF/
 kraken_eu=kraken2-results_$run\_5prime-trimmed/EuPathDB48/
-fastq=fastq_$run
+fastq=$run\_fastq
 
 
 echo $kraken_plus

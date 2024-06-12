@@ -19,7 +19,7 @@ source WGS_metagenomic_analysis/config.txt
 
 kraken_plus=kraken2-results_$run\_5prime-trimmed/PlusPF/
 kraken_eu=kraken2-results_$run\_5prime-trimmed/EuPathDB48/
-fastq=fastq_$run
+fastq=$run\_fastq
 eu_blast_result=kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result
 plus_blast_result=kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
 
