@@ -156,6 +156,7 @@ def main():
         if dfresult_taxoid_list:
             dfresult_taxoid = pd.concat(dfresult_taxoid_list, ignore_index=True)
             dfresult_list.append(dfresult_taxoid)
+            print(dfresult_list)
             #print(dfresult_taxoid)
     dfresult = pd.concat(dfresult_list, ignore_index=True)
     
