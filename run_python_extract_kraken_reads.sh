@@ -16,8 +16,8 @@ source WGS_metagenomic_analysis/config.txt
 
 echo $run\_fastq/kraken2-results_$run\_5prime-trimmed/PlusPF/
 
-argument1=$run\_fastq/kraken2-results_$run\_5prime-trimmed/PlusPF/
-argument2=$run\_fastq/kraken2-results_$run\_5prime-trimmed/EuPathDB48/
+argument1="$run\_fastq/kraken2-results_$run\_5prime-trimmed/PlusPF/"
+argument2="$run\_fastq/kraken2-results_$run\_5prime-trimmed/EuPathDB48/"
 
 echo $argument1
 echo $argument2
