@@ -130,8 +130,8 @@ def main():
                     striped_sample = (strip_samplenames(sample, kraken_file_path))
                     print(striped_sample)
                     kraken_file = kraken_file_path + sample + '.kraken2'
-                    seq_file1 = read_file_path + striped_sample + 'nonhuman_reads_5trimmed.1.fastq'
-                    seq_file2 = read_file_path + striped_sample + 'nonhuman_reads_5trimmed.2.fastq'
+                    seq_file1 = read_file_path + '/' + striped_sample + 'nonhuman_reads_5trimmed.1.fastq'
+                    seq_file2 = read_file_path + '/' + striped_sample + 'nonhuman_reads_5trimmed.2.fastq'
                     report_file = kraken_file_path + sample + '.k2report'
                     output_file = kraken_file_path + sample + '.tid' + str(item) + '.1.fa'
                     output_file2 = kraken_file_path + sample + '.tid' + str(item) + '.2.fa'
