@@ -22,6 +22,9 @@ module load picard/2.23.5
 
 source WGS_metagenomic_analysis/config.txt
 
+fastq_directory=$run\_fastq
+output_dir=kraken2-results_$run\_5prime-trimmed
+
 mkdir $output_dir
 mkdir $output_dir/$kraken_output_dir
 mkdir $output_dir/$kraken_output_dir_2
