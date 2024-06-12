@@ -4,7 +4,7 @@ import sys
 from parse_tabular_blast import parse_tabular_blast_results #https://gist.github.com/peterk87/5513274 I made some changes to include more fields from the blast results to be parsed
 from ete3 import NCBITaxa
 ncbi = NCBITaxa()
-ncbi.update_taxonomy_database()
+#ncbi.update_taxonomy_database()
 
 #### FUNCTIONS ####
 
