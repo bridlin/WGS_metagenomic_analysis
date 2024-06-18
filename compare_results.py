@@ -194,7 +194,7 @@ def main():
     
     dfresult_true_bitscoremax_concat = dfresult_true_bitscoremax_concat.sort_values(by=['sample', 'taxoID','read'])
     
-    dfresult_true_bitscoremax_concat.to_csv(results_path+'kraken_blast_comparison_true_or_bitscoremax.tsv', sep='\t', index=False, header=True)
+    dfresult_true_bitscoremax_concat.to_csv(results_path+'/kraken_blast_comparison_true_or_bitscoremax.tsv', sep='\t', index=False, header=True)
  
     
 
