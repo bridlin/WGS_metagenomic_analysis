@@ -81,7 +81,10 @@ def get_genus_taxID(dfresult):
         #print(kraken_genus_lineage)
         print(taxid)
         if taxid.isdigit(): # check if string is only numbers,sometines the taxid is in this format 1111;1112
-            blast_lineage = ncbi.get_lineage(taxid)
+            try:
+                blast_lineage = ncbi.get_lineage(taxid)
+            except ValueError as e:
+                print(e)
         else:
             split_taxid = taxid.split(';')  
             blast_lineage = ncbi.get_lineage(split_taxid[0])
