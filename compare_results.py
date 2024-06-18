@@ -87,7 +87,10 @@ def get_genus_taxID(dfresult):
                 print(e)
         else:
             split_taxid = taxid.split(';')  
-            blast_lineage = ncbi.get_lineage(split_taxid[0])
+            try:
+                blast_lineage = ncbi.get_lineage(split_taxid[0])
+            except ValueError as e:
+                print(e)
         if blast_lineage is not None and kraken_genus_lineage is not None:  
             genus_position = len(kraken_genus_lineage)
             if (len(blast_lineage) >= genus_position) :
