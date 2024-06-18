@@ -48,7 +48,6 @@ def blast_result_as_df(taxoid,sample_name,result_path):
         df_blast = pd.DataFrame()
     else:        
         dict_blast = parse_tabular_blast_results(blastfile)
-        print(dict_blast)
         if not dict_blast:
             df_blast = pd.DataFrame()
             
@@ -171,7 +170,7 @@ def main():
     # comparing the names from the blast and kraken2 outputs and adding a column with the comparison result
     dfresult = compare_names(dfresult)
     dfresult = compare_genus_taxid(dfresult)
-    dfresult.to_csv(results_path+'kraken_blast_comparison_all.tsv', sep='\t', index=False, header=True)
+    dfresult.to_csv(results_path+'/kraken_blast_comparison_all.tsv', sep='\t', index=False, header=True)
     print(dfresult)
     # selecting the rows where the name comparison is True
     #dfresult_true = dfresult[dfresult.name_comparison == True].copy()
