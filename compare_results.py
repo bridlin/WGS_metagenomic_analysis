@@ -43,10 +43,12 @@ def read_blast_result(results_path):
 
 def blast_result_as_df(taxoid,sample_name,result_path):
     blastfile = result_path + 'blast_result/' + sample_name + '.tid' + str(taxoid) + '.1.fa_blast'       
+    print(blastfile)
     if not os.path.isfile(blastfile):
         df_blast = pd.DataFrame()
     else:        
         dict_blast = parse_tabular_blast_results(blastfile)
+        print(dict_blast)
         if not dict_blast:
             df_blast = pd.DataFrame()
             
