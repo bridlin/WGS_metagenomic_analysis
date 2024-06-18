@@ -129,6 +129,7 @@ def main():
         print('input file paths are missing as command line arguments!!!')
     else:
         results_path = sys.argv[1]
+        print(results_path)
 
 
     #results_path = '../../test-run23/kraken2-results_run23_5prime-trimmed/PlusPF/'
