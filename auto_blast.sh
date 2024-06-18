@@ -12,7 +12,7 @@
 
 module load blast/2.14.0
 
-source WGS_metagenomic_analysis/config.txt
+source ../WGS_metagenomic_analysis/config.txt
 
 
 
