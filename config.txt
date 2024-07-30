@@ -1,5 +1,6 @@
-run=run25
-input_list=("1993d_S1_")
+run=run27
+input_list=("3092_S1_")
+
 #fastq_directory=run25_fastq
 #output_dir=kraken2-results_run25_5prime-trimmed
 kraken_output_dir=PlusPF
