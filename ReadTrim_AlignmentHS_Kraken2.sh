@@ -24,7 +24,7 @@ module load bbmap/39.00
 source WGS_metagenomic_analysis/config.txt
 
 fastq_directory=$run\_fastq
-output_dir=kraken2-results_$run\_5prime-trimmed
+output_dir=kraken2-results_$run\_5prime-trimmed_dedup
 
 mkdir $output_dir
 mkdir $output_dir/$kraken_output_dir
