@@ -74,7 +74,7 @@ dedupe.sh \
     in=$fastq_directory/$sample\nonhuman_reads.1.fastq \
     in2=$fastq_directory/$sample\nonhuman_reads.2.fastq \
     out=$fastq_directory/$sample\nonhuman_reads_dedup.1.fastq \
-    out2=$fastq_directory/$sample\nonhuman_reads_dedup.2.fastq \
+   #out2=$fastq_directory/$sample\nonhuman_reads_dedup.2.fastq \
     ac=f \
     outd=$fastq_directory/$sample\duplicates.fq &&
 cutadapt  -g AGATCGGAAGAGCACACGTCTGAACTCCAGTCA   -G AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT \
