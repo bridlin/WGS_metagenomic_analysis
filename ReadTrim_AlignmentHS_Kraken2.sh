@@ -19,6 +19,7 @@ module load samtools/1.13
 module load kraken2/2.1.2
 module load multiqc/1.13
 module load picard/2.23.5
+module load bbmap/39.00
 
 source WGS_metagenomic_analysis/config.txt
 
@@ -69,10 +70,17 @@ picard CollectInsertSizeMetrics   \
 rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered.bam &&
 rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam &&
 rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
+dedupe.sh \
+    in=$fastq_directory/$sample\nonhuman_reads.1.fastq \
+    in2=$fastq_directory/$sample\nonhuman_reads.2.fastq \
+    out=$fastq_directory/$sample\nonhuman_reads_dedup.1.fastq \
+    out2=$fastq_directory/$sample\nonhuman_reads_dedup.2.fastq \
+    ac=f \
+    outd=duplicates.fq &&
 cutadapt  -g AGATCGGAAGAGCACACGTCTGAACTCCAGTCA   -G AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT \
-    -o $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq  \
-    -p $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq  \
-    $fastq_directory/$sample\nonhuman_reads.1.fastq  $fastq_directory/$sample\nonhuman_reads.2.fastq \
+    -o $fastq_directory/$sample\nonhuman_reads_dedup_5trimmed.1.fastq  \
+    -p $fastq_directory/$sample\nonhuman_reads_dedup_5trimmed.2.fastq  \
+    $fastq_directory/$sample\nonhuman_reads_dedup.1.fastq  $fastq_directory/$sample\nonhuman_reads_dedup.2.fastq \
     --minimum-length 60 \
     > $output_dir/$sample\nonhuman_reads_cutadapt_report.txt &&
 kraken2 --db $kraken2_db \
@@ -80,14 +88,14 @@ kraken2 --db $kraken2_db \
     --minimum-hit-groups 3  \
     --report-minimizer-data \
     --report $output_dir/$kraken_output_dir/$sample$kraken_output_dir\.k2report  \
-    --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
+    --paired $fastq_directory/$sample\nonhuman_reads_dedup_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_dedup_5trimmed.2.fastq \
     > $output_dir/$kraken_output_dir/$sample$kraken_output_dir\.kraken2 &&
 kraken2 --db $kraken2_db_2 \
     --threads 8 \
     --minimum-hit-groups 3  \
     --report-minimizer-data \
     --report $output_dir/$kraken_output_dir_2/$sample$kraken_output_dir_2\.k2report  \
-    --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq > $output_dir/$kraken_output_dir_2/$sample$kraken_output_dir_2\.kraken2 ; done
+    --paired $fastq_directory/$sample\nonhuman_reads_dedup_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_dedup_5trimmed.2.fastq > $output_dir/$kraken_output_dir_2/$sample$kraken_output_dir_2\.kraken2 ; done
 
 multiqc   \
     $output_dir \
