@@ -73,10 +73,13 @@ for sample in "${input_list[@]}"; do
 dedupe.sh \
     in=$fastq_directory/$sample\nonhuman_reads.1.fastq \
     in2=$fastq_directory/$sample\nonhuman_reads.2.fastq \
-    out=$fastq_directory/$sample\nonhuman_reads_dedup.1.fastq \
-   #out2=$fastq_directory/$sample\nonhuman_reads_dedup.2.fastq \
+    out=$fastq_directory/$sample\nonhuman_reads_dedup.fastq \
     ac=f \
     outd=$fastq_directory/$sample\duplicates.fq &&
+reformat.sh \
+    in=$fastq_directory/$sample\nonhuman_reads_dedup.fastq \
+    out1=$fastq_directory/$sample\nonhuman_reads_dedup.1.fastq \
+    out2=$fastq_directory/$sample\nonhuman_reads_dedup.2.fastq &&
 cutadapt  -g AGATCGGAAGAGCACACGTCTGAACTCCAGTCA   -G AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT \
     -o $fastq_directory/$sample\nonhuman_reads_dedup_5trimmed.1.fastq  \
     -p $fastq_directory/$sample\nonhuman_reads_dedup_5trimmed.2.fastq  \
