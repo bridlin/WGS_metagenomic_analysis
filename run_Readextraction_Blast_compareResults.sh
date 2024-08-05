@@ -17,11 +17,17 @@ module load blast/2.14.0
 
 source WGS_metagenomic_analysis/config.txt
 
-kraken_plus=kraken2-results_$run\_5prime-trimmed/PlusPF/
-kraken_eu=kraken2-results_$run\_5prime-trimmed/EuPathDB48/
+# kraken_plus=kraken2-results_$run\_5prime-trimmed/PlusPF/
+# kraken_eu=kraken2-results_$run\_5prime-trimmed/EuPathDB48/
+# fastq=$run\_fastq
+# eu_blast_result=kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result
+# plus_blast_result=kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
+
+kraken_plus=kraken2-results_$run\_5prime-trimmed_dedup/PlusPF/
+kraken_eu=kraken2-results_$run\_5prime-trimmed_dedup/EuPathDB48/
 fastq=$run\_fastq
-eu_blast_result=kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result
-plus_blast_result=kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
+eu_blast_result=kraken2-results_$run\_5prime-trimmed_dedup/EuPathDB48/blast_result
+plus_blast_result=kraken2-results_$run\_5prime-trimmed_dedup/PlusPF/blast_result
 
 ### run python script to extract 10 reads per genus from the kraken2 results
 
