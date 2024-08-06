@@ -38,6 +38,8 @@ fastq=$run\_fastq
 
 ### run blast on the extracted reads
 
+echo auto_blast on $kraken_eu
+
 cd auto_blast_folder/
 
 mkdir ../$kraken_eu\blast_result
