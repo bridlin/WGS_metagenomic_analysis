@@ -43,6 +43,7 @@ echo auto_blast on $kraken_eu
 cd auto_blast_folder/
 
 mkdir ../$kraken_eu\blast_result
+echo ../$kraken_eu\*.1.fa
 for files in ../$kraken_eu\*.1.fa ; do \
     file=$( echo $files | cut -d / -f 4) && 
     echo $files && 
