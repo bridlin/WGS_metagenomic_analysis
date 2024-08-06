@@ -33,7 +33,7 @@ fastq=$run\_fastq
 
 #python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq $kraken_plus
 
-python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq $kraken_eu
+#python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq $kraken_eu
 
 
 ### run blast on the extracted reads
@@ -42,10 +42,10 @@ cd auto_blast_folder/
 
 mkdir ../$kraken_eu\blast_result
 for files in ../$kraken_eu\*.1.fa ; do \
-    file=$( echo $files | cut -d / -f 4) && \
-    echo $files && \
-    echo $file  && \
-    echo $file\_blast && \
+    file=$( echo $files | cut -d / -f 4) && 
+    echo $files && 
+    echo $file  && 
+    echo $file\_blast && 
     blastn \
         -db nt \
         -query $files \
@@ -53,7 +53,7 @@ for files in ../$kraken_eu\*.1.fa ; do \
         -max_target_seqs 5 \
         -max_hsps 5   \
         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
-        -remote &&\
+        -remote && 
 mv $file\_blast ../$kraken_eu\blast_result ; done
 
 
