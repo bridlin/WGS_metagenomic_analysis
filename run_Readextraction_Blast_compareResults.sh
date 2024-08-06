@@ -25,9 +25,9 @@ plus_blast_result=kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
 
 ### run python script to extract 10 reads per genus from the kraken2 results
 
-#python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq $kraken_plus
-
 python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq $kraken_eu
+
+python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq $kraken_plus
 
 
 ### run blast on the extracted reads
@@ -51,21 +51,21 @@ for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do \
 mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result ; done
 
 
-# mkdir ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
-# for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do \
-#     file=$( echo $files | cut -d / -f 4) && \
-#     echo $files && \
-#     echo $file  && \
-#     echo $file\_blast && \
-#     blastn \
-#         -db nt \
-#         -query $files \
-#         -out $file\_blast  \
-#         -max_target_seqs 5 \
-#         -max_hsps 5   \
-#         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
-#         -remote && \
-# mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result ; done
+mkdir ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
+for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do \
+    file=$( echo $files | cut -d / -f 4) && \
+    echo $files && \
+    echo $file  && \
+    echo $file\_blast && \
+    blastn \
+        -db nt \
+        -query $files \
+        -out $file\_blast  \
+        -max_target_seqs 5 \
+        -max_hsps 5   \
+        -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
+        -remote && \
+mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result ; done
 
 cd ..
 
@@ -73,4 +73,4 @@ cd ..
 
 python3 WGS_metagenomic_analysis/compare_results.py  $kraken_eu
 
-#python3 WGS_metagenomic_analysis/compare_results.py  $kraken_plus
+python3 WGS_metagenomic_analysis/compare_results.py  $kraken_plus
