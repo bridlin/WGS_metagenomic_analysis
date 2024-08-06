@@ -44,7 +44,7 @@ cd auto_blast_folder/
 
 mkdir ../$kraken_eu\blast_result
 echo ../$kraken_eu\*.1.fa
-for files in ../$kraken_eu\*.1.fa ; do \
+for files in ../kraken2-results_$run\_5prime-trimmed_dedup/EuPathDB48/*.1.fa ; do \
     echo $files && 
     file=$( echo $files | cut -d / -f 4) && 
     echo $file  && 
