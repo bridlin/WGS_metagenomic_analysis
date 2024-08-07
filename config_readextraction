@@ -1,6 +1,6 @@
 id_list=("5690" "5658" "5810")
 input_list=("3092_S1_")
-read_directory=run28_fastq
-output_dir=kraken2-results_run28_5prime-trimmed
+read_directory=run27_fastq
+output_dir=kraken2-results_run27_5prime-trimmed
 db=EuPathDB48
 
