@@ -1,6 +1,6 @@
-id_list=("5690" "5658" "5820" "5800" "4797" "100860" "5506" "5754")
-input_list=("Undetermined_S0_")
-read_directory=run22_fastq
-output_dir=kraken2-results_run22_5prime-trimmed
+id_list=("5690" "5658" "5810")
+input_list=("3092_S1_")
+read_directory=run28_fastq
+output_dir=kraken2-results_run28_5prime-trimmed
 db=EuPathDB48
 
