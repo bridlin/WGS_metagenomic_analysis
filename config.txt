@@ -1,5 +1,5 @@
-run=run28
-input_list=("2929_S1_" "Undetermined_S0_")
+run=run29
+input_list=("1802_S3_" "3063_S1_" "4204_S2_" "4272_S4_" "Undetermined_S0_")
 
 #fastq_directory=run25_fastq
 #output_dir=kraken2-results_run25_5prime-trimmed
