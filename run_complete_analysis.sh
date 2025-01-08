@@ -111,6 +111,9 @@ fastq=$run\_fastq
 eu_blast_result=kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result
 plus_blast_result=kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
 
+echo $eu_blast_result
+echo $plus_blast_result
+
 
 
 # python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq $kraken_plus
