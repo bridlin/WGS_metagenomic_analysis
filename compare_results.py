@@ -8,6 +8,7 @@ ncbi = NCBITaxa()
 
 #### FUNCTIONS ####
 
+### select the sample names from the kraken2 report files in the results path
 def get_sample_names(results_path):
     sample_names = []
     for root, dirs, files in os.walk(results_path):
@@ -16,12 +17,14 @@ def get_sample_names(results_path):
                  sample_names.append(os.path.splitext(file)[0])
     return sample_names    
 
+### strip the sample name from the kraken2 report file path
 def strip_samplenames(sample_name,kraken_file_path):
     substring = kraken_file_path.split('/')
     print(substring)
     striped_name = sample_name.split(substring[-2])
     return striped_name[0]
 
+### read in as df the table with Genus taxo IS and reads number per sample
 def read_G_taxoIDs(results_path):
     for root, dirs, files in os.walk(results_path):
         for file in files:
@@ -30,17 +33,18 @@ def read_G_taxoIDs(results_path):
                 df_report = pd.read_table(G_taxo,index_col=0)       
     return df_report    
 
-def read_blast_result(results_path):
-    for root, dirs, files in os.walk(results_path):
-        for file in files:
-            if (os.path.splitext(file)[1] == ".fa_blast") :
-                print(os.path.splitext(file)[0])
-                blast_result = results_path + '/' + 'blast_result/' + file
-                print(blast_result)
-                df_blast_result = pd.read_table(blast_result)
-    return df_blast_result
+### read in as df the blast results
+# def read_blast_result(results_path):
+#     for root, dirs, files in os.walk(results_path):
+#         for file in files:
+#             if (os.path.splitext(file)[1] == ".fa_blast") :
+#                 print(os.path.splitext(file)[0])
+#                 blast_result = results_path + '/' + 'blast_result/' + file
+#                 print(blast_result)
+#                 df_blast_result = pd.read_table(blast_result)
+#     return df_blast_result
 
-
+### read in as df the blast results
 def blast_result_as_df(taxoid,sample_name,result_path):
     blastfile = result_path + 'blast_result/' + sample_name + '.tid' + str(taxoid) + '.1.fa_blast'       
     if not os.path.isfile(blastfile):
@@ -73,17 +77,23 @@ def format_dfresult(dfresult):
     return(dfresult)
 
 def get_genus_taxID(dfresult):
-    # get the genus taxID from the taxoID column
+    # get the genus taxID from the taxoID column in dfresult
     for i,taxid in enumerate(dfresult['taxoid']): 
         #print(dfresult.loc[i,'taxoID'])
         kraken_genus_lineage = ncbi.get_lineage(dfresult.loc[i,'taxoID']) 
         #print(kraken_genus_lineage)
         #print(taxid)
         if taxid.isdigit(): # check if string is only numbers,sometines the taxid is in this format 1111;1112
-            blast_lineage = ncbi.get_lineage(taxid)
+            try:
+                blast_lineage = ncbi.get_lineage(taxid)
+            except ValueError:
+                blast_lineage = None
         else:
             split_taxid = taxid.split(';')  
-            blast_lineage = ncbi.get_lineage(split_taxid[0])
+            try:
+                blast_lineage = ncbi.get_lineage(split_taxid[0])
+            except ValueError:
+                    blast_lineage = None
         if blast_lineage is not None and kraken_genus_lineage is not None:  
             genus_position = len(kraken_genus_lineage)
             if (len(blast_lineage) >= genus_position) :
@@ -92,6 +102,8 @@ def get_genus_taxID(dfresult):
             else:
                 dfresult.at[i,'genus_taxid'] = 'NaN'
     return(dfresult)
+
+
 
 def compare_names(dfresult):
     # comparing the name and the name_prefix_blast columns generating a new column with the comparison result
@@ -125,13 +137,13 @@ def add_highest_bitscore_if_false(dfresult,dfresult_true_bitscoremax):
 
 #### Main ####
 def main():
-    if len(sys.argv) == 1:
-        print('input file paths are missing as command line arguments!!!')
-    else:
-        results_path = sys.argv[1]
+    # if len(sys.argv) == 1:
+    #     print('input file paths are missing as command line arguments!!!')
+    # else:
+    #     results_path = sys.argv[1]
 
 
-    #results_path = '../../test-run23/kraken2-results_run23_5prime-trimmed/PlusPF/'
+    results_path = '../../test-run23/kraken2-results_run23_5prime-trimmed/PlusPF/'
 
     # getting the Kraken results from the Genus taxon file as df
     df_G_taxo = read_G_taxoIDs(results_path)
