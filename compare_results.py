@@ -17,12 +17,6 @@ def get_sample_names(results_path):
                  sample_names.append(os.path.splitext(file)[0])
     return sample_names    
 
-### strip the sample name from the kraken2 report file path
-def strip_samplenames(sample_name,kraken_file_path):
-    substring = kraken_file_path.split('/')
-    print(substring)
-    striped_name = sample_name.split(substring[-2])
-    return striped_name[0]
 
 ### read in as df the table with Genus taxo IS and reads number per sample
 def read_G_taxoIDs(results_path):
@@ -33,16 +27,7 @@ def read_G_taxoIDs(results_path):
                 df_report = pd.read_table(G_taxo,index_col=0)       
     return df_report    
 
-### read in as df the blast results
-# def read_blast_result(results_path):
-#     for root, dirs, files in os.walk(results_path):
-#         for file in files:
-#             if (os.path.splitext(file)[1] == ".fa_blast") :
-#                 print(os.path.splitext(file)[0])
-#                 blast_result = results_path + '/' + 'blast_result/' + file
-#                 print(blast_result)
-#                 df_blast_result = pd.read_table(blast_result)
-#     return df_blast_result
+
 
 ### read in as df the blast results
 def blast_result_as_df(taxoid,sample_name,result_path):
