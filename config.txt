@@ -1,5 +1,5 @@
-run=run31
-input_list=("2868d_S1_" "Undetermined_S0_")
+run=run32
+input_list=("2868_S1_" "Undetermined_S0_")
 
 kraken_output_dir=EuPathDB48
 kraken_output_dir_2=PlusPF
