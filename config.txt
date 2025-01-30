@@ -1,5 +1,5 @@
-run=run6
-input_list=("1513_S2_" "2681_S1_" "3111_S4_" "3934_S3_" "Undetermined_S0_")
+run=run7
+input_list=("1513-1_S1_" "1513-2_S2_" "3111-1_S3_" "3111-2_S4_")
 
 kraken_output_dir=EuPathDB48
 kraken_output_dir_2=PlusPF
