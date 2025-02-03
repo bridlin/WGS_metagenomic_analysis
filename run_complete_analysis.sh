@@ -166,6 +166,6 @@ echo $kraken_plus
 
 ### run python script to compare the results of the blast with the kraken2 results
 
-python3 WGS_metagenomic_analysis/compare_results.py  $kraken_eu
+python3 WGS_metagenomic_analysis/compare_results.py  $eu_result
 
 python3 WGS_metagenomic_analysis/compare_results.py  $plus_result
