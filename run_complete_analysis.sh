@@ -108,60 +108,60 @@ mkdir $output_dir/$kraken_output_dir_2
 # kraken_plus=kraken2-results_$run\_5prime-trimmed/PlusPF/
 # kraken_eu=kraken2-results_$run\_5prime-trimmed/EuPathDB48/
 # fastq=$run\_fastq
-# eu_blast_result=kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result
-# plus_blast_result=kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
+# eu_blast_result=$output_dir/$kraken_output_dir_2\/blast_result
+# plus_blast_result=$output_dir/$kraken_output_dir_2\/blast_result
 
 # echo $eu_blast_result
 # echo $plus_blast_result
 
 
 
-# python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq $kraken_plus
+# python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $kraken_plus
 
-# python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq $kraken_eu
+# python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $kraken_eu
 
 
 # ### run blast on the extracted reads
 
-cd auto_blast_folder/
+# cd auto_blast_folder/
 
-mkdir ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result
-for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do \
-    file=$( echo $files | cut -d / -f 4) && \
-    echo $files && \
-    echo $file  && \
-    echo $file\_blast && \
-    blastn \
-        -db nt \
-        -query $files \
-        -out $file\_blast  \
-        -max_target_seqs 5 \
-        -max_hsps 5   \
-        -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
-        -remote &&\
-mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result ; done
+# mkdir ../$output_dir/$kraken_output_dir\/blast_result
+# for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do \
+#     file=$( echo $files | cut -d / -f 4) && \
+#     echo $files && \
+#     echo $file  && \
+#     echo $file\_blast && \
+#     blastn \
+#         -db nt \
+#         -query $files \
+#         -out $file\_blast  \
+#         -max_target_seqs 5 \
+#         -max_hsps 5   \
+#         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
+#         -remote &&\
+# mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result ; done
 
-mkdir ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
-for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do \
-    file=$( echo $files | cut -d / -f 4) && \
-    echo $files && \
-    echo $file  && \
-    echo $file\_blast && \
-    blastn \
-        -db nt \
-        -query $files \
-        -out $file\_blast  \
-        -max_target_seqs 5 \
-        -max_hsps 5   \
-        -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
-        -remote && \
-mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result ; done
+# mkdir ../$output_dir/$kraken_output_dir_2\/blast_result
+# for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do \
+#     file=$( echo $files | cut -d / -f 4) && \
+#     echo $files && \
+#     echo $file  && \
+#     echo $file\_blast && \
+#     blastn \
+#         -db nt \
+#         -query $files \
+#         -out $file\_blast  \
+#         -max_target_seqs 5 \
+#         -max_hsps 5   \
+#         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
+#         -remote && \
+# mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result ; done
 
 
-cd ..
+# cd ..
 
 ### run python script to compare the results of the blast with the kraken2 results
 
-python3 WGS_metagenomic_analysis/compare_results.py  $kraken_eu
+python3 WGS_metagenomic_analysis/compare_results.py  $output_dir/$kraken_output_dir
 
-python3 WGS_metagenomic_analysis/compare_results.py  $kraken_plus
+python3 WGS_metagenomic_analysis/compare_results.py  $output_dir/$kraken_output_dir_2
