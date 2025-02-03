@@ -111,11 +111,6 @@ kraken_plus=$output_dir/$kraken_output_dir\/
 kraken_eu=$output_dir/$kraken_output_dir_2\/
 
 
-eu_result=kraken2-results_$run\_5prime-trimmed/EuPathDB48
-plus_result=kraken2-results_$run\_5prime-trimmed/PlusPF
-
-echo $eu_result
-echo $plus_result
 
 echo $kraken_eu
 echo $kraken_plus
