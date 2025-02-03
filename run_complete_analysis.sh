@@ -110,8 +110,13 @@ mkdir $output_dir/$kraken_output_dir_2
 kraken_plus=$output_dir/$kraken_output_dir\/
 kraken_eu=$output_dir/$kraken_output_dir_2\/
 
+eu_blast_result=$output_dir/$kraken_output_dir\/blast_result
+plus_blast_result=$output_dir/$kraken_output_dir_2\/blast_result
+
 echo $kraken_eu
 echo $kraken_plus
+echo $eu_blast_result
+echo $plus_blast_result
 
 # python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $kraken_plus
 
@@ -159,6 +164,6 @@ echo $kraken_plus
 
 ### run python script to compare the results of the blast with the kraken2 results
 
-python3 WGS_metagenomic_analysis/compare_results.py  $kraken_eu
+python3 WGS_metagenomic_analysis/compare_results.py  $eu_blast_result
 
-python3 WGS_metagenomic_analysis/compare_results.py  $kraken_plus
+python3 WGS_metagenomic_analysis/compare_results.py  $plus_blast_result
