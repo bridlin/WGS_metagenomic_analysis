@@ -33,8 +33,7 @@ for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do \
             -max_hsps 5   \
             -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
             -remote &&\
-    mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result 
-; done
+mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result ; done
 
 
 
