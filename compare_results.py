@@ -122,13 +122,13 @@ def add_highest_bitscore_if_false(dfresult,dfresult_true_bitscoremax):
 
 #### Main ####
 def main():
-    if len(sys.argv) == 1:
-        print('input file paths are missing as command line arguments!!!')
-    else:
-        results_path = sys.argv[1]
+    # if len(sys.argv) == 1:
+    #     print('input file paths are missing as command line arguments!!!')
+    # else:
+    #     results_path = sys.argv[1]
 
 
-    # results_path = '../../test-run23/kraken2-results_run23_5prime-trimmed/PlusPF/'
+    results_path = '../../test-run23/kraken2-results_run23_5prime-trimmed/PlusPF/'
 
     # getting the Kraken results from the Genus taxon file as df
     df_G_taxo = read_G_taxoIDs(results_path)
@@ -153,7 +153,7 @@ def main():
         if dfresult_taxoid_list:
             dfresult_taxoid = pd.concat(dfresult_taxoid_list, ignore_index=True)
             dfresult_list.append(dfresult_taxoid)
-            print(dfresult_list)
+            print('dfresultlist:' + str(dfresult_list))
             #print(dfresult_taxoid)
     dfresult = pd.concat(dfresult_list, ignore_index=True)
     
