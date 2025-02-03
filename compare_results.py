@@ -122,13 +122,13 @@ def add_highest_bitscore_if_false(dfresult,dfresult_true_bitscoremax):
 
 #### Main ####
 def main():
-    if len(sys.argv) == 1:
-        print('input file paths are missing as command line arguments!!!')
-    else:
-        results_path = sys.argv[1]
+    # if len(sys.argv) == 1:
+    #     print('input file paths are missing as command line arguments!!!')
+    # else:
+    #     results_path = sys.argv[1]
 
 
-    # results_path = '../../test-run23/kraken2-results_run23_5prime-trimmed/PlusPF/'
+    results_path = '../../test-run23/kraken2-results_run23_5prime-trimmed/PlusPF/'
 
     # getting the Kraken results from the Genus taxon file as df
     df_G_taxo = read_G_taxoIDs(results_path)
@@ -148,12 +148,13 @@ def main():
             if not blast_result_df.empty:
                 df_temp = pd.merge(df_G_taxo, blast_result_df, how='inner', left_on=['taxoID','sample'], right_on=['taxoID_kraken2','sample_kraken2'],left_index=False, right_index=False, sort=True,suffixes=('_x', '_y'), indicator=False)
                 dfresult_taxoid_list.append(df_temp)
-                print(dfresult_taxoid_list)
-        print(dfresult_taxoid_list)    
+                #print(dfresult_taxoid_list)
+            else: print('blast result empty')
+        #print(dfresult_taxoid_list)    
         if dfresult_taxoid_list:
             dfresult_taxoid = pd.concat(dfresult_taxoid_list, ignore_index=True)
             dfresult_list.append(dfresult_taxoid)
-            print('dfresultlist:' + str(dfresult_list))
+            #print('dfresultlist:' + str(dfresult_list))
             print(dfresult_taxoid)
     dfresult = pd.concat(dfresult_list, ignore_index=True)
     
