@@ -105,8 +105,17 @@ mkdir $output_dir/$kraken_output_dir_2
 
 ### run python script to extract 10 reads per genus from the kraken2 results
 
-# kraken_plus=kraken2-results_$run\_5prime-trimmed/PlusPF/
-# kraken_eu=kraken2-results_$run\_5prime-trimmed/EuPathDB48/
+kraken_plus=kraken2-results_$run\_5prime-trimmed/PlusPF/
+kraken_eu=kraken2-results_$run\_5prime-trimmed/EuPathDB48/
+
+kraken_plus2=$output_dir/$kraken_output_dir
+kraken_eu2=$output_dir/$kraken_output_dir_2
+
+echo $kraken_eu
+echo $kraken_plus
+echo $kraken_eu2
+echo $kraken_plus2
+
 # fastq=$run\_fastq
 # eu_blast_result=$output_dir/$kraken_output_dir_2\/blast_result
 # plus_blast_result=$output_dir/$kraken_output_dir_2\/blast_result
@@ -162,6 +171,6 @@ mkdir $output_dir/$kraken_output_dir_2
 
 ### run python script to compare the results of the blast with the kraken2 results
 
-python3 WGS_metagenomic_analysis/compare_results.py  $output_dir/$kraken_output_dir
+python3 WGS_metagenomic_analysis/compare_results.py  $kraken_eu
 
-python3 WGS_metagenomic_analysis/compare_results.py  $output_dir/$kraken_output_dir_2
+python3 WGS_metagenomic_analysis/compare_results.py  $kraken_plus
