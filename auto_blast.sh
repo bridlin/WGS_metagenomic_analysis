@@ -31,9 +31,10 @@ for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do \
             -max_target_seqs 5 \
             -max_hsps 5   \
             -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
-            -remote &&\
+            -remote 
     else 
-        echo "blast is already done"
+        echo "blast is already done" && \
+        echo $file\_blast
     fi
 mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result ; done
 
