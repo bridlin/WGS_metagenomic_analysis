@@ -18,7 +18,7 @@ cd auto_blast_folder/
 
 mkdir ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result
 for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do \
-    if [ ! -f ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result/$file\_blast ];
+    if [ ! -f ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result/$file\_blast ] 
     then
         file=$( echo $files | cut -d / -f 4) && \
         echo $files && \
