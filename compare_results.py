@@ -10,6 +10,7 @@ ncbi = NCBITaxa()
 
 ### select the sample names from the kraken2 report files in the results path
 def get_sample_names(results_path):
+    print(results_path)
     sample_names = []
     for root, dirs, files in os.walk(results_path):
         for file in files:
