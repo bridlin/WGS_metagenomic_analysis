@@ -14,7 +14,7 @@ module load blast/2.14.0
 
 source WGS_metagenomic_analysis/config.txt
 
-
+cd auto_blast_folder/
 
 mkdir ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result
 for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do \
