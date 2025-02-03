@@ -108,8 +108,8 @@ mkdir $output_dir/$kraken_output_dir_2
 kraken_plus=kraken2-results_$run\_5prime-trimmed/PlusPF/
 kraken_eu=kraken2-results_$run\_5prime-trimmed/EuPathDB48/
 
-kraken_plus2=$output_dir/$kraken_output_dir
-kraken_eu2=$output_dir/$kraken_output_dir_2
+kraken_plus2=$output_dir/$kraken_output_dir\/
+kraken_eu2=$output_dir/$kraken_output_dir_2\/
 
 echo $kraken_eu
 echo $kraken_plus
@@ -171,6 +171,6 @@ echo $kraken_plus2
 
 ### run python script to compare the results of the blast with the kraken2 results
 
-python3 WGS_metagenomic_analysis/compare_results.py  $kraken_eu
+python3 WGS_metagenomic_analysis/compare_results.py  $kraken_eu2
 
-python3 WGS_metagenomic_analysis/compare_results.py  $kraken_plus
+python3 WGS_metagenomic_analysis/compare_results.py  $kraken_plus2
