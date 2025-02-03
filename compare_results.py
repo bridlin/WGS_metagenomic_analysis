@@ -10,7 +10,6 @@ ncbi = NCBITaxa()
 
 ### select the sample names from the kraken2 report files in the results path
 def get_sample_names(results_path):
-    print(results_path)
     sample_names = []
     for root, dirs, files in os.walk(results_path):
         for file in files:
@@ -21,6 +20,7 @@ def get_sample_names(results_path):
 
 ### read in as df the table with Genus taxo IS and reads number per sample
 def read_G_taxoIDs(results_path):
+    print(results_path) 
     for root, dirs, files in os.walk(results_path):
         for file in files:
             if file == "G_TaxoIDs_per_sample.tsv" :
@@ -128,7 +128,7 @@ def main():
     else:
         results_path = sys.argv[1]
 
-
+    print(results_path) 
     # results_path = '../../test-run23/kraken2-results_run23_5prime-trimmed/PlusPF/'
 
     # getting the Kraken results from the Genus taxon file as df
