@@ -20,9 +20,8 @@ mkdir ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result
 for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do \
     file=$( echo $files | cut -d / -f 4) && \
     echo $files && \
-    echo $file  && \
-    echo $file\_blast && \
     if [ ! -f ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result/$file\_blast ] ; then
+        echo $file\_blast && \
         blastn \
         -db nt \
         -query $files \
@@ -35,7 +34,9 @@ for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do \
         echo "blast is already done" && \
         echo $file\_blast
     fi
-mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result ; done
+if [ ! -f $file\_blast ] ; then
+    mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result  ; fi
+; done
 
 
 
@@ -45,9 +46,8 @@ mkdir ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
 for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do \
     file=$( echo $files | cut -d / -f 4) && \
     echo $files && \
-    echo $file  && \
-    echo $file\_blast && \
     if [ ! -f ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result/$file\_blast ] ; then
+        echo $file\_blast && \
         blastn \
         -db nt \
         -query $files \
@@ -60,7 +60,9 @@ for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do \
         echo "blast is already done" && \
         echo $file\_blast
     fi
-mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result ; done
+if [ ! -f $file\_blast ] ; then
+    mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result ; fi
+; done
 
 
 
