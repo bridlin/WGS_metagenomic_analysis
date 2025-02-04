@@ -14,6 +14,7 @@ module load python/3.9
 
 source WGS_metagenomic_analysis/config.txt
 
+output_dir=kraken2-results_$run\_5prime-trimmed
 kraken_plus=$output_dir/$kraken_output_dir\/
 kraken_eu=$output_dir/$kraken_output_dir_2\/
 
