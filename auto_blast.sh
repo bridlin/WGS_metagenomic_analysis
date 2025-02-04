@@ -34,9 +34,9 @@ for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do \
         echo "blast is already done" && \
         echo $file\_blast 
     fi
-    if [ ! -f $file\_blast ] ; then \
+    if [  -f $file\_blast ] ; then \
         mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result
-    ; fi 
+    fi 
 ; done
 
 
@@ -61,9 +61,9 @@ for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do \
         echo "blast is already done" && \
         echo $file\_blast
     fi
-    if [ ! -f $file\_blast ] ; then
+    if [  -f $file\_blast ] ; then
         mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result 
-    ; fi
+    fi
 ; done
 
 
