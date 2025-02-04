@@ -17,7 +17,7 @@ source WGS_metagenomic_analysis/config.txt
 cd auto_blast_folder/
 
 mkdir ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result
-for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do \
+for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do 
     file=$( echo $files | cut -d / -f 4) && \
     echo $files && \
     if [ ! -f ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result/$file\_blast ] ; then 
@@ -34,7 +34,7 @@ for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do \
         echo "blast is already done" && \
         echo $file\_blast 
     fi
-    if [  -f $file\_blast ] ; then \
+    if [  -f $file\_blast ] ; then 
         mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result
     fi 
 ; done
@@ -44,7 +44,7 @@ for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do \
 
 
 mkdir ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
-for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do \
+for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do 
     file=$( echo $files | cut -d / -f 4) && \
     echo $files && \
     if [ ! -f ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result/$file\_blast ] ; then
@@ -63,7 +63,7 @@ for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do \
     fi
     if [  -f $file\_blast ] ; then
         mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result 
-    fi
+    fi 
 ; done
 
 
