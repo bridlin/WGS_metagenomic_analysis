@@ -151,7 +151,7 @@ def main():
                 df_temp = pd.merge(df_G_taxo, blast_result_df, how='inner', left_on=['taxoID','sample'], right_on=['taxoID_kraken2','sample_kraken2'],left_index=False, right_index=False, sort=True,suffixes=('_x', '_y'), indicator=False)
                 dfresult_taxoid_list.append(df_temp)
                 #print(dfresult_taxoid_list)
-            else: print(str(sample) + '   ' + str(taxoid) + '   ' + 'blast result empty.')
+            else: print(str(sample) + ' ' + str(taxoid) + ' ' + 'blast result empty.')
         #print(dfresult_taxoid_list)    
         if dfresult_taxoid_list:
             dfresult_taxoid = pd.concat(dfresult_taxoid_list, ignore_index=True)
