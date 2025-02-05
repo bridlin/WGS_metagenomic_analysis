@@ -1,4 +1,4 @@
-run=run15
+run=run13
 input_list=("1407d_S1_" "1407Td_S2_" "1528d_S3_" "1528Td_S4_")
 
 kraken_output_dir=EuPathDB48
