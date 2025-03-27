@@ -125,36 +125,54 @@ python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $krake
 cd auto_blast_folder/
 
 mkdir ../$output_dir/$kraken_output_dir\/blast_result
-for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do \
-    file=$( echo $files | cut -d / -f 4) && \
-    echo $files && \
-    echo $file  && \
-    echo $file\_blast && \
-    blastn \
+for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do 
+    file=$( echo $files | cut -d / -f 4) && 
+    # echo $files && 
+    if [ ! -f ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result/$file\_blast ] ; then 
+        echo $file\_blast && 
+        echo "blasting..." &&
+        blastn \
         -db nt \
         -query $files \
         -out $file\_blast  \
         -max_target_seqs 5 \
         -max_hsps 5   \
         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
-        -remote && \
-mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result ; done
+        -remote 
+    else 
+        echo $file\_blast  && 
+        echo "blast is already done"
+    fi 
+    if [  -f $file\_blast ] ; then 
+        mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result ; fi 
+done
 
-mkdir ../$output_dir/$kraken_output_dir_2\/blast_result
-for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do \
-    file=$( echo $files | cut -d / -f 4) && \
-    echo $files && \
-    echo $file  && \
-    echo $file\_blast && \
-    blastn \
+
+
+
+
+mmkdir ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
+for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do 
+    file=$( echo $files | cut -d / -f 4) && 
+    # echo $files && 
+    if [ ! -f ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result/$file\_blast ] ; then 
+        echo $file\_blast && 
+        echo "blasting..." &&
+        blastn \
         -db nt \
         -query $files \
         -out $file\_blast  \
         -max_target_seqs 5 \
         -max_hsps 5   \
         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
-        -remote && \
-mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result ; done
+        -remote 
+    else 
+        echo $file\_blast  && 
+        echo "blast is already done"
+    fi 
+    if [  -f $file\_blast ] ; then 
+        mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result ; fi 
+done
 
 
 cd ..
