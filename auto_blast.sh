@@ -66,5 +66,11 @@ for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do
         mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result ; fi 
 done
 
+cd ..
 
+### run python script to compare the results of the blast with the kraken2 results
+
+python3 WGS_metagenomic_analysis/compare_results.py  $kraken_eu
+
+python3 WGS_metagenomic_analysis/compare_results.py  $kraken_plus
 
