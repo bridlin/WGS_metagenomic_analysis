@@ -107,10 +107,11 @@ multiqc   \
 
 
 
-kraken_plus=$output_dir/$kraken_output_dir\/
-kraken_eu=$output_dir/$kraken_output_dir_2\/
+kraken_plus=$output_dir/$kraken_output_dir\/extracted_reads\/
+kraken_eu=$output_dir/$kraken_output_dir_2\/extracted_reads\/
 
-
+mkdir $kraken_plus
+mkdir $kraken_eu
 
 echo $kraken_eu
 echo $kraken_plus
