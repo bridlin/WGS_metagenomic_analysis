@@ -19,7 +19,7 @@ cd auto_blast_folder/
 
 mkdir ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result
 for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do 
-    file=$( echo $files | cut -d / -f 4) && 
+    file=$(basename "$files") && 
     # echo $files && 
     if [ ! -f ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result/$file\_blast ] ; then 
         echo $file\_blast && 
@@ -44,9 +44,9 @@ for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do
             -max_hsps 5   \
             -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
             -remote 
-        fi
-        echo $file\_blast  && 
-        echo "blast is already done"
+        else
+            echo $file\_blast  && 
+            echo "blast is already done"
     fi 
     if [  -f $file\_blast ] ; then 
         mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result ; fi 
@@ -58,7 +58,7 @@ done
 
 mkdir ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
 for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do 
-    file=$( echo $files | cut -d / -f 4) && 
+     file=$(basename "$files") && 
     # echo $files && 
     if [ ! -f ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result/$file\_blast ] ; then 
         echo $file\_blast && 
@@ -83,9 +83,9 @@ for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do
             -max_hsps 5   \
             -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
             -remote 
-        fi
-        echo $file\_blast  && 
-        echo "blast is already done"
+        else
+            echo $file\_blast  && 
+            echo "blast is already done"
     fi 
     if [  -f $file\_blast ] ; then 
         mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result ; fi 
