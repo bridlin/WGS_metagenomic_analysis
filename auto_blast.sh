@@ -67,6 +67,14 @@ for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do
         mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result ; fi 
 done
 
+
+output_dir=kraken2-results_$run\_5prime-trimmed
+kraken_plus=$output_dir/$kraken_output_dir\/
+kraken_eu=$output_dir/$kraken_output_dir_2\/
+
+echo $kraken_eu
+echo $kraken_plus
+
 cd ..
 
 ### run python script to compare the results of the blast with the kraken2 results
