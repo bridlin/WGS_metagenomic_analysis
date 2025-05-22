@@ -108,15 +108,17 @@ mkdir $output_dir/$kraken_output_dir_2
 
 echo "run python script to extract 10 reads per genus from the kraken2 results"
 
-kraken_plus=$output_dir/$kraken_output_dir\/extracted_reads\/
-kraken_eu=$output_dir/$kraken_output_dir_2\/extracted_reads\/
+kraken_plus=$output_dir/$kraken_output_dir\/
+kraken_eu=$output_dir/$kraken_output_dir_2\/
 
-mkdir $kraken_plus
-mkdir $kraken_eu
+mkdir $kraken_plus\/extracted_reads
+mkdir $kraken_eu\/extracted_reads
 
 echo $kraken_eu
 echo $kraken_plus
 
+
+### run the python script to extract 10 reads per genus from the kraken2 results 1. arguments are the fastq directory and the kraken2 results directory
 python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $kraken_plus
 
 python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $kraken_eu
