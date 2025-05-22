@@ -132,11 +132,12 @@ cd auto_blast_folder/
 
 mkdir ../$output_dir/$kraken_output_dir\/blast_result
 for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/extracted_reads/*.1.fa ; do 
-    file=$( echo $files | cut -d / -f 4) && 
+    file=$(basename "$files") 
     # echo $files && 
-    if [ ! -f ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result/$file\_blast ] ; then 
-        echo $file\_blast && 
-        echo "blasting..." &&
+    if [ ! -f ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result/$file\_blast ]  
+    then 
+        echo $file\_blast  
+        echo "blasting..." 
         blastn \
         -db nt \
         -query $files \
@@ -146,11 +147,13 @@ for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/extracted_reads/
         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
         -remote 
     else 
-        echo $file\_blast  && 
+        echo $file\_blast  
         echo "blast is already done"
     fi 
-    if [  -f $file\_blast ] ; then 
-        mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result ; fi 
+    if [  -f $file\_blast ] 
+    then 
+        mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result  
+    fi 
 done
 
 
@@ -159,11 +162,12 @@ done
 
 mkdir ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
 for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/extracted_reads/*.1.fa ; do 
-    file=$( echo $files | cut -d / -f 4) && 
+    file=$(basename "$files")  
     # echo $files && 
-    if [ ! -f ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result/$file\_blast ] ; then 
-        echo $file\_blast && 
-        echo "blasting..." &&
+    if [ ! -f ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result/$file\_blast ]  
+    then 
+        echo $file\_blast 
+        echo "blasting..." 
         blastn \
         -db nt \
         -query $files \
@@ -173,11 +177,13 @@ for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/extracted_reads/*.1.
         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
         -remote 
     else 
-        echo $file\_blast  && 
+        echo $file\_blast  
         echo "blast is already done"
     fi 
-    if [  -f $file\_blast ] ; then 
-        mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result ; fi 
+    if [  -f $file\_blast ]
+    then 
+        mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
+    fi 
 done
 
 
