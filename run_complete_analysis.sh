@@ -111,17 +111,17 @@ echo "run python script to extract 10 reads per genus from the kraken2 results"
 kraken_plus=$output_dir/$kraken_output_dir\/
 kraken_eu=$output_dir/$kraken_output_dir_2\/
 
-mkdir $kraken_plus\/extracted_reads
-mkdir $kraken_eu\/extracted_reads
+mkdir $kraken_plus\extracted_reads
+mkdir $kraken_eu\extracted_reads
 
 echo $kraken_eu
 echo $kraken_plus
 
 
-### run the python script to extract 10 reads per genus from the kraken2 results 1. arguments are the fastq directory and the kraken2 results directory
-python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $kraken_plus
+# ### run the python script to extract 10 reads per genus from the kraken2 results 1. arguments are the fastq directory and the kraken2 results directory
+# python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $kraken_plus
 
-python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $kraken_eu
+# python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $kraken_eu
 
 
 ### run blast on the extracted reads
@@ -131,7 +131,7 @@ echo "run blast on the extracted reads"
 cd auto_blast_folder/
 
 mkdir ../$output_dir/$kraken_output_dir\/blast_result
-for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do 
+for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/extracted_reads/*.1.fa ; do 
     file=$( echo $files | cut -d / -f 4) && 
     # echo $files && 
     if [ ! -f ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result/$file\_blast ] ; then 
@@ -158,7 +158,7 @@ done
 
 
 mkdir ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
-for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do 
+for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/extracted_reads/*.1.fa ; do 
     file=$( echo $files | cut -d / -f 4) && 
     # echo $files && 
     if [ ! -f ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result/$file\_blast ] ; then 
@@ -184,6 +184,9 @@ done
 cd ..
 
 ### run python script to compare the results of the blast with the kraken2 results
+
+echo "run python script to compare the results of the blast with the kraken2 results"
+
 
 python3 WGS_metagenomic_analysis/compare_results.py  $kraken_eu
 
