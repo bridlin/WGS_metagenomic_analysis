@@ -8,6 +8,7 @@ ncbi = NCBITaxa()
 
 #### FUNCTIONS ####
 
+### select the sample names from the kraken2 report files in the results path
 def get_sample_names(results_path):
     sample_names = []
     for root, dirs, files in os.walk(results_path):
@@ -16,13 +17,10 @@ def get_sample_names(results_path):
                  sample_names.append(os.path.splitext(file)[0])
     return sample_names    
 
-def strip_samplenames(sample_name,kraken_file_path):
-    substring = kraken_file_path.split('/')
-    print(substring)
-    striped_name = sample_name.split(substring[-2])
-    return striped_name[0]
 
+### read in as df the table with Genus taxo IS and reads number per sample
 def read_G_taxoIDs(results_path):
+    print(results_path) 
     for root, dirs, files in os.walk(results_path):
         for file in files:
             if file == "G_TaxoIDs_per_sample.tsv" :
@@ -30,22 +28,15 @@ def read_G_taxoIDs(results_path):
                 df_report = pd.read_table(G_taxo,index_col=0)       
     return df_report    
 
-def read_blast_result(results_path):
-    for root, dirs, files in os.walk(results_path):
-        for file in files:
-            if (os.path.splitext(file)[1] == ".fa_blast") :
-                print(os.path.splitext(file)[0])
-                blast_result = results_path + '/' + 'blast_result/' + file
-                print(blast_result)
-                df_blast_result = pd.read_table(blast_result)
-    return df_blast_result
 
 
+### read in as df the blast results
 def blast_result_as_df(taxoid,sample_name,result_path):
     blastfile = result_path + '/blast_result/' + sample_name + '.tid' + str(taxoid) + '.1.fa_blast'       
     print(blastfile)
     if not os.path.isfile(blastfile):
         df_blast = pd.DataFrame()
+        print(str(sample_name) + '.tid' + str(taxoid) + ' blast file not found!!!')
     else:        
         dict_blast = parse_tabular_blast_results(blastfile)
         if not dict_blast:
@@ -74,7 +65,7 @@ def format_dfresult(dfresult):
     return(dfresult)
 
 def get_genus_taxID(dfresult):
-    # get the genus taxID from the taxoID column
+    # get the genus taxID from the taxoID column in dfresult
     for i,taxid in enumerate(dfresult['taxoid']): 
         #print(dfresult.loc[i,'taxoID'])
         kraken_genus_lineage = ncbi.get_lineage(dfresult.loc[i,'taxoID']) 
@@ -83,14 +74,24 @@ def get_genus_taxID(dfresult):
         if taxid.isdigit(): # check if string is only numbers,sometines the taxid is in this format 1111;1112
             try:
                 blast_lineage = ncbi.get_lineage(taxid)
+<<<<<<< HEAD
             except ValueError as e:
                 print(e)
+=======
+            except ValueError:
+                blast_lineage = None
+>>>>>>> general_runfile
         else:
             split_taxid = taxid.split(';')  
             try:
                 blast_lineage = ncbi.get_lineage(split_taxid[0])
+<<<<<<< HEAD
             except ValueError as e:
                 print(e)
+=======
+            except ValueError:
+                    blast_lineage = None
+>>>>>>> general_runfile
         if blast_lineage is not None and kraken_genus_lineage is not None:  
             genus_position = len(kraken_genus_lineage)
             if (len(blast_lineage) >= genus_position) :
@@ -99,6 +100,8 @@ def get_genus_taxID(dfresult):
             else:
                 dfresult.at[i,'genus_taxid'] = 'NaN'
     return(dfresult)
+
+
 
 def compare_names(dfresult):
     # comparing the name and the name_prefix_blast columns generating a new column with the comparison result
@@ -138,8 +141,8 @@ def main():
         results_path = sys.argv[1]
         print(results_path)
 
-
-    #results_path = '../../test-run23/kraken2-results_run23_5prime-trimmed/PlusPF/'
+    print(results_path) 
+    # results_path = '../../test-run23/kraken2-results_run23_5prime-trimmed/PlusPF/'
 
     # getting the Kraken results from the Genus taxon file as df
     df_G_taxo = read_G_taxoIDs(results_path)
@@ -150,22 +153,23 @@ def main():
     # script blocks if there are no blast results as the list of df is empty and the concat function does not work with empty lists
     dfresult_list = []
     for sample in get_sample_names(results_path):
-        #print(sample)
+        print(sample)
         taxoids = df_G_taxo.loc[df_G_taxo['sample'] == sample, 'taxoID']
         dfresult_taxoid_list = []
         for taxoid in taxoids:
-            #print(taxoid)
+            print(taxoid)
             blast_result_df = blast_result_as_df(taxoid,sample,results_path)
             if not blast_result_df.empty:
                 df_temp = pd.merge(df_G_taxo, blast_result_df, how='inner', left_on=['taxoID','sample'], right_on=['taxoID_kraken2','sample_kraken2'],left_index=False, right_index=False, sort=True,suffixes=('_x', '_y'), indicator=False)
                 dfresult_taxoid_list.append(df_temp)
                 #print(dfresult_taxoid_list)
+            else: print(str(sample) + ' ' + str(taxoid) + ' ' + 'blast result empty.')
         #print(dfresult_taxoid_list)    
         if dfresult_taxoid_list:
             dfresult_taxoid = pd.concat(dfresult_taxoid_list, ignore_index=True)
             dfresult_list.append(dfresult_taxoid)
-            print(dfresult_list)
-            #print(dfresult_taxoid)
+            #print('dfresultlist:' + str(dfresult_list))
+            print(dfresult_taxoid)
     dfresult = pd.concat(dfresult_list, ignore_index=True)
     
     # formatting the dfresult

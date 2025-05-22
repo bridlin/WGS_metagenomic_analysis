@@ -1,8 +1,6 @@
-run=run30
-input_list=("1845_S3_" "1587_S1_" "3438_S2_" "2531_S4_" "Undetermined_S0_")
+run=run35
+input_list=("2024T_S2_"  "2024_S1_" "Undetermined_S0_")
 
-#fastq_directory=run25_fastq
-#output_dir=kraken2-results_run25_5prime-trimmed
 kraken_output_dir=EuPathDB48
 kraken_output_dir_2=PlusPF
 kraken2_db=Kraken2_db/EuPathDB48
