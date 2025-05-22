@@ -1,7 +1,5 @@
 run=run35
 input_list=("2024T_S2_"  "2024_S1_" "Undetermined_S0_")
 
-kraken_output_dir=EuPathDB48
-kraken_output_dir_2=PlusPF
-kraken2_db=Kraken2_db/EuPathDB48
-kraken2_db_2=Kraken2_db/PlusPF
+kraken2_E=EuPathDB48
+kraken2_P=PlusPF
