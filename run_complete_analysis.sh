@@ -35,6 +35,7 @@ mkdir $output_dir/$kraken_output_dir_2
 
 ### run fastqc, cutadapt and trimmomatic on the raw reads
 
+echo "run fastqc, cutadapt and trimmomatic on the raw reads"
 
 for sample in "${input_list[@]}"; do
 fastqc $fastq_directory/$sample\L001_R1_001.fastq.gz \
@@ -105,7 +106,7 @@ multiqc   \
 
 ### run python script to extract 10 reads per genus from the kraken2 results
 
-
+echo "run python script to extract 10 reads per genus from the kraken2 results"
 
 kraken_plus=$output_dir/$kraken_output_dir\/extracted_reads\/
 kraken_eu=$output_dir/$kraken_output_dir_2\/extracted_reads\/
@@ -122,6 +123,8 @@ python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $krake
 
 
 ### run blast on the extracted reads
+
+echo "run blast on the extracted reads"
 
 cd auto_blast_folder/
 
@@ -152,7 +155,7 @@ done
 
 
 
-mmkdir ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
+mkdir ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
 for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do 
     file=$( echo $files | cut -d / -f 4) && 
     # echo $files && 
