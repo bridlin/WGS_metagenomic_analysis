@@ -1,5 +1,5 @@
 run=run35
-input_list=("2024T_S2_"  "2024_S1_" "Undetermined_S0_")
+input_list=("2024T_S2_" "2024_S1_" "Undetermined_S0_")
 
 kraken2_E=EuPathDB48
 kraken2_P=PlusPF

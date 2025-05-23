@@ -26,7 +26,7 @@ source WGS_metagenomic_analysis/config.txt
 
 echo "run complete analysis"
 echo "run= $run"
-echo "input_list= $input_list"
+echo "input_list= ${input_list[@]}"
 echo "kraken2_E= $kraken2_E"    
 echo "kraken2_P= $kraken2_P"
 
