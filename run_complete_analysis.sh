@@ -116,17 +116,17 @@ kraken2 \
     --threads 8 \
     --minimum-hit-groups 3  \
     --report-minimizer-data \
-    --report $output_dir_E/$sample$kraken_output_dir\.k2report  \
+    --report $output_dir_E/$sample$kraken2_E\.k2report  \
     --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
-    > $output_dir_E/$sample$kraken2_E\.kraken2 
-kraken2 \
-    --db $kraken2_db_P \
-    --threads 8 \
-    --minimum-hit-groups 3  \
-    --report-minimizer-data \
-    --report $output_dir_P/$sample$kraken2_P\.k2report  \
-    --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
-    > $output_dir_P/$sample$kraken2_P\.kraken2 ; done
+    > $output_dir_E/$sample$kraken2_E\.kraken2 ; done
+# kraken2 \
+#     --db $kraken2_db_P \
+#     --threads 8 \
+#     --minimum-hit-groups 3  \
+#     --report-minimizer-data \
+#     --report $output_dir_P/$sample$kraken2_P\.k2report  \
+#     --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
+#     > $output_dir_P/$sample$kraken2_P\.kraken2 ; done
 
 multiqc   \
     $output_dir \
@@ -142,7 +142,7 @@ mkdir $output_dir_P\/extracted_reads
 mkdir $output_dir_E\/extracted_reads
 
 ### run the python script to extract 10 reads per genus from the kraken2 results 1. arguments are the fastq directory and the kraken2 results directory
-python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $output_dir_P\/
+#python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $output_dir_P\/
 
 python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $output_dir_E\/
 
