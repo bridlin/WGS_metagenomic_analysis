@@ -16,7 +16,7 @@ module load python/3.9
 source WGS_metagenomic_analysis/config.txt
 
 cd auto_blast_folder/
-
+output_dir=kraken2-results_$run\_5prime-trimmed_test_test
 output_dir_E=$output_dir/$kraken2_E
 output_dir_P=$output_dir/$kraken2_P
 
@@ -26,7 +26,7 @@ echo "input_list= ${input_list[@]}"
 echo "kraken2_E= $kraken2_E"    
 echo "kraken2_P= $kraken2_P"
 echo "output_dir_E is " $output_dir_E
-echo  "output_dir_P is " $output_dir_P
+echo "output_dir_P is " $output_dir_P
 
 mkdir ../$output_dir_E\/blast_result
 mkdir ../$output_dir_P\/blast_result
