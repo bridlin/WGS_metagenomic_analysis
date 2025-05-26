@@ -17,11 +17,13 @@ source WGS_metagenomic_analysis/config.txt
 
 cd auto_blast_folder/
 
-mkdir ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result
-for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do 
-    file=$(basename "$files")  
+mkdir ../$output_dir_E\/blast_result
+mkdir ../$output_dir_P\/blast_result
+
+for files in ../$output_dir_E\/extracted_reads/*.1.fa ; do 
+    file=$(basename "$files")   
     # echo $files && 
-    if [ ! -f ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result/$file\_blast ]  
+    if [ ! -f ../$output_dir_E\/blast_result/$file\_blast ]  
     then 
         echo $file\_blast 
         echo "blasting..." 
@@ -33,7 +35,7 @@ for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do
         -max_hsps 5   \
         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
         -remote 
-    elif [ ! -s ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result/$file\_blast ] 
+    elif [ ! -s ../$output_dir_E\/blast_result/$file\_blast ] 
     then
         echo $file\_blast  
         echo "file is there but empty re-blasting..." 
@@ -51,7 +53,7 @@ for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do
     fi 
     if [  -f $file\_blast ] 
     then 
-        mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result  
+        mv $file\_blast ../$output_dir_E\/blast_result  
     fi 
 done
 
@@ -59,11 +61,11 @@ done
 
 
 
-mkdir ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
-for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do 
+
+for files in ../$output_dir_P\/extracted_reads/*.1.fa ; do 
      file=$(basename "$files")  
     # echo $files  
-    if [ ! -f ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result/$file\_blast ] 
+    if [ ! -f ../$output_dir_P\/blast_result/$file\_blast ] 
     then 
         echo $file\_blast  
         echo "blasting..." 
@@ -75,7 +77,7 @@ for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do
         -max_hsps 5   \
         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
         -remote 
-    elif [ ! -s ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result/$file\_blast ] 
+    elif [ ! -s ../$output_dir_P\/blast_result/$file\_blast ] 
     then
         echo $file\_blast 
         echo "file is there but empty re-blasting..." 
@@ -93,6 +95,6 @@ for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do
     fi 
     if [  -f $file\_blast ]  
     then 
-        mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result  
+        mv $file\_blast ../$output_dir_P\/blast_result  
     fi 
 done
