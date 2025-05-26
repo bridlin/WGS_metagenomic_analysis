@@ -22,7 +22,8 @@ mkdir ../$output_dir_P\/blast_result
 
 for files in ../$output_dir_E\/extracted_reads/*.1.fa ; do 
     file=$(basename "$files")   
-    # echo $files && 
+    echo $files 
+    echo $file
     if [ ! -f ../$output_dir_E\/blast_result/$file\_blast ]  
     then 
         echo $file\_blast 
@@ -64,7 +65,8 @@ done
 
 for files in ../$output_dir_P\/extracted_reads/*.1.fa ; do 
      file=$(basename "$files")  
-    # echo $files  
+    echo $files 
+    echo $file 
     if [ ! -f ../$output_dir_P\/blast_result/$file\_blast ] 
     then 
         echo $file\_blast  
