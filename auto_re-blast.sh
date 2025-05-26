@@ -17,6 +17,9 @@ source WGS_metagenomic_analysis/config.txt
 
 cd auto_blast_folder/
 
+echo $output_dir_E
+echo $output_dir_P
+
 mkdir ../$output_dir_E\/blast_result
 mkdir ../$output_dir_P\/blast_result
 
