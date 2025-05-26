@@ -17,8 +17,16 @@ source WGS_metagenomic_analysis/config.txt
 
 cd auto_blast_folder/
 
-echo $output_dir_E
-echo $output_dir_P
+output_dir_E=$output_dir/$kraken2_E
+output_dir_P=$output_dir/$kraken2_P
+
+echo "run auto re-blast"
+echo "run= $run"
+echo "input_list= ${input_list[@]}"
+echo "kraken2_E= $kraken2_E"    
+echo "kraken2_P= $kraken2_P"
+echo "output_dir_E is " $output_dir_E
+echo  "output_dir_P is " $output_dir_P
 
 mkdir ../$output_dir_E\/blast_result
 mkdir ../$output_dir_P\/blast_result
