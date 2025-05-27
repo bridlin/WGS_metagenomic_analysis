@@ -13,7 +13,7 @@
 module load blast/2.14.0
 module load python/3.9
 
-source ../WGS_metagenomic_analysis/config.txt
+source WGS_metagenomic_analysis/config.txt
 
 output_dir=kraken2-results_$run\_5prime-trimmed_test_test
 output_dir_E=$output_dir/$kraken2_E
