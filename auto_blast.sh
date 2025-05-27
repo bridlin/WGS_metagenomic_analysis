@@ -15,13 +15,28 @@ module load python/3.9
 
 source ../WGS_metagenomic_analysis/config.txt
 
+output_dir=kraken2-results_$run\_5prime-trimmed_test_test
+output_dir_E=$output_dir/$kraken2_E
+output_dir_P=$output_dir/$kraken2_P
+
+echo "run auto blast and compare results"
+echo "run= $run"
+echo "input_list= ${input_list[@]}"
+echo "kraken2_E= $kraken2_E"    
+echo "kraken2_P= $kraken2_P"
+echo "output_dir_E is " $output_dir_E
+echo "output_dir_P is " $output_dir_P
+
+mkdir ../$output_dir_E\/blast_result
+mkdir ../$output_dir_P\/blast_result
+
 cd auto_blast_folder/
 
-mkdir ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result
-for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do 
+
+for files in ../$output_dir_E\/extracted_reads/*.1.fa ; do 
     file=$(basename "$files")  
     # echo $files  
-    if [ ! -f ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result/$file\_blast ]  
+    if [ ! -f ../$output_dir_E\/blast_result/$file\_blast ]  
     then 
         echo $file\_blast 
         echo "blasting..." 
@@ -39,7 +54,7 @@ for files in ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/*.1.fa ; do
     fi 
     if [  -f $file\_blast ]  
     then 
-        mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/EuPathDB48/blast_result  
+        mv $file\_blast ../$output_dir_E\/blast_result  
     fi 
 done
 
@@ -47,11 +62,11 @@ done
 
 
 
-mkdir ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result
-for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do 
+
+for files in ../$output_dir_P\/extracted_reads/*.1.fa ; do 
     file=$(basename "$files")  
     # echo $files && 
-    if [ ! -f ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result/$file\_blast ]  
+    if [ ! -f ../$output_dir_P\/blast_result/$file\_blast ]  
     then 
         echo $file\_blast  
         echo "blasting..." 
@@ -69,23 +84,19 @@ for files in ../kraken2-results_$run\_5prime-trimmed/PlusPF/*.1.fa ; do
     fi 
     if [  -f $file\_blast ]  
     then 
-        mv $file\_blast ../kraken2-results_$run\_5prime-trimmed/PlusPF/blast_result  
+        mv $file\_blast ../$output_dir_P\/blast_result/$file\_blast  
     fi 
 done
 
 
-output_dir=kraken2-results_$run\_5prime-trimmed
-kraken_plus=$output_dir/$kraken_output_dir\/
-kraken_eu=$output_dir/$kraken_output_dir_2\/
 
-echo $kraken_eu
-echo $kraken_plus
 
 cd ..
 
 ### run python script to compare the results of the blast with the kraken2 results
+echo "run python script to compare the results of the blast with the kraken2 results"
 
-python3 WGS_metagenomic_analysis/compare_results.py  $kraken_eu
 
-python3 WGS_metagenomic_analysis/compare_results.py  $kraken_plus
+python3 WGS_metagenomic_analysis/compare_results.py  $output_dir_E\/
 
+python3 WGS_metagenomic_analysis/compare_results.py  $output_dir_P\/
