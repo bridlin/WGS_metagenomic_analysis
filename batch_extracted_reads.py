@@ -15,8 +15,6 @@ def write_chunk(chunk, chunk_num):
     print(f"Wrote {len(chunk)} reads to {out_path}")
 
 
-# 2024T_S2_EuPathDB48.tid1463229.1.fa
-
 
 for fasta_file in input_folder.glob("*.fa"):
     file_id = fasta_file.stem  # gets filename without extension

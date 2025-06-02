@@ -5,22 +5,49 @@ import os
 
 #### FUNCTIONS ####
 
-### read in as df the table with Genus taxo IS and reads number per sample
+### reads in as df the blast_chunk results from the chunk_blast_results folder and combine them into one df
 def read_chunk_blast_result(results_path):
-    print(results_path) 
+    print(f"Reading from: {results_path}")
+    dataframes = []
+    
     for root, dirs, files in os.walk(results_path):
-        print(files)
+        print(f"Files found in {root}: {files}")
         for file in files:
-            print(file)
-            if os.path.splitext(file)[1] == ".fasta_blast": 
-                chunk_blast = results_path + '/' + file
-                df_chunk_blast = pd.read_table(chunk_blast,index_col=None,header=None)       
-    return df_chunk_blast  
-
+            print(f"Checking file: {file}")
+            if file.endswith(".fasta_blast"):
+                file_path = os.path.join(root, file)
+                print(f"Reading file: {file_path}")
+                df = pd.read_table(file_path, header=None)
+                dataframes.append(df)
+    
+    if dataframes:
+        df_chunk_blast = pd.concat(dataframes, ignore_index=True)
+    else:
+        df_chunk_blast = pd.DataFrame()
+    
+    return df_chunk_blast
 
 def split_first_column(df):
-    df[[0]]= df.iloc[:,0].astype("string").str.split("|", expand=True)
+    # df2=[]
+    # df2= df.iloc[:,0].astype("string").str.split("|", expand=True)
+    df[['file', [0]]] = df.iloc[:,0].astype("string").str.split("|", expand=True)
     return df
+
+def split_df_by_last_column(df):
+    # Get the name (or index) of the last column
+    last_col = df.columns[-1]
+    print(f"Last column to split by: {last_col}")
+    # Dictionary to hold the resulting sub-DataFrames
+    split_dfs = {}
+    
+    # Group by the last column
+    for value, group in df.groupby(last_col):
+        # Drop the last column
+        sub_df = group.drop(columns=last_col)
+        # Store in dictionary with key based on the group value
+        split_dfs[str(value)] = sub_df
+    
+    return split_dfs
 
 
 print("hello")
@@ -33,7 +60,7 @@ def main():
     # else:
     #     results_path = sys.argv[1]
     #     print(results_path)
-    results_path = '../blast_results/'
+    results_path = '../../chunk_blast_results/'
 
     print(results_path) 
 
@@ -42,7 +69,13 @@ def main():
     df_chunk_blast = read_chunk_blast_result(results_path)
     print(df_chunk_blast)
 
-    print(split_first_column(df_chunk_blast))
+    df_total = split_first_column(df_chunk_blast)
+    print(df_total)
+    split_dfs = split_df_by_last_column(df_total)
+    print(split_df_by_last_column(df_total))
+
+    for key, sub_df in split_dfs.items():
+        sub_df.to_csv(f"{results_path}/{key}.fa_blast", sep='\t', index=False, header=False)
 
 
 
