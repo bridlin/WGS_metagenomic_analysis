@@ -11,7 +11,7 @@
 #SBATCH --mem  128GB
 
 module load blast/2.14.0
-
+module load python/3.9
 
 source WGS_metagenomic_analysis/config.txt
 
@@ -32,13 +32,15 @@ mkdir ../$output_dir_P\/blast_result
 
 
 
-python3 WGS_metagenomic_analysis/batch_extracted_reads.py ../$output_dir_E\
+python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_E\
 
-python3 WGS_metagenomic_analysis/batch_extracted_reads.py ../$output_dir_P\
+python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_P\
 
 
 cd auto_blast_folder/
 
+mkdir ../$output_dir_E\/blast_result
+mkdir ../$output_dir_P\/blast_result
 
 for files in ../$output_dir_E\/blast_chunks/*.fasta ; do 
     file=$(basename "$files")  
@@ -91,6 +93,8 @@ done
 #     fi 
 # done
 
- python3 WGS_metagenomic_analysis/dechunk_blast_results.py  ../$output_dir_E\
+cd ..
+
+ python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_E\
  
- python3 WGS_metagenomic_analysis/dechunk_blast_results.py  ../$output_dir_P\
+ python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_P\
