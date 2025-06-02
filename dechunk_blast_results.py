@@ -1,7 +1,7 @@
 import pandas as pd
 import sys
 import os
-
+from pathlib import Path
 
 #### FUNCTIONS ####
 
@@ -55,25 +55,38 @@ print("hello")
 #### Main ####
 def main():
     print("hello")
-    # if len(sys.argv) == 1:
-    #     print('input file paths are missing as command line arguments!!!')
-    # else:
-    #     results_path = sys.argv[1]
-    #     print(results_path)
-    results_path = '../../chunk_blast_results/'
+    if len(sys.argv) == 1:
+        print('Input file paths are missing as command line arguments!!!')
+        sys.exit(1)  # Exit the program to avoid NameError
+
+    input_path = Path(sys.argv[1])
+    print(input_path)
+    
+    results_path = input_path / "chunk_blast_results"
+    print(results_path)
+    
+
+    
+
+   
+    # results_path = '../../chunk_blast_results/'
 
     print(results_path) 
 
 
- # getting the Kraken results from the Genus taxon file as df
+#   # getting the chunke blast results and de-chunk them into individual blast results
     df_chunk_blast = read_chunk_blast_result(results_path)
     print(df_chunk_blast)
 
+#   # Split the first column into two columns: the read name [0] and the file name
     df_total = split_first_column(df_chunk_blast)
     print(df_total)
+#   # split the DataFrame by the last column (which is the file name) and return a list of dfs
     split_dfs = split_df_by_last_column(df_total)
     print(split_df_by_last_column(df_total))
 
+
+#   # write a file for each df in the df_list
     for key, sub_df in split_dfs.items():
         sub_df.to_csv(f"{results_path}/{key}.fa_blast", sep='\t', index=False, header=False)
 

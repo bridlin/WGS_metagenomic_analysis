@@ -1,8 +1,20 @@
 from pathlib import Path
 from Bio import SeqIO
+import sys
 
-input_folder = Path("../../extracted_reads/")  # folder with your fasta files
-output_folder = Path("../../blast_chunks")
+# This script reads fasta files from a specified input folder, chunks them into bigger files,
+# and writes these chunks to an output folder.
+# Usage: python batch_extracted_reads.py <path_to_results_folder>
+
+if len(sys.argv) == 1:
+    print('Input file paths are missing as command line arguments!!!')
+    sys.exit(1)  # optional: exit the script
+else:
+    results_path = Path(sys.argv[1])  # convert to Path right away
+    print(results_path)
+
+input_folder = results_path / "extracted_reads"
+output_folder = results_path / "blast_chunks"
 output_folder.mkdir(exist_ok=True)
 
 chunk_size = 100
