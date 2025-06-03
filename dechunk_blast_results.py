@@ -91,8 +91,8 @@ def main():
     df_total = split_first_column(df_chunk_blast)
     print(df_total)
 #   # split the DataFrame by the last column (which is the file name) and return a list of dfs
-    split_dfs = split_df_by_last_column(df_total)
-    print(split_df_by_last_column(df_total))
+    split_dfs = split_df_by_file_column(df_total)
+    print(split_df_by_file_column(df_total))
 
 
 #   # write a file for each df in the df_list
