@@ -62,7 +62,7 @@ def main():
     input_path = Path(sys.argv[1])
     print(input_path)
     
-    results_path = input_path / "chunk_blast_results"
+    results_path = input_path / "blast_result"
     print(results_path)
     
 
