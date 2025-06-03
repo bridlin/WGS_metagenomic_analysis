@@ -65,17 +65,17 @@ print("hello")
 #### Main ####
 def main():
     print("hello")
-    # if len(sys.argv) == 1:
-    #     print('Input file paths are missing as command line arguments!!!')
-    #     sys.exit(1)  # Exit the program to avoid NameError
+    if len(sys.argv) == 1:
+        print('Input file paths are missing as command line arguments!!!')
+        sys.exit(1)  # Exit the program to avoid NameError
 
-    # input_path = Path(sys.argv[1])
-    # print(input_path)
+    input_path = Path(sys.argv[1])
+    print(input_path)
     
-    # results_path = input_path / "blast_result"
-    # print(results_path)
+    results_path = input_path / "blast_result"
+    print(results_path)
     
-    results_path = '../../chunk_blast_results/'
+    # results_path = '../../chunk_blast_results/'
 
     print(results_path) 
 
