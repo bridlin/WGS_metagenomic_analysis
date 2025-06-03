@@ -27,23 +27,32 @@ def read_chunk_blast_result(results_path):
     
     return df_chunk_blast
 
+### Splits the first column of the DataFrame into two columns: file name and read name
+
 def split_first_column(df):
-    # df2=[]
-    # df2= df.iloc[:,0].astype("string").str.split("|", expand=True)
-    df[['file', [0]]] = df.iloc[:,0].astype("string").str.split("|", expand=True)
+    # Split the first column on '|', expand into two columns
+    split_cols = df.iloc[:, 0].astype(str).str.split("|", expand=True)
+    
+    # Rename the new columns for clarity
+    split_cols.columns = ['file', 'read_name']
+
+    # Drop the original first column and insert the new ones
+    df = df.drop(df.columns[0], axis=1)
+    df = pd.concat([split_cols, df], axis=1)
+    
     return df
 
-def split_df_by_last_column(df):
+def split_df_by_file_column(df):
     # Get the name (or index) of the last column
-    last_col = df.columns[-1]
-    print(f"Last column to split by: {last_col}")
+    file_col = df['file']
+    print(f"Last column to split by: {file_col}")
     # Dictionary to hold the resulting sub-DataFrames
     split_dfs = {}
     
     # Group by the last column
-    for value, group in df.groupby(last_col):
+    for value, group in df.groupby(file_col):
         # Drop the last column
-        sub_df = group.drop(columns=last_col)
+        sub_df = group.drop(columns=file_col)
         # Store in dictionary with key based on the group value
         split_dfs[str(value)] = sub_df
     
