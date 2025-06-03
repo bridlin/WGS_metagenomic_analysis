@@ -31,6 +31,7 @@ mkdir ../$output_dir_E\/blast_result
 mkdir ../$output_dir_P\/blast_result
 
 
+# batching  the reads for light blasting ito 100 reads per fasta file
 
 # python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_E\
 
@@ -94,6 +95,8 @@ for files in ../$output_dir_P\/blast_chunks/*.fasta ; do
 done
 
 cd ..
+
+# dechunking the blast results
 
  python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_E\
  

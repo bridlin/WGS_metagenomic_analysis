@@ -111,14 +111,14 @@ mkdir $output_dir_P
 #     $fastq_directory/$sample\nonhuman_reads.1.fastq  $fastq_directory/$sample\nonhuman_reads.2.fastq \
 #     --minimum-length 60 \
 #     > $output_dir/$sample\nonhuman_reads_cutadapt_report.txt &&
-kraken2 \
-    --db $kraken2_db_E \
-    --threads 8 \
-    --minimum-hit-groups 3  \
-    --report-minimizer-data \
-    --report $output_dir_E/$sample$kraken2_E\.k2report  \
-    --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
-    > $output_dir_E/$sample$kraken2_E\.kraken2 ; done
+# kraken2 \
+#     --db $kraken2_db_E \
+#     --threads 8 \
+#     --minimum-hit-groups 3  \
+#     --report-minimizer-data \
+#     --report $output_dir_E/$sample$kraken2_E\.k2report  \
+#     --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
+#     > $output_dir_E/$sample$kraken2_E\.kraken2 ; done
 # kraken2 \
 #     --db $kraken2_db_P \
 #     --threads 8 \
@@ -128,34 +128,40 @@ kraken2 \
 #     --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
 #     > $output_dir_P/$sample$kraken2_P\.kraken2 ; done
 
-multiqc   \
-    $output_dir \
-    $output_dir_E \
-    $output_dir_P \
-    --outdir $output_dir 
+# multiqc   \
+#     $output_dir \
+#     $output_dir_E \
+#     $output_dir_P \
+#     --outdir $output_dir 
 
 
-### run python script to extract 10 reads per genus from the kraken2 results
-echo "run python script to extract 10 reads per genus from the kraken2 results"
+# ### run python script to extract 10 reads per genus from the kraken2 results
+# echo "run python script to extract 10 reads per genus from the kraken2 results"
 
-mkdir $output_dir_P\/extracted_reads
-mkdir $output_dir_E\/extracted_reads
+# mkdir $output_dir_P\/extracted_reads
+# mkdir $output_dir_E\/extracted_reads
 
-### run the python script to extract 10 reads per genus from the kraken2 results 1. arguments are the fastq directory and the kraken2 results directory
-#python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $output_dir_P\/
+# ### run the python script to extract 10 reads per genus from the kraken2 results 1. arguments are the fastq directory and the kraken2 results directory
+# echo "run the python script to extract 10 reads per genus from the kraken2 results" 
+# #python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $output_dir_P\/
 
-python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $output_dir_E\/
+# python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $output_dir_E\/
 
+# ### batching  the reads for light blasting ito 100 reads per fasta file
+# echo "batching  the reads for light blasting ito 100 reads per fasta file" 
+# python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_E\
 
-### run blast on the extracted reads
-echo "run blast on the extracted reads"
+# python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_P\
+
+### run blast on the extracted batched reads
+echo "run blast on the extracted  batched reads"
 
 cd auto_blast_folder/
 
 mkdir ../$output_dir_E\/blast_result
 mkdir ../$output_dir_P\/blast_result
 
-for files in ../$output_dir_E\/extracted_reads/*.1.fa ; do 
+for files in ../$output_dir_E\/blast_chunks/*.fasta ; do 
     file=$(basename "$files") 
     # echo $files && 
     if [ ! -f ../$output_dir_E\/blast_result/$file\_blast ]  
@@ -181,7 +187,7 @@ for files in ../$output_dir_E\/extracted_reads/*.1.fa ; do
 done
 
 
-for files in ../$output_dir_P\/extracted_reads/*.1.fa ; do 
+for files in ../$output_dir_P\/blast_chunks/*.fasta ; do 
     file=$(basename "$files")  
     # echo $files && 
     if [ ! -f ../$output_dir_P\/blast_result/$file\_blast ]  
@@ -208,6 +214,16 @@ done
 
 
 cd ..
+
+# dechunking the blast results
+echo "dechunking the blast results"
+
+python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_E\
+ 
+python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_P\
+
+
+
 
 ### run python script to compare the results of the blast with the kraken2 results
 echo "run python script to compare the results of the blast with the kraken2 results"
