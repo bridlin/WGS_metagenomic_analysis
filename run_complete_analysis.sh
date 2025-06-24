@@ -109,7 +109,7 @@ cutadapt  \
     -o $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq  \
     -p $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq  \
     $fastq_directory/$sample\nonhuman_reads.1.fastq  $fastq_directory/$sample\nonhuman_reads.2.fastq \
-    --minimum-length 60 \
+    --minimum-length 40 \
     > $output_dir/$sample\nonhuman_reads_cutadapt_report.txt &&
 kraken2 \
     --db $kraken2_db_E \
