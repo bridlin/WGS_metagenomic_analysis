@@ -148,8 +148,8 @@ python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $outpu
 
 python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $output_dir_E\/
 
-### batching  the reads for light blasting ito 100 reads per fasta file
-echo "batching  the reads for light blasting ito 100 reads per fasta file" 
+### batching  the reads for light blasting into 100 reads per fasta file
+echo "batching  the reads for light blasting into 100 reads per fasta file"
 
 python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_E\
 
