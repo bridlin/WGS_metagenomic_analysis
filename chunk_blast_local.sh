@@ -99,4 +99,4 @@ done
 
  python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_E\
  
- python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_P\
+# python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_P\
