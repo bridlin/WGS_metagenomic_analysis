@@ -83,7 +83,7 @@ for files in ../$output_dir_P\/extracted_reads_2/*.1.fa ; do
         echo $file\_blast  
         echo "blasting..." 
         blastn \
-        -db ../../bank/nt/current/blast/nt \
+        -db ../../bank/nt/current/blast/ \
         -query $files \
         -out $file\_blast  \
         -max_target_seqs 5 \
@@ -94,7 +94,7 @@ for files in ../$output_dir_P\/extracted_reads_2/*.1.fa ; do
         echo $file\_blast 
         echo "file is there but empty re-blasting..." 
         blastn \
-        -db ../../bank/nt/current/blast/nt \
+        -db ../../bank/nt/current/blast/ \
         -query $files \
         -out $file\_blast  \
         -max_target_seqs 5 \
