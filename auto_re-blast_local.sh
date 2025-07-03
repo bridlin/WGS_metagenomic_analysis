@@ -16,6 +16,7 @@ module load python/3.9
 source WGS_metagenomic_analysis/config.txt
 
 cd auto_blast_folder/
+
 output_dir=kraken2-results_$run\_5prime-trimmed
 output_dir_E=$output_dir/$kraken2_E
 output_dir_P=$output_dir/$kraken2_P
@@ -83,7 +84,7 @@ for files in ../$output_dir_P\/extracted_reads_2/*.1.fa ; do
         echo $file\_blast  
         echo "blasting..." 
         blastn \
-        -db ../../bank/nt/current/blast/ \
+        -db ../../../bank/nt/current/blast/nt \
         -query $files \
         -out $file\_blast  \
         -max_target_seqs 5 \
@@ -94,7 +95,7 @@ for files in ../$output_dir_P\/extracted_reads_2/*.1.fa ; do
         echo $file\_blast 
         echo "file is there but empty re-blasting..." 
         blastn \
-        -db ../../bank/nt/current/blast/ \
+        -db ../../../bank/nt/current/blast/nt \
         -query $files \
         -out $file\_blast  \
         -max_target_seqs 5 \
