@@ -27,8 +27,8 @@ echo "kraken2_P= $kraken2_P"
 echo "output_dir_E is " $output_dir_E
 echo "output_dir_P is " $output_dir_P
 
-mkdir ../$output_dir_E\/blast_result
-mkdir ../$output_dir_P\/blast_result
+mkdir $output_dir_E\/blast_result
+mkdir $output_dir_P\/blast_result
 
 
 # batching  the reads for light blasting ito 100 reads per fasta file
@@ -38,20 +38,20 @@ mkdir ../$output_dir_P\/blast_result
 # python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_P\
 
 
-cd auto_blast_folder/
+# cd auto_blast_folder/
 
-mkdir ../$output_dir_E\/blast_result
-mkdir ../$output_dir_P\/blast_result
+mkdir $output_dir_E\/blast_result
+mkdir $output_dir_P\/blast_result
 
-for files in ../$output_dir_E\/blast_chunks/*.fasta ; do 
+for files in $output_dir_E\/blast_chunks/*.fasta ; do 
     file=$(basename "$files")  
     # echo $files  
-    if [ ! -f ../$output_dir_E\/blast_result/$file\_blast ]  
+    if [ ! -f $output_dir_E\/blast_result/$file\_blast ]  
     then 
         echo $file\_blast 
         echo "blasting..." 
         blastn \
-        -db ../../bank/nt/current/blast/nt \
+        -db ../bank/nt/current/blast/nt \
         -query $files \
         -out $file\_blast  \
         -max_target_seqs 5 \
@@ -63,36 +63,36 @@ for files in ../$output_dir_E\/blast_chunks/*.fasta ; do
     fi 
     if [  -f $file\_blast ]  
     then 
-        mv $file\_blast ../$output_dir_E\/blast_result  
+        mv $file\_blast $output_dir_E\/blast_result  
     fi 
 done
 
 
-for files in ../$output_dir_P\/blast_chunks/*.fasta ; do 
-    file=$(basename "$files")  
-    # echo $files && 
-    if [ ! -f ../$output_dir_P\/blast_result/$file\_blast ]  
-    then 
-        echo $file\_blast  
-        echo "blasting..." 
-        blastn \
-        -db ../../bank/nt/current/blast/nt \
-        -query $files \
-        -out $file\_blast  \
-        -max_target_seqs 5 \
-        -max_hsps 5   \
-        -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" 
-    else 
-        echo $file\_blast   
-        echo "blast is already done"
-    fi 
-    if [  -f $file\_blast ]  
-    then 
-        mv $file\_blast ../$output_dir_P\/blast_result/$file\_blast  
-    fi 
-done
+# for files in ../$output_dir_P\/blast_chunks/*.fasta ; do 
+#     file=$(basename "$files")  
+#     # echo $files && 
+#     if [ ! -f ../$output_dir_P\/blast_result/$file\_blast ]  
+#     then 
+#         echo $file\_blast  
+#         echo "blasting..." 
+#         blastn \
+#         -db ../../bank/nt/current/blast/nt \
+#         -query $files \
+#         -out $file\_blast  \
+#         -max_target_seqs 5 \
+#         -max_hsps 5   \
+#         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" 
+#     else 
+#         echo $file\_blast   
+#         echo "blast is already done"
+#     fi 
+#     if [  -f $file\_blast ]  
+#     then 
+#         mv $file\_blast ../$output_dir_P\/blast_result/$file\_blast  
+#     fi 
+# done
 
-cd ..
+# cd ..
 
 # dechunking the blast results
 
