@@ -17,6 +17,8 @@ source WGS_metagenomic_analysis/config.txt
 
 output_dir=kraken2-results_$run\_5prime-trimmed_chunked
 output_dir_P=$output_dir/$kraken2_P
+output_dir_E=$output_dir/$kraken2_E
+
 
 echo "run auto blast and compare results"
 echo "run= $run"
