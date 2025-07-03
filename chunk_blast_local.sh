@@ -15,8 +15,7 @@ module load python/3.9
 
 source WGS_metagenomic_analysis/config.txt
 
-output_dir=kraken2-results_$run\_5prime-trimmed_test_test
-output_dir_E=$output_dir/$kraken2_E
+output_dir=kraken2-results_$run\_5prime-trimmed_chunked
 output_dir_P=$output_dir/$kraken2_P
 
 echo "run auto blast and compare results"
@@ -31,7 +30,7 @@ mkdir $output_dir_E\/blast_result
 mkdir $output_dir_P\/blast_result
 
 
-# batching  the reads for light blasting ito 100 reads per fasta file
+# batching  the reads for light blasting into 100 reads per fasta file
 
 # python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_E\
 
