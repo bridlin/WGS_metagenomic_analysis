@@ -52,7 +52,7 @@ for files in $output_dir_E\/blast_chunks/*.fasta ; do
         echo $file\_blast 
         echo "blasting..." 
         blastn \
-        -db ../bank/nt/current/blast/nt \
+        -db ../../bank/nt/current/blast/nt \
         -query $files \
         -out $file\_blast  \
         -max_target_seqs 5 \
