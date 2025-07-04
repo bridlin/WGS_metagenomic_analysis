@@ -39,20 +39,20 @@ mkdir $output_dir_P\/blast_result
 # python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_P\
 
 
-# cd auto_blast_folder/
+cd auto_blast_folder/
 
 mkdir $output_dir_E\/blast_result
 mkdir $output_dir_P\/blast_result
 
-for files in $output_dir_E\/blast_chunks/*.fasta ; do 
+for files in ../$output_dir_E\/blast_chunks/*.fasta ; do 
     file=$(basename "$files")  
     # echo $files  
-    if [ ! -f $output_dir_E\/blast_result/$file\_blast ]  
+    if [ ! -f ../$output_dir_E\/blast_result/$file\_blast ]  
     then 
         echo $file\_blast 
         echo "blasting..." 
         blastn \
-        -db ../../bank/nt/current/blast/nt \
+        -db ../../../bank/nt/current/blast/nt \
         -query $files \
         -out $file\_blast  \
         -max_target_seqs 5 \
@@ -64,7 +64,7 @@ for files in $output_dir_E\/blast_chunks/*.fasta ; do
     fi 
     if [  -f $file\_blast ]  
     then 
-        mv $file\_blast $output_dir_E\/blast_result  
+        mv $file\_blast ../$output_dir_E\/blast_result  
     fi 
 done
 
@@ -77,7 +77,7 @@ done
 #         echo $file\_blast  
 #         echo "blasting..." 
 #         blastn \
-#         -db ../../bank/nt/current/blast/nt \
+#         -db ../../../bank/nt/current/blast/nt \
 #         -query $files \
 #         -out $file\_blast  \
 #         -max_target_seqs 5 \
