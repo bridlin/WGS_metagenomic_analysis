@@ -83,10 +83,10 @@ for sample in "${input_list[@]}"; do
 #     --un-conc $fastq_directory/$sample\nonhuman_reads.fastq \
 #     -S $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam \
 #     2> $output_dir/$sample\_bowtie.log &&
-# samtools \
-#     view -S \
-#     -b $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam \   
-#     > $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
+samtools \
+    view -S \
+    -b $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam \   
+    > $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
 samtools \
     sort $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam  \
     -o $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam &&
