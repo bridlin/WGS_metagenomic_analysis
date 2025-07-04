@@ -109,6 +109,9 @@ def main():
     df_taxoIDs_all = pd.DataFrame(columns=['sample' ,'taxoID', 'name', 'reads'])                            # empty df to be filled 
     
     for root, dirs, files in os.walk(kraken_file_path): 
+        print(root)
+        print(dirs)
+        print(files)
         for file in files: 
             if os.path.splitext(file)[1] == ".k2report":                                                    # identification of the Kraken2 reports that have to be read
                 report = root + file
