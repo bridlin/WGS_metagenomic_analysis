@@ -85,7 +85,7 @@ for sample in "${input_list[@]}"; do
 #     2> $output_dir/$sample\_bowtie.log &&
 samtools \
     view -S \
-    -b $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam \   
+    -b $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam  \
     > $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
 samtools \
     sort $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam  \
