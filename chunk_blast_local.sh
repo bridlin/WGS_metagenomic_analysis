@@ -69,31 +69,31 @@ for files in ../$output_dir_E\/blast_chunks/*.fasta ; do
 done
 
 
-# for files in ../$output_dir_P\/blast_chunks/*.fasta ; do 
-#     file=$(basename "$files")  
-#     # echo $files && 
-#     if [ ! -f ../$output_dir_P\/blast_result/$file\_blast ]  
-#     then 
-#         echo $file\_blast  
-#         echo "blasting..." 
-#         blastn \
-#         -db ../../../bank/nt/current/blast/nt \
-#         -query $files \
-#         -out $file\_blast  \
-#         -max_target_seqs 5 \
-#         -max_hsps 5   \
-#         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" 
-#     else 
-#         echo $file\_blast   
-#         echo "blast is already done"
-#     fi 
-#     if [  -f $file\_blast ]  
-#     then 
-#         mv $file\_blast ../$output_dir_P\/blast_result/$file\_blast  
-#     fi 
-# done
+for files in ../$output_dir_P\/blast_chunks/*.fasta ; do 
+    file=$(basename "$files")  
+    # echo $files && 
+    if [ ! -f ../$output_dir_P\/blast_result/$file\_blast ]  
+    then 
+        echo $file\_blast  
+        echo "blasting..." 
+        blastn \
+        -db ../../../bank/nt/current/blast/nt \
+        -query $files \
+        -out $file\_blast  \
+        -max_target_seqs 5 \
+        -max_hsps 5   \
+        -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" 
+    else 
+        echo $file\_blast   
+        echo "blast is already done"
+    fi 
+    if [  -f $file\_blast ]  
+    then 
+        mv $file\_blast ../$output_dir_P\/blast_result/$file\_blast  
+    fi 
+done
 
-# cd ..
+cd ..
 
 # dechunking the blast results
 
