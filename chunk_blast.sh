@@ -57,7 +57,19 @@ for files in ../$output_dir_E\/blast_chunks/*.fasta ; do
         -max_target_seqs 5 \
         -max_hsps 5   \
         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
-        -remote 
+        -remote
+    elif [ ! -s ../$output_dir_E\/blast_result/$file\_blast ] 
+    then
+        echo $file\_blast  
+        echo "file is there but empty re-blasting..." 
+        blastn \
+        -db nt \
+        -query $files \
+        -out $file\_blast  \
+        -max_target_seqs 5 \
+        -max_hsps 5   \
+        -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
+        -remote  
     else 
         echo $file\_blast   
         echo "blast is already done"
@@ -67,6 +79,7 @@ for files in ../$output_dir_E\/blast_chunks/*.fasta ; do
         mv $file\_blast ../$output_dir_E\/blast_result  
     fi 
 done
+
 
 
 # for files in ../$output_dir_P\/blast_chunks/*.fasta ; do 
@@ -84,6 +97,18 @@ done
 #         -max_hsps 5   \
 #         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
 #         -remote 
+#     elif [ ! -s ../$output_dir_P\/blast_result/$file\_blast ] 
+#     then
+#         echo $file\_blast  
+#         echo "file is there but empty re-blasting..." 
+#         blastn \
+#         -db nt \
+#         -query $files \
+#         -out $file\_blast  \
+#         -max_target_seqs 5 \
+#         -max_hsps 5   \
+#         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
+#         -remote  
 #     else 
 #         echo $file\_blast   
 #         echo "blast is already done"
