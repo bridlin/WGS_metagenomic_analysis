@@ -19,18 +19,32 @@ def get_sample_names(results_path):
 
 
 ### read in as df the table with Genus taxo IS and reads number per sample
+# def read_G_taxoIDs(results_path):
+#     print(results_path) 
+#     for root, dirs, files in os.walk(results_path):
+#         print(files)
+#         for file in files:
+#             print(file)
+#             if file == "G_TaxoIDs_per_sample.tsv" :
+#                 G_taxo = results_path + '/' + file
+#                 df_report = pd.read_table(G_taxo,index_col=0)
+#             else :
+#                 print('G_TaxoIDs_per_sample.tsv file not found in ' + results_path)           
+#     return df_report    
+
+
 def read_G_taxoIDs(results_path):
-    print(results_path) 
-    for root, dirs, files in os.walk(results_path):
-        print(files)
-        for file in files:
-            print(file)
-            if file == "G_TaxoIDs_per_sample.tsv" :
-                G_taxo = results_path + '/' + file
-                df_report = pd.read_table(G_taxo,index_col=0)
-            else :
-                print('G_TaxoIDs_per_sample.tsv file not found in ' + results_path)           
-    return df_report    
+    # Define the exact path of the file
+    target_file = os.path.join(results_path, "G_TaxoIDs_per_sample.tsv")
+    
+    # Check if the file exists
+    if os.path.isfile(target_file):
+        print(f"Reading file: {target_file}")
+        df_report = pd.read_table(target_file, index_col=0)
+        return df_report
+    if not os.path.isfile(target_file):
+        raise FileNotFoundError(f"Required file 'G_TaxoIDs_per_sample.tsv' not found in: {results_path}")
+
 
 
 
