@@ -46,15 +46,19 @@ def read_G_taxoIDs(results_path):
         raise FileNotFoundError(f"Required file 'G_TaxoIDs_per_sample.tsv' not found in: {results_path}")
 
 
-
-
 ### read in as df the blast results
-def blast_result_as_df(taxoid,sample_name,result_path):
-    blastfile = result_path + '/blast_result/' + sample_name + '.tid' + str(taxoid) + '.1.fa_blast'       
+def blast_result_as_df(taxoid, sample_name, result_path):
+    # Build the filename first
+    filename = f"{sample_name}.tid{taxoid}.1.fa_blast"
+    
+    # Use os.path.join to create the full path
+    blastfile = os.path.join(result_path, "blast_result", filename)
+    
     print(blastfile)
+    
     if not os.path.isfile(blastfile):
-        df_blast = pd.DataFrame()
-        print(str(sample_name) + '.tid' + str(taxoid) + ' blast file not found!!!')
+        print(f"{filename} blast file not found!!!")
+        return pd.DataFrame()  # empty DataFrame if file is missing
     else:        
         dict_blast = parse_tabular_blast_results(blastfile)
         if not dict_blast:
@@ -66,6 +70,25 @@ def blast_result_as_df(taxoid,sample_name,result_path):
             df_blast["sample_kraken2"] = sample_name
             df_blast.reset_index(inplace=True) # to get the index as columns 
     return(df_blast)
+
+
+# def blast_result_as_df(taxoid,sample_name,result_path):
+#     blastfile = result_path + '/blast_result/' + sample_name + '.tid' + str(taxoid) + '.1.fa_blast'       
+#     print(blastfile)
+#     if not os.path.isfile(blastfile):
+#         df_blast = pd.DataFrame()
+#         print(str(sample_name) + '.tid' + str(taxoid) + ' blast file not found!!!')
+#     else:        
+#         dict_blast = parse_tabular_blast_results(blastfile)
+#         if not dict_blast:
+#             df_blast = pd.DataFrame()
+            
+#         else:
+#             df_blast = pd.DataFrame.from_dict(dict_blast, orient='index').stack().apply(pd.Series).stack().apply(pd.Series)
+#             df_blast["taxoID_kraken2"] = taxoid
+#             df_blast["sample_kraken2"] = sample_name
+#             df_blast.reset_index(inplace=True) # to get the index as columns 
+#     return(df_blast)
     
 
 def format_dfresult(dfresult):
