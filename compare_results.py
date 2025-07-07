@@ -22,7 +22,9 @@ def get_sample_names(results_path):
 def read_G_taxoIDs(results_path):
     print(results_path) 
     for root, dirs, files in os.walk(results_path):
+        print(files)
         for file in files:
+            print(file)
             if file == "G_TaxoIDs_per_sample.tsv" :
                 G_taxo = results_path + '/' + file
                 df_report = pd.read_table(G_taxo,index_col=0)
