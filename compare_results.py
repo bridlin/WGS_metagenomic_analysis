@@ -25,7 +25,9 @@ def read_G_taxoIDs(results_path):
         for file in files:
             if file == "G_TaxoIDs_per_sample.tsv" :
                 G_taxo = results_path + '/' + file
-                df_report = pd.read_table(G_taxo,index_col=0)       
+                df_report = pd.read_table(G_taxo,index_col=0)
+            else :
+                print('G_TaxoIDs_per_sample.tsv file not found in ' + results_path)           
     return df_report    
 
 
@@ -131,7 +133,7 @@ def main():
         results_path = sys.argv[1]
         print(results_path)
 
-    print(results_path) 
+    # print(results_path) 
     # results_path = '../../test-run23/kraken2-results_run23_5prime-trimmed/PlusPF/'
 
     # getting the Kraken results from the Genus taxon file as df
