@@ -37,4 +37,4 @@ output_dir_P=$output_dir/$kraken2_P
 
 python3 WGS_metagenomic_analysis/compare_results.py  $output_dir_E\/
 
-python3 WGS_metagenomic_analysis/compare_results.py  $output_dir_P\/
+# python3 WGS_metagenomic_analysis/compare_results.py  $output_dir_P\/

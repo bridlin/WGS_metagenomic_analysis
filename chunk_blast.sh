@@ -27,8 +27,7 @@ echo "kraken2_P= $kraken2_P"
 echo "output_dir_E is " $output_dir_E
 echo "output_dir_P is " $output_dir_P
 
-mkdir ../$output_dir_E\/blast_result
-mkdir ../$output_dir_P\/blast_result
+
 
 
 # batching  the reads for light blasting ito 100 reads per fasta file
