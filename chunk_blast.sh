@@ -118,7 +118,7 @@ python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_P\ $run $k
 #     fi 
 # done
 
-cd ..
+# cd ..
 
 # dechunking the blast results
 
