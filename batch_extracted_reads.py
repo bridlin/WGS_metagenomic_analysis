@@ -4,13 +4,15 @@ import sys
 
 # This script reads fasta files from a specified input folder, chunks them into bigger files,
 # and writes these chunks to an output folder.
-# Usage: python batch_extracted_reads.py <path_to_results_folder>
+# Usage: python batch_extracted_reads.py <path_to_results_folder> <run_id> <DB_id>
 
 if len(sys.argv) == 1:
     print('Input file paths are missing as command line arguments!!!')
     sys.exit(1)  # optional: exit the script
 else:
     results_path = Path(sys.argv[1])  # convert to Path right away
+    run = Path(sys.argv[2]) if len(sys.argv) > 2 else None
+    DB = Path(sys.argv[3]) if len(sys.argv) > 3 else None
     print(results_path)
 
 input_folder = results_path / "extracted_reads"
@@ -22,7 +24,7 @@ chunk = []
 chunk_num = 0
 
 def write_chunk(chunk, chunk_num):
-    out_path = output_folder / f"chunk_{chunk_num:04}.fasta"
+    out_path = output_folder / f"chunk_{chunk_num:04}_{run}_{DB}.fasta"
     SeqIO.write(chunk, out_path, "fasta")
     print(f"Wrote {len(chunk)} reads to {out_path}")
 
