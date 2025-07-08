@@ -14,6 +14,8 @@ else:
     run = Path(sys.argv[2]) if len(sys.argv) > 2 else None
     DB = Path(sys.argv[3]) if len(sys.argv) > 3 else None
     print(results_path)
+    print(run)
+    print(DB)   
 
 input_folder = results_path / "extracted_reads"
 output_folder = results_path / "blast_chunks"
