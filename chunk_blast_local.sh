@@ -41,8 +41,7 @@ mkdir $output_dir_P\/blast_result
 
 cd auto_blast_folder/
 
-mkdir $output_dir_E\/blast_result
-mkdir $output_dir_P\/blast_result
+
 
 for files in ../$output_dir_E\/blast_chunks/*.fasta ; do 
     file=$(basename "$files")  
