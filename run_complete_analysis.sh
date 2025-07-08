@@ -148,81 +148,81 @@ echo "run fastqc, cutadapt and trimmomatic on the raw reads"
 
 # python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $output_dir_E\/
 
-# ### batching  the reads for light blasting into 100 reads per fasta file
-# echo "batching  the reads for light blasting into 100 reads per fasta file"
+### batching  the reads for light blasting into 100 reads per fasta file
+echo "batching  the reads for light blasting into 100 reads per fasta file"
 
-# python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_E\
+python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_E\
 
-# python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_P\
+python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_P\
 
-# ### run blast on the extracted batched reads
-# echo "run blast on the extracted  batched reads"
+### run blast on the extracted batched reads
+echo "run blast on the extracted  batched reads"
 
-# cd auto_blast_folder/
+cd auto_blast_folder/
 
-# mkdir ../$output_dir_E\/blast_result
-# mkdir ../$output_dir_P\/blast_result
+mkdir ../$output_dir_E\/blast_result
+mkdir ../$output_dir_P\/blast_result
 
-# for files in ../$output_dir_E\/blast_chunks/*.fasta ; do 
-#     file=$(basename "$files") 
-#     # echo $files && 
-#     if [ ! -f ../$output_dir_E\/blast_result/$file\_blast ]  
-#     then 
-#         echo $file\_blast  
-#         echo "blasting..." 
-#         blastn \
-#         -db nt \
-#         -query $files \
-#         -out $file\_blast  \
-#         -max_target_seqs 5 \
-#         -max_hsps 5   \
-#         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
-#         -remote 
-#     else 
-#         echo $file\_blast  
-#         echo "blast is already done"
-#     fi 
-#     if [  -f $file\_blast ] 
-#     then 
-#         mv $file\_blast ../$output_dir_E\/blast_result  
-#     fi 
-# done
-
-
-# for files in ../$output_dir_P\/blast_chunks/*.fasta ; do 
-#     file=$(basename "$files")  
-#     # echo $files && 
-#     if [ ! -f ../$output_dir_P\/blast_result/$file\_blast ]  
-#     then 
-#         echo $file\_blast 
-#         echo "blasting..." 
-#         blastn \
-#         -db nt \
-#         -query $files \
-#         -out $file\_blast  \
-#         -max_target_seqs 5 \
-#         -max_hsps 5   \
-#         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
-#         -remote 
-#     else 
-#         echo $file\_blast  
-#         echo "blast is already done"
-#     fi 
-#     if [  -f $file\_blast ]
-#     then 
-#         mv $file\_blast ../$output_dir_P\/blast_result
-#     fi 
-# done
+for files in ../$output_dir_E\/blast_chunks/*.fasta ; do 
+    file=$(basename "$files") 
+    # echo $files && 
+    if [ ! -f ../$output_dir_E\/blast_result/$file\_blast ]  
+    then 
+        echo $file\_blast  
+        echo "blasting..." 
+        blastn \
+        -db nt \
+        -query $files \
+        -out $file\_blast  \
+        -max_target_seqs 5 \
+        -max_hsps 5   \
+        -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
+        -remote 
+    else 
+        echo $file\_blast  
+        echo "blast is already done"
+    fi 
+    if [  -f $file\_blast ] 
+    then 
+        mv $file\_blast ../$output_dir_E\/blast_result  
+    fi 
+done
 
 
-# cd ..
+for files in ../$output_dir_P\/blast_chunks/*.fasta ; do 
+    file=$(basename "$files")  
+    # echo $files && 
+    if [ ! -f ../$output_dir_P\/blast_result/$file\_blast ]  
+    then 
+        echo $file\_blast 
+        echo "blasting..." 
+        blastn \
+        -db nt \
+        -query $files \
+        -out $file\_blast  \
+        -max_target_seqs 5 \
+        -max_hsps 5   \
+        -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
+        -remote 
+    else 
+        echo $file\_blast  
+        echo "blast is already done"
+    fi 
+    if [  -f $file\_blast ]
+    then 
+        mv $file\_blast ../$output_dir_P\/blast_result
+    fi 
+done
 
-# # dechunking the blast results
-# echo "dechunking the blast results"
 
-# python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_E\
+cd ..
+
+# dechunking the blast results
+echo "dechunking the blast results"
+
+python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_E\
  
-# python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_P\
+python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_P\
 
 
 
