@@ -31,50 +31,50 @@ echo "output_dir_P is " $output_dir_P
 mkdir ../$output_dir_E\/blast_result
 mkdir ../$output_dir_P\/blast_result
 
-for files in ../$output_dir_E\/extracted_reads/*.1.fa ; do 
-    file=$(basename "$files")   
-    echo $files 
-    echo $file
-    if [ ! -f ../$output_dir_E\/blast_result/$file\_blast ]  
-    then 
-        echo $file\_blast 
-        echo "blasting..." 
-        blastn \
-        -db nt \
-        -query $files \
-        -out $file\_blast  \
-        -max_target_seqs 5 \
-        -max_hsps 5   \
-        -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
-        -remote 
-    elif [ ! -s ../$output_dir_E\/blast_result/$file\_blast ] 
-    then
-        echo $file\_blast  
-        echo "file is there but empty re-blasting..." 
-        blastn \
-        -db nt \
-        -query $files \
-        -out $file\_blast  \
-        -max_target_seqs 5 \
-        -max_hsps 5   \
-        -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
-        -remote 
-    else
-        echo $file\_blast  
-        echo "blast is already done" 
-    fi 
-    if [  -f $file\_blast ] 
-    then 
-        mv $file\_blast ../$output_dir_E\/blast_result  
-    fi 
-done
+# for files in ../$output_dir_E\/extracted_reads/*.1.fa ; do 
+#     file=$(basename "$files")   
+#     echo $files 
+#     echo $file
+#     if [ ! -f ../$output_dir_E\/blast_result/$file\_blast ]  
+#     then 
+#         echo $file\_blast 
+#         echo "blasting..." 
+#         blastn \
+#         -db nt \
+#         -query $files \
+#         -out $file\_blast  \
+#         -max_target_seqs 5 \
+#         -max_hsps 5   \
+#         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
+#         -remote 
+#     elif [ ! -s ../$output_dir_E\/blast_result/$file\_blast ] 
+#     then
+#         echo $file\_blast  
+#         echo "file is there but empty re-blasting..." 
+#         blastn \
+#         -db nt \
+#         -query $files \
+#         -out $file\_blast  \
+#         -max_target_seqs 5 \
+#         -max_hsps 5   \
+#         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
+#         -remote 
+#     else
+#         echo $file\_blast  
+#         echo "blast is already done" 
+#     fi 
+#     if [  -f $file\_blast ] 
+#     then 
+#         mv $file\_blast ../$output_dir_E\/blast_result  
+#     fi 
+# done
 
 
 
 
 
 
-for files in ../$output_dir_P\/extracted_reads/*.1.fa ; do 
+for files in ../$output_dir_P\/extracted_reads_2/*.1.fa ; do 
      file=$(basename "$files")  
     echo $files 
     echo $file 
