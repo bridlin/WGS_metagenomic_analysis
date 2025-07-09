@@ -1,4 +1,4 @@
-run=run14
+run=run13
 input_list=("3092_S1_" "Undetermined_S0_")
 
 kraken2_E=EuPathDB48
