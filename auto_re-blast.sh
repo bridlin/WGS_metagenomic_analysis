@@ -74,7 +74,7 @@ done
 
 
 
-for files in ../$output_dir_P\/extracted_reads_2/*.1.fa ; do 
+for files in ../$output_dir_P\/extracted_reads/*.1.fa ; do 
      file=$(basename "$files")  
     echo $files 
     echo $file 
