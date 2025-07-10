@@ -32,9 +32,9 @@ echo "output_dir_P is " $output_dir_P
 
 # batching  the reads for light blasting ito 100 reads per fasta file
 echo "Batching reads for blasting"
-# python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_E $run $kraken2_E
+python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_E $run $kraken2_E
 
-python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_P $run $kraken2_P
+# python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_P $run $kraken2_P
 
 
 cd auto_blast_folder/
