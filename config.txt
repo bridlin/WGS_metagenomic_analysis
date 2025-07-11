@@ -1,5 +1,5 @@
-run=run19
-input_list=("1826_S1_" "1905_S4_" "2971Td_S3_" "2971d_S2_")
+run=run34
+input_list=("2868Td_S1_" "Undetermined_S0_")
 
 kraken2_E=EuPathDB48
 kraken2_P=PlusPF

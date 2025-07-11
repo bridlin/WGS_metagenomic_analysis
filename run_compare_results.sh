@@ -29,8 +29,8 @@ fastq_directory=$run\_fastq
 output_dir=kraken2-results_$run\_5prime-trimmed
 output_dir_E=$output_dir/$kraken2_E
 output_dir_P=$output_dir/$kraken2_P
- echo "output_dir_E is " $output_dir_E
- echo "output_dir_P is " $output_dir_P
+echo "output_dir_E is " $output_dir_E
+echo "output_dir_P is " $output_dir_P
 
 
 
