@@ -16,7 +16,8 @@ module load python/3.9
 source WGS_metagenomic_analysis/config.txt
 
 cd auto_blast_folder/
-output_dir=kraken2-results_$run\_5prime-trimmed_clumped
+# output_dir=kraken2-results_$run\_5prime-trimmed_clumped
+output_dir=kraken2-results_$run\_5prime-trimmed
 output_dir_E=$output_dir/$kraken2_E
 output_dir_P=$output_dir/$kraken2_P
 
