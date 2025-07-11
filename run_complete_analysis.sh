@@ -41,9 +41,9 @@ output_dir_E=$output_dir/$kraken2_E
 output_dir_P=$output_dir/$kraken2_P
 
 
-# mkdir $output_dir
-# mkdir $output_dir_E
-# mkdir $output_dir_P
+mkdir $output_dir 
+mkdir $output_dir_E
+mkdir $output_dir_P
 
 
 
