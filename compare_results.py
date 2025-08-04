@@ -151,7 +151,7 @@ def main():
     
 
     # getting the blast results as df from blastn outputformat 6 (modified script from https://gist.github.com/peterk87/5513274) and merge tham with the kraken2 results into a single df
-    # script blocks if there are no blast results as the list of df is empty and the concat function does not work with empty lists
+    # script blocked if there are no blast results as the list of df is empty and the concat function does not work with empty lists
     dfresult_list = []
     for sample in get_sample_names(results_path):
         print(sample)
