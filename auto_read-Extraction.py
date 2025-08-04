@@ -108,22 +108,8 @@ def main():
     
     df_taxoIDs_all = pd.DataFrame(columns=['sample' ,'taxoID', 'name', 'reads'])                            # empty df to be filled 
     
-    # for root, dirs, files in os.walk(kraken_file_path): 
-    #     print(root)
-    #     print(dirs)
-    #     print(files)
-    #     for file in files: 
-    #         if os.path.splitext(file)[1] == ".k2report":                                                    # identification of the Kraken2 reports that have to be read
-    #             report = root + file
-    #             sample = os.path.splitext(file)[0]
-    #             df_filtered = get_G_taxoIDs(read_report(report, column_names),sample)  
-    #             df_taxoIDs_all = pd.concat([df_taxoIDs_all, df_filtered], ignore_index=True)
-    #     print(df_taxoIDs_all)
-    #     df_taxoIDs_all.to_csv(kraken_file_path + "/G_TaxoIDs_per_sample.tsv", sep="\t")
-    # dict_taxo_per_sample = make_taxoID_sample_dict(df_taxoIDs_all,get_sample_names(kraken_file_path))
-    # print(dict_taxo_per_sample)
-
-    # i asked tChatGPT to make my this snippet cleaner and this was his solution: hasto be tested!!!! before i changed the path for df_taxoIDs_all.to_csv 'from root + "G_TaxoIDs_per_sample.tsv' to  'kraken_file_path + "/G_TaxoIDs_per_sample.tsv' also not tested!
+    # Iterate through all files in the kraken_file_path directory
+    # and its subdirectories to find Kraken2 reports
 
     
     for root, _, files in os.walk(kraken_file_path):
@@ -131,7 +117,7 @@ def main():
         print(f"Files: {files}")
 
         for file in files:
-            if file.endswith(".k2report"):  # simpler and clearer than splitext
+            if file.endswith(".k2report"):  # identification of the Kraken2 reports that have to be read
                 report_path = os.path.join(root, file)
                 sample = os.path.splitext(file)[0]
 

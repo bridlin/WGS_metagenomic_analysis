@@ -143,8 +143,7 @@ mkdir $output_dir_P
 #     --outdir $output_dir 
 
 
-### run python script to extract 10 reads per genus from the kraken2 results
-echo "run python script to extract 10 reads per genus from the kraken2 results"
+
 
 mkdir $output_dir_P\/extracted_reads
 mkdir $output_dir_E\/extracted_reads
