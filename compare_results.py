@@ -154,11 +154,11 @@ def main():
     # script blocked if there are no blast results as the list of df is empty and the concat function does not work with empty lists
     dfresult_list = []
     for sample in get_sample_names(results_path):
-        print(sample)
+        # print(sample)
         taxoids = df_G_taxo.loc[df_G_taxo['sample'] == sample, 'taxoID']
         dfresult_taxoid_list = []
         for taxoid in taxoids:
-            print(taxoid)
+            # print(taxoid)
             blast_result_df = blast_result_as_df(taxoid,sample,results_path)
             if not blast_result_df.empty:
                 df_temp = pd.merge(df_G_taxo, blast_result_df, how='inner', left_on=['taxoID','sample'], right_on=['taxoID_kraken2','sample_kraken2'],left_index=False, right_index=False, sort=True,suffixes=('_x', '_y'), indicator=False)
