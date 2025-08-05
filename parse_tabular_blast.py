@@ -91,6 +91,87 @@ def extract_extended_seq(sseq, q_s_i, q_e_i, s_s_i, s_e_i, q_len):
             return sseq[s_s_i:s_e_i + 1]
     
 
+# def parse_tabular_blast_results(blast_results_file):
+#     """
+#     Parse out the BLAST results from a tabular format BLAST results file into a 
+#     2D dictionary containing query id/name -> subject id/name -> BLAST result.
+
+#     Args:
+#         blast_results_file (string): Path to tabular BLAST results file.
+
+#     Returns:
+#         2D dictionary containing query id/name -> subject id/name -> BLAST result
+#     """
+#     # results are stored in a 2D dictionary - query -> subject -> BLAST result
+#     results = {}
+#     with open(blast_results_file,'r') as f:
+#         for line in f:
+#             line = line.rstrip()
+#             sp = line.split('\t')
+#             # get query id
+#             query = sp[0]
+#             #q_len = query_lengths[q]
+#             # get subject id
+#             subject = sp[1]
+#             # get scientific name
+#             sscinames = sp[2]
+#             # get the subject SeqRecord object
+#             #sseq = strain_name_seq_rec[s]
+#             # get % identity and convert to decimal (e.g. 96.7 -> 0.967)
+#             pid = float(sp[3])#/100.0
+#             # get coverage %
+#             qcovs = int(sp[4])
+#             # get alignment length
+#             aln_len = int(sp[6])
+#             # get query start index
+#             q_s_i = int(sp[6])
+#             # get query end index
+#             q_e_i = int(sp[7])
+#             # get subject start index
+#             s_s_i = int(sp[8])
+#             # get subject end index
+#             s_e_i = int(sp[9])
+#             # get subject end index
+#             taxoid = sp[15]
+#             # get the taxoid
+#             bitscore = float(sp[14])               
+#             # try to get the extended subject sequence based on the full length 
+#             # of the query. If not able to grab the full length, grab as much
+#             # as possible. 
+#             # extracted_seq = extract_extended_seq(sseq, 
+#             #     q_s_i, 
+#             #     q_e_i, 
+#             #     s_s_i, 
+#             #     s_e_i,
+#             #     q_len)
+#             # number of identities (count of positive sequence matches)
+#             identities = int(aln_len*pid)
+#             # the results for a particular query could be whatever you need
+#             # in this example, a dictionary is made where different results have
+#             # different identifiers for instance
+#             result_dict = {
+#             'sscinames':sscinames,
+#             #'q_len':q_len,
+#             'pid':pid,
+#             'qcovs':qcovs, 
+#             'aln_len':aln_len,
+#             'taxoid':taxoid,
+#             'bitscore':bitscore,
+#             #'extracted_seq': extracted_seq
+#             }
+#             # could add more items to this BLAST result dictionary
+#             if query not in results:
+#                 results[query] = {subject:[result_dict]}
+#             else:
+#                 if subject not in results[query]:
+#                     results[query][subject] = [result_dict]
+#                 else:
+#                     results[query][subject].append(result_dict)
+#     return results
+
+
+
+
 def parse_tabular_blast_results(blast_results_file):
     """
     Parse out the BLAST results from a tabular format BLAST results file into a 
@@ -102,69 +183,54 @@ def parse_tabular_blast_results(blast_results_file):
     Returns:
         2D dictionary containing query id/name -> subject id/name -> BLAST result
     """
-    # results are stored in a 2D dictionary - query -> subject -> BLAST result
     results = {}
-    with open(blast_results_file,'r') as f:
-        for line in f:
+    with open(blast_results_file, 'r') as f:
+        for line_number, line in enumerate(f, start=1):
             line = line.rstrip()
+            if not line:
+                continue  # skip empty lines
+
             sp = line.split('\t')
-            # get query id
-            query = sp[0]
-            #q_len = query_lengths[q]
-            # get subject id
-            subject = sp[1]
-            # get scientific name
-            sscinames = sp[2]
-            # get the subject SeqRecord object
-            #sseq = strain_name_seq_rec[s]
-            # get % identity and convert to decimal (e.g. 96.7 -> 0.967)
-            pid = float(sp[3])#/100.0
-            # get coverage %
-            qcovs = int(sp[4])
-            # get alignment length
-            aln_len = int(sp[6])
-            # get query start index
-            q_s_i = int(sp[6])
-            # get query end index
-            q_e_i = int(sp[7])
-            # get subject start index
-            s_s_i = int(sp[8])
-            # get subject end index
-            s_e_i = int(sp[9])
-            # get subject end index
-            taxoid = sp[15]
-            # get the taxoid
-            bitscore = float(sp[14])               
-            # try to get the extended subject sequence based on the full length 
-            # of the query. If not able to grab the full length, grab as much
-            # as possible. 
-            # extracted_seq = extract_extended_seq(sseq, 
-            #     q_s_i, 
-            #     q_e_i, 
-            #     s_s_i, 
-            #     s_e_i,
-            #     q_len)
-            # number of identities (count of positive sequence matches)
-            identities = int(aln_len*pid)
-            # the results for a particular query could be whatever you need
-            # in this example, a dictionary is made where different results have
-            # different identifiers for instance
-            result_dict = {
-            'sscinames':sscinames,
-            #'q_len':q_len,
-            'pid':pid,
-            'qcovs':qcovs, 
-            'aln_len':aln_len,
-            'taxoid':taxoid,
-            'bitscore':bitscore,
-            #'extracted_seq': extracted_seq
-            }
-            # could add more items to this BLAST result dictionary
-            if query not in results:
-                results[query] = {subject:[result_dict]}
-            else:
-                if subject not in results[query]:
-                    results[query][subject] = [result_dict]
+
+            if len(sp) != 16:
+                print(f"Warning: Line {line_number} skipped due to incorrect number of columns ({len(sp)}): {line}")
+                continue
+
+            try:
+                query = sp[0]
+                subject = sp[1]
+                sscinames = sp[2]
+                pid = float(sp[3])
+                qcovs = int(sp[4])
+                aln_len = int(sp[6])
+                q_s_i = int(sp[6])
+                q_e_i = int(sp[7])
+                s_s_i = int(sp[8])
+                s_e_i = int(sp[9])
+                bitscore = float(sp[14])
+                taxoid = sp[15]
+
+                identities = int(aln_len * pid)
+
+                result_dict = {
+                    'sscinames': sscinames,
+                    'pid': pid,
+                    'qcovs': qcovs,
+                    'aln_len': aln_len,
+                    'taxoid': taxoid,
+                    'bitscore': bitscore
+                }
+
+                if query not in results:
+                    results[query] = {subject: [result_dict]}
                 else:
-                    results[query][subject].append(result_dict)
+                    if subject not in results[query]:
+                        results[query][subject] = [result_dict]
+                    else:
+                        results[query][subject].append(result_dict)
+
+            except Exception as e:
+                print(f"Error parsing line {line_number}: {e}\n{line}")
+                continue
+
     return results
