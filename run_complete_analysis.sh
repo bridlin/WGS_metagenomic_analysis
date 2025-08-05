@@ -170,38 +170,6 @@ cd auto_blast_folder/
 mkdir ../$output_dir_E\/blast_result
 mkdir ../$output_dir_P\/blast_result
 
-# for files in ../$output_dir_E\/blast_chunks/*.fasta ; do 
-#     file=$(basename "$files") 
-#     # echo $files && 
-#     if [ ! -f ../$output_dir_E\/blast_result/$file\_blast ]  
-#     then 
-#         echo $file\_blast  
-#         echo "blasting..." 
-#         blastn \
-#         -db nt \
-#         -query $files \
-#         -out $file\_blast  \
-#         -max_target_seqs 5 \
-#         -max_hsps 5   \
-#         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
-#         -remote 
-#     else 
-#         echo $file\_blast  
-#         echo "blast is already done"
-#     fi 
-#     if [  -f $file\_blast ] 
-#     then 
-#         mv $file\_blast ../$output_dir_E\/blast_result  
-#     fi 
-# done
-
-
-
-
-
-# chat GPT suggestion to improve the script robustness and logging
-# This script will now log the start and end times, handle errors more gracefully, and ensure that output files are not overwritten if they already exist.
-
 
 # Output log file
 logfile="../$output_dir_E/blast_${run}_E.log"
@@ -261,50 +229,79 @@ echo "=== Finished BLAST run: $(date) ===" >> "$logfile"
 
 
 
+# Output log file
+logfile="../$output_dir_P/blast_${run}_P.log"
+touch "$logfile"
+
+echo "=== Starting BLAST run: $(date) ===" >> "$logfile"
+
+# Loop through all chunked query files
+for files in ../$output_dir_P/blast_chunks/*.fasta ; do 
+    file=$(basename "$files")
+    outfile="${file}_blast"
+    full_outpath="../$output_dir_P/blast_result/$outfile"
+
+    # Skip if output already exists
+    if [ -f "$full_outpath" ]; then 
+        echo "$outfile - already exists, skipping" | tee -a "$logfile"
+        continue
+    fi
+
+    echo "$outfile - blasting..." | tee -a "$logfile"
+
+    # Run BLAST and capture stderr to temp file
+    tmp_stderr=$(mktemp)
+    blastn -db nt \
+        -query "$files" \
+        -out "$outfile" \
+        -max_target_seqs 5 \
+        -max_hsps 5 \
+        -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
+        -remote 2> "$tmp_stderr"
+
+    # Check success
+    exit_code=$?
+    if [ $exit_code -eq 0 ]; then
+        if [ -s "$outfile" ]; then
+            mv "$outfile" "$full_outpath"
+            echo "$outfile - success" | tee -a "$logfile"
+        else
+            echo "$outfile - BLAST completed but file is empty (no hits?)" | tee -a "$logfile"
+            mv "$outfile" "$full_outpath"
+        fi
+    else
+        echo "$outfile - BLAST FAILED (exit code $exit_code)" | tee -a "$logfile"
+        echo "--- STDERR ---" >> "$logfile"
+        cat "$tmp_stderr" >> "$logfile"
+        echo "--------------" >> "$logfile"
+        # Optionally: touch empty file so downstream doesn't re-run
+        touch "$full_outpath.failed"
+    fi
+
+    rm "$tmp_stderr"
+done
+
+echo "=== Finished BLAST run: $(date) ===" >> "$logfile"
 
 
-# for files in ../$output_dir_P\/blast_chunks/*.fasta ; do 
-#     file=$(basename "$files")  
-#     # echo $files && 
-#     if [ ! -f ../$output_dir_P\/blast_result/$file\_blast ]  
-#     then 
-#         echo $file\_blast 
-#         echo "blasting..." 
-#         blastn \
-#         -db nt \
-#         -query $files \
-#         -out $file\_blast  \
-#         -max_target_seqs 5 \
-#         -max_hsps 5   \
-#         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
-#         -remote 
-#     else 
-#         echo $file\_blast  
-#         echo "blast is already done"
-#     fi 
-#     if [  -f $file\_blast ]
-#     then 
-#         mv $file\_blast ../$output_dir_P\/blast_result
-#     fi 
-# done
 
 
-# cd ..
+cd ..
 
-# # dechunking the blast results
-# echo "dechunking the blast results"
+# dechunking the blast results
+echo "dechunking the blast results"
 
-# python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_E\
+python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_E\
  
-# python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_P\
+python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_P\
 
 
 
 
-# ### run python script to compare the results of the blast with the kraken2 results
-# echo "run python script to compare the results of the blast with the kraken2 results"
+### run python script to compare the results of the blast with the kraken2 results
+echo "run python script to compare the results of the blast with the kraken2 results"
 
 
-# python3 WGS_metagenomic_analysis/compare_results.py  $output_dir_E\/
+python3 WGS_metagenomic_analysis/compare_results.py  $output_dir_E\/
 
-# python3 WGS_metagenomic_analysis/compare_results.py  $output_dir_P\/
+python3 WGS_metagenomic_analysis/compare_results.py  $output_dir_P\/
