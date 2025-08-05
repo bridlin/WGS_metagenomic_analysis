@@ -204,7 +204,7 @@ mkdir ../$output_dir_P\/blast_result
 
 
 # Output log file
-logfile=blast_$run\_E.log
+logfile="../$output_dir_E/blast_${run}_E.log"
 touch "$logfile"
 
 echo "=== Starting BLAST run: $(date) ===" >> "$logfile"
