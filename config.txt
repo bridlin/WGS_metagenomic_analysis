@@ -1,5 +1,5 @@
-run=run10
-input_list=("MC520_S1_" "MC5T20_S2_" "MC530_S3_" "MC5T30_S4_" "Undetermined_S0_")
+run=run16
+input_list=("2971_S1_" "2971T_S2_" "2978_S3_" "2978T_S4_")
 
 kraken2_E=EuPathDB48
 kraken2_P=PlusPF
