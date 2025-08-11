@@ -154,10 +154,7 @@ def main():
     # script blocked if there are no blast results as the list of df is empty and the concat function does not work with empty lists
     dfresult_list = []
     for sample in get_sample_names(results_path):
-        print(results_path)
         print(sample)
-        # print(df_G_taxo)
-        print(df_G_taxo.keys())
         taxoids = df_G_taxo.loc[df_G_taxo['sample'] == sample, 'taxoID']
         dfresult_taxoid_list = []
         for taxoid in taxoids:
