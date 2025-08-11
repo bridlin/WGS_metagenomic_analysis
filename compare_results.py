@@ -156,6 +156,7 @@ def main():
     for sample in get_sample_names(results_path):
         print(results_path)
         print(sample)
+        print(df_G_taxo)
         taxoids = df_G_taxo.loc[df_G_taxo['sample'] == sample, 'taxoID']
         dfresult_taxoid_list = []
         for taxoid in taxoids:
