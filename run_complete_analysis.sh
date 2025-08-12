@@ -121,184 +121,184 @@ for sample in "${input_list[@]}"; do
 #     $fastq_directory/$sample\nonhuman_reads.1.fastq  $fastq_directory/$sample\nonhuman_reads.2.fastq \
 #     --minimum-length 40 \
 #     > $output_dir/$sample\nonhuman_reads_cutadapt_report.txt &&
-kraken2 \
-    --db $kraken2_db_E \
-    --threads 8 \
-    --minimum-hit-groups 3  \
-    --report-minimizer-data \
-    --report $output_dir_E/$sample$kraken2_E\.k2report  \
-    --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
-    > $output_dir_E/$sample$kraken2_E\.kraken2 &&
-kraken2 \
-    --db $kraken2_db_P \
-    --threads 8 \
-    --minimum-hit-groups 3  \
-    --report-minimizer-data \
-    --report $output_dir_P/$sample$kraken2_P\.k2report  \
-    --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
-    > $output_dir_P/$sample$kraken2_P\.kraken2 ; done
+# kraken2 \
+#     --db $kraken2_db_E \
+#     --threads 8 \
+#     --minimum-hit-groups 3  \
+#     --report-minimizer-data \
+#     --report $output_dir_E/$sample$kraken2_E\.k2report  \
+#     --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
+#     > $output_dir_E/$sample$kraken2_E\.kraken2 &&
+# kraken2 \
+#     --db $kraken2_db_P \
+#     --threads 8 \
+#     --minimum-hit-groups 3  \
+#     --report-minimizer-data \
+#     --report $output_dir_P/$sample$kraken2_P\.k2report  \
+#     --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
+#     > $output_dir_P/$sample$kraken2_P\.kraken2 ; done
 
-multiqc   \
-    $output_dir \
-    $output_dir_E \
-    $output_dir_P \
-    --outdir $output_dir 
-
-
-
-
-mkdir $output_dir_P\/extracted_reads
-mkdir $output_dir_E\/extracted_reads
-
-### run the python script to extract 10 reads per genus from the kraken2 results 1. arguments are the fastq directory and the kraken2 results directory
-echo "run the python script to extract 10 reads per genus from the kraken2 results" 
-
-python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $output_dir_P\/
-
-python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $output_dir_E\/
+# multiqc   \
+#     $output_dir \
+#     $output_dir_E \
+#     $output_dir_P \
+#     --outdir $output_dir 
 
 
 
 
-### batching  the reads for light blasting into 100 reads per fasta file
-echo "batching  the reads for light blasting into 100 reads per fasta file"
+# mkdir $output_dir_P\/extracted_reads
+# mkdir $output_dir_E\/extracted_reads
 
-python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_E  $run $kraken2_E
+# ### run the python script to extract 10 reads per genus from the kraken2 results 1. arguments are the fastq directory and the kraken2 results directory
+# echo "run the python script to extract 10 reads per genus from the kraken2 results" 
 
-python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_P  $run $kraken2_P
+# python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $output_dir_P\/
 
-### run blast on the extracted batched reads
-echo "run blast on the extracted  batched reads"
-
-cd auto_blast_folder/
-
-mkdir ../$output_dir_E\/blast_result
-mkdir ../$output_dir_P\/blast_result
-
-
-# Output log file
-logfile="../$output_dir_E/blast_${run}_E.log"
-touch "$logfile"
-
-echo "=== Starting BLAST run: $(date) ===" >> "$logfile"
-
-# Loop through all chunked query files
-for files in ../$output_dir_E/blast_chunks/*.fasta ; do 
-    file=$(basename "$files")
-    outfile="${file}_blast"
-    full_outpath="../$output_dir_E/blast_result/$outfile"
-
-    # Skip if output already exists
-    if [ -f "$full_outpath" ]; then 
-        echo "$outfile - already exists, skipping" | tee -a "$logfile"
-        continue
-    fi
-
-    echo "$outfile - blasting..." | tee -a "$logfile"
-
-    # Run BLAST and capture stderr to temp file
-    tmp_stderr=$(mktemp)
-    blastn -db nt \
-        -query "$files" \
-        -out "$outfile" \
-        -max_target_seqs 5 \
-        -max_hsps 5 \
-        -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
-        -remote 2> "$tmp_stderr"
-
-    # Check success
-    exit_code=$?
-    if [ $exit_code -eq 0 ]; then
-        if [ -s "$outfile" ]; then
-            mv "$outfile" "$full_outpath"
-            echo "$outfile - success" | tee -a "$logfile"
-        else
-            echo "$outfile - BLAST completed but file is empty (no hits?)" | tee -a "$logfile"
-            mv "$outfile" "$full_outpath"
-        fi
-    else
-        echo "$outfile - BLAST FAILED (exit code $exit_code)" | tee -a "$logfile"
-        echo "--- STDERR ---" >> "$logfile"
-        cat "$tmp_stderr" >> "$logfile"
-        echo "--------------" >> "$logfile"
-        # Optionally: touch empty file so downstream doesn't re-run
-        touch "$full_outpath.failed"
-    fi
-
-    rm "$tmp_stderr"
-done
-
-echo "=== Finished BLAST run: $(date) ===" >> "$logfile"
+# python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $output_dir_E\/
 
 
 
 
+# ### batching  the reads for light blasting into 100 reads per fasta file
+# echo "batching  the reads for light blasting into 100 reads per fasta file"
 
-# Output log file
-logfile="../$output_dir_P/blast_${run}_P.log"
-touch "$logfile"
+# python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_E  $run $kraken2_E
 
-echo "=== Starting BLAST run: $(date) ===" >> "$logfile"
+# python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_P  $run $kraken2_P
 
-# Loop through all chunked query files
-for files in ../$output_dir_P/blast_chunks/*.fasta ; do 
-    file=$(basename "$files")
-    outfile="${file}_blast"
-    full_outpath="../$output_dir_P/blast_result/$outfile"
+# ### run blast on the extracted batched reads
+# echo "run blast on the extracted  batched reads"
 
-    # Skip if output already exists
-    if [ -f "$full_outpath" ]; then 
-        echo "$outfile - already exists, skipping" | tee -a "$logfile"
-        continue
-    fi
+# cd auto_blast_folder/
 
-    echo "$outfile - blasting..." | tee -a "$logfile"
-
-    # Run BLAST and capture stderr to temp file
-    tmp_stderr=$(mktemp)
-    blastn -db nt \
-        -query "$files" \
-        -out "$outfile" \
-        -max_target_seqs 5 \
-        -max_hsps 5 \
-        -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
-        -remote 2> "$tmp_stderr"
-
-    # Check success
-    exit_code=$?
-    if [ $exit_code -eq 0 ]; then
-        if [ -s "$outfile" ]; then
-            mv "$outfile" "$full_outpath"
-            echo "$outfile - success" | tee -a "$logfile"
-        else
-            echo "$outfile - BLAST completed but file is empty (no hits?)" | tee -a "$logfile"
-            mv "$outfile" "$full_outpath"
-        fi
-    else
-        echo "$outfile - BLAST FAILED (exit code $exit_code)" | tee -a "$logfile"
-        echo "--- STDERR ---" >> "$logfile"
-        cat "$tmp_stderr" >> "$logfile"
-        echo "--------------" >> "$logfile"
-        # Optionally: touch empty file so downstream doesn't re-run
-        touch "$full_outpath.failed"
-    fi
-
-    rm "$tmp_stderr"
-done
-
-echo "=== Finished BLAST run: $(date) ===" >> "$logfile"
+# mkdir ../$output_dir_E\/blast_result
+# mkdir ../$output_dir_P\/blast_result
 
 
+# # Output log file
+# logfile="../$output_dir_E/blast_${run}_E.log"
+# touch "$logfile"
+
+# echo "=== Starting BLAST run: $(date) ===" >> "$logfile"
+
+# # Loop through all chunked query files
+# for files in ../$output_dir_E/blast_chunks/*.fasta ; do 
+#     file=$(basename "$files")
+#     outfile="${file}_blast"
+#     full_outpath="../$output_dir_E/blast_result/$outfile"
+
+#     # Skip if output already exists
+#     if [ -f "$full_outpath" ]; then 
+#         echo "$outfile - already exists, skipping" | tee -a "$logfile"
+#         continue
+#     fi
+
+#     echo "$outfile - blasting..." | tee -a "$logfile"
+
+#     # Run BLAST and capture stderr to temp file
+#     tmp_stderr=$(mktemp)
+#     blastn -db nt \
+#         -query "$files" \
+#         -out "$outfile" \
+#         -max_target_seqs 5 \
+#         -max_hsps 5 \
+#         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
+#         -remote 2> "$tmp_stderr"
+
+#     # Check success
+#     exit_code=$?
+#     if [ $exit_code -eq 0 ]; then
+#         if [ -s "$outfile" ]; then
+#             mv "$outfile" "$full_outpath"
+#             echo "$outfile - success" | tee -a "$logfile"
+#         else
+#             echo "$outfile - BLAST completed but file is empty (no hits?)" | tee -a "$logfile"
+#             mv "$outfile" "$full_outpath"
+#         fi
+#     else
+#         echo "$outfile - BLAST FAILED (exit code $exit_code)" | tee -a "$logfile"
+#         echo "--- STDERR ---" >> "$logfile"
+#         cat "$tmp_stderr" >> "$logfile"
+#         echo "--------------" >> "$logfile"
+#         # Optionally: touch empty file so downstream doesn't re-run
+#         touch "$full_outpath.failed"
+#     fi
+
+#     rm "$tmp_stderr"
+# done
+
+# echo "=== Finished BLAST run: $(date) ===" >> "$logfile"
 
 
-cd ..
 
-# dechunking the blast results
-echo "dechunking the blast results"
 
-python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_E\
+
+# # Output log file
+# logfile="../$output_dir_P/blast_${run}_P.log"
+# touch "$logfile"
+
+# echo "=== Starting BLAST run: $(date) ===" >> "$logfile"
+
+# # Loop through all chunked query files
+# for files in ../$output_dir_P/blast_chunks/*.fasta ; do 
+#     file=$(basename "$files")
+#     outfile="${file}_blast"
+#     full_outpath="../$output_dir_P/blast_result/$outfile"
+
+#     # Skip if output already exists
+#     if [ -f "$full_outpath" ]; then 
+#         echo "$outfile - already exists, skipping" | tee -a "$logfile"
+#         continue
+#     fi
+
+#     echo "$outfile - blasting..." | tee -a "$logfile"
+
+#     # Run BLAST and capture stderr to temp file
+#     tmp_stderr=$(mktemp)
+#     blastn -db nt \
+#         -query "$files" \
+#         -out "$outfile" \
+#         -max_target_seqs 5 \
+#         -max_hsps 5 \
+#         -outfmt "6 qseqid sseqid sscinames pident qcovs qcovhsp length mismatch gapopen qstart qend sstart send evalue bitscore staxids" \
+#         -remote 2> "$tmp_stderr"
+
+#     # Check success
+#     exit_code=$?
+#     if [ $exit_code -eq 0 ]; then
+#         if [ -s "$outfile" ]; then
+#             mv "$outfile" "$full_outpath"
+#             echo "$outfile - success" | tee -a "$logfile"
+#         else
+#             echo "$outfile - BLAST completed but file is empty (no hits?)" | tee -a "$logfile"
+#             mv "$outfile" "$full_outpath"
+#         fi
+#     else
+#         echo "$outfile - BLAST FAILED (exit code $exit_code)" | tee -a "$logfile"
+#         echo "--- STDERR ---" >> "$logfile"
+#         cat "$tmp_stderr" >> "$logfile"
+#         echo "--------------" >> "$logfile"
+#         # Optionally: touch empty file so downstream doesn't re-run
+#         touch "$full_outpath.failed"
+#     fi
+
+#     rm "$tmp_stderr"
+# done
+
+# echo "=== Finished BLAST run: $(date) ===" >> "$logfile"
+
+
+
+
+# cd ..
+
+# # dechunking the blast results
+# echo "dechunking the blast results"
+
+# python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_E\
  
-python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_P\
+# python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_P\
 
 
 
