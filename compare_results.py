@@ -35,7 +35,7 @@ def read_G_taxoIDs(results_path):
 ### read in as df the blast results
 def blast_result_as_df(taxoid, sample_name, result_path):
     # Build the filename first
-    filename = f"{sample_name}.tid{int(taxoid)}.1.fa_blast" ### in my last running of this script taxoid was used as xxxx.0 and the file name did not work!!! has to be solved!!!
+    filename = f"{sample_name}.tid{int(taxoid)}.1.fa_blast" 
     
     # Use os.path.join to create the full path
     blastfile = os.path.join(result_path, "blast_result", filename)
