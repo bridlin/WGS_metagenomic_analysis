@@ -52,7 +52,7 @@ mkdir $output_dir_P
 ### run fastqc, cutadapt and trimmomatic on the raw reads
 echo "run fastqc, cutadapt and trimmomatic on the raw reads"
 
-for sample in "${input_list[@]}"; do
+# for sample in "${input_list[@]}"; do
 # fastqc \
 #     $fastq_directory/$sample\L001_R1_001.fastq.gz \
 #     --outdir $output_dir &&
