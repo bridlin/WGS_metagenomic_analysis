@@ -26,7 +26,7 @@ def read_G_taxoIDs(results_path):
     # Check if the file exists
     if os.path.isfile(target_file):
         print(f"Reading file: {target_file}")
-        df_report = pd.read_table(target_file, index_col=0)
+        df_report = pd.read_table(target_file, index_col=None)
         return df_report
     if not os.path.isfile(target_file):
         raise FileNotFoundError(f"Required file 'G_TaxoIDs_per_sample.tsv' not found in: {results_path}")
