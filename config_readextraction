@@ -1,4 +1,4 @@
-taxo_id_list=("0")
+taxo_id_list=("475")
 input_list=("1513-1_S1_")
 read_directory=run7_fastq
 output_dir=kraken2-results_run7_5prime-trimmed
