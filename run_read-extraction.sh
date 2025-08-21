@@ -19,7 +19,7 @@ module load python/3.9
 
 source WGS_metagenomic_analysis/config_readextraction
 
-for sample in "${input_list[@]}"; do for id in "${id_list[@]}"; do 
+for sample in "${input_list[@]}"; do for id in "${taxo_id_list[@]}"; do 
 python \
     KrakenTools-master/extract_kraken_reads.py \
     -k $output_dir/$db/$sample$db\.kraken2 \
