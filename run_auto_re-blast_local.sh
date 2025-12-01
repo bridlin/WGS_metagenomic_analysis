@@ -10,8 +10,8 @@
 #SBATCH --cpus-per-task 4
 #SBATCH --mem  128GB
 
-module load blast/2.14.0
-module load python/3.9
+module load blast/2.16.0
+module load python/3.12
 
 source WGS_metagenomic_analysis/config.txt
 

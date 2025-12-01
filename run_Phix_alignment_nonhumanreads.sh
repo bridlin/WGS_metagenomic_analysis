@@ -12,9 +12,9 @@
 
 
 
-module load bowtie2/2.4.1
-module load cutadapt/4.0
-module load kraken2/2.1.2
+module load bowtie2/2.5.4
+module load cutadapt/4.5
+module load kraken2/2.14
 
 
 source WGS_metagenomic_analysis/config.yml

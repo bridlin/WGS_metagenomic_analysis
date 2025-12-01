@@ -11,17 +11,16 @@
 #SBATCH --mem  128GB
 
 
-module load cutadapt/4.0
+module load cutadapt/4.5
 module load trimmomatic/0.39
-module load fastqc/0.11.9
-module load bowtie2/2.4.1
-module load samtools/1.13
-module load kraken2/2.1.2
-module load multiqc/1.13
+module load fastqc/0.12.1
+module load bowtie2/2.5.4
+module load samtools/1.21
+module load kraken2/2.14
+module load multiqc/1.29
 module load picard/2.23.5
-# module load python/3.9
 module load python/3.12
-module load blast/2.14.0
+module load blast/2.16.0
 module load bbmap/39.00
 
 source WGS_metagenomic_analysis/config.txt

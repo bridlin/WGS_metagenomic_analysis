@@ -10,8 +10,8 @@
 #SBATCH --cpus-per-task 6
 #SBATCH --mem 64GB
 
-module load python/3.9
-module load blast/2.14.0
+module load python/3.12
+module load blast/2.16.0
 
 
 
