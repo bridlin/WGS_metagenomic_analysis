@@ -19,7 +19,8 @@ module load samtools/1.13
 module load kraken2/2.1.2
 module load multiqc/1.13
 module load picard/2.23.5
-module load python/3.9
+# module load python/3.9
+module load python/3.12
 module load blast/2.14.0
 module load bbmap/39.00
 
