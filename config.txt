@@ -1,5 +1,17 @@
-run=run37
-input_list=("5074-1_S1_" "5074-2_S2_" "5074-T-1_S3_" "5074-T-2_S4_" "Undetermined_S0_")
+run=Benchmark_ANRS
+input_list=("CasClinique10_ADN"
+"CasClinique2_ADN"
+"CasClinique3_ADN"
+"CasClinique4_ADN"
+"CasClinique5_ADN"
+"CasClinique7_ADN"
+"CasClinique9_ADN"
+"CasClinique1_ARN"
+"CasClinique6_ARN"
+"CasClinique8_ARN")
+
+read1_postfix="_R1"
+read2_postfix="_R2"
 
 kraken2_E=EuPathDB48
 kraken2_P=PlusPF
