@@ -65,35 +65,35 @@ fastqc \
     --outdir $output_dir &&
 cutadapt  \
     -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA   -A AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT  \
-    -o $fastq_directory/$sample$read1_postfix_3trimmed.fastq.gz \
-    -p $fastq_directory/$sample$read2_postfix_3trimmed.fastq.gz  \
+    -o $fastq_directory/$sample$read1_postfix\_3trimmed.fastq.gz \
+    -p $fastq_directory/$sample$read2_postfix\_3trimmed.fastq.gz  \
     $fastq_directory/$sample$read1_postfix.fastq.gz  $fastq_directory/$sample$read2_postfix.fastq.gz \
     --minimum-length 40 \
-    > $output_dir/$sample\all_cutadapt_report.txt &&
+    > $output_dir/$sample\_all_cutadapt_report.txt &&
 trimmomatic \
     PE \
     -threads 4 \
     -trimlog $output_dir/$sample\trim \
-    $fastq_directory/$sample$read1_postfix_3trimmed.fastq.gz $fastq_directory/$sample$read2_postfix_3trimmed.fastq.gz \
-    $fastq_directory/$sample$read1_postfix_3trimmed_q20.fastq.gz   $fastq_directory/$sample$read1_postfix_3trimmed_q20_un.fastq.gz $fastq_directory/$sample$read2_postfix_3trimmed_q20.fastq.gz  $fastq_directory/$sample$read2_postfix_3trimmed_q20_un.fastq.gz \
+    $fastq_directory/$sample$read1_postfix\_3trimmed.fastq.gz $fastq_directory/$sample$read2_postfix\_3trimmed.fastq.gz \
+    $fastq_directory/$sample$read1_postfix\_3trimmed_q20.fastq.gz   $fastq_directory/$sample$read1_postfix\_3trimmed_q20_un.fastq.gz $fastq_directory/$sample$read2_postfix\_3trimmed_q20.fastq.gz  $fastq_directory/$sample$read2_postfix\_3trimmed_q20_un.fastq.gz \
     SLIDINGWINDOW:4:20 \
     MINLEN:40 &&
 clumpify.sh \
-    in1=$fastq_directory/$sample$read1_postfix_3trimmed_q20.fastq.gz \
-    in2=$fastq_directory/$sample$read2_postfix_3trimmed_q20.fastq.gz \
-    out1=$fastq_directory/$sample$read1_postfix_3trimmed_q20_clumped.fastq.gz \
-    out2=$fastq_directory/$sample$read2_postfix_3trimmed_q20_clumped.fastq.gz \
+    in1=$fastq_directory/$sample$read1_postfix\_3trimmed_q20.fastq.gz \
+    in2=$fastq_directory/$sample$read2_postfix\_3trimmed_q20.fastq.gz \
+    out1=$fastq_directory/$sample$read1_postfix\_3trimmed_q20_clumped.fastq.gz \
+    out2=$fastq_directory/$sample$read2_postfix\_3trimmed_q20_clumped.fastq.gz \
     dedupe=t \
     optical=f &&
 fastqc \
-    $fastq_directory/$sample$read1_postfix_3trimmed_q20_clumped.fastq.gz \
+    $fastq_directory/$sample$read1_postfix\_3trimmed_q20_clumped.fastq.gz \
     --outdir $output_dir &&
 fastqc \
-    $fastq_directory/$sample$read2_postfix_3trimmed_q20_clumped.fastq.gz \
+    $fastq_directory/$sample$read2_postfix\_3trimmed_q20_clumped.fastq.gz \
     --outdir $output_dir &&
 bowtie2 \
     -x ../../bank/bowtie2/Homo_sapiens.GRCh38.dna.toplevel \
-    -1 $fastq_directory/$sample$read1_postfix_3trimmed_q20_clumped.fastq.gz -2 $fastq_directory/$sample$read2_postfix_3trimmed_q20_clumped.fastq.gz  \
+    -1 $fastq_directory/$sample$read1_postfix\_3trimmed_q20_clumped.fastq.gz -2 $fastq_directory/$sample$read2_postfix\_3trimmed_q20_clumped.fastq.gz  \
     --un-conc $fastq_directory/$sample\nonhuman_reads.fastq \
     -S $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam \
     2> $output_dir/$sample\_bowtie.log &&
