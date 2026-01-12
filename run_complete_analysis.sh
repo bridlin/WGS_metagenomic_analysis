@@ -6,7 +6,7 @@
 #SBATCH --mail-user b-barckmann@chu-montpellier.fr
 #
 #
-#SBATCH --partition fast
+#SBATCH --partition long
 #SBATCH --cpus-per-task 4
 #SBATCH --mem  128GB
 
