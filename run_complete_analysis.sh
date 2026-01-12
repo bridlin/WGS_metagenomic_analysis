@@ -133,14 +133,14 @@ for sample in "${input_list[@]}"; do
 #     --report $output_dir_E/$sample$kraken2_E\.k2report  \
 #     --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
 #     > $output_dir_E/$sample$kraken2_E\.kraken2 &&
-kraken2 \
-    --db $kraken2_db_P \
-    --threads 8 \
-    --minimum-hit-groups 3  \
-    --report-minimizer-data \
-    --report $output_dir_P/$sample$kraken2_P\.k2report  \
-    --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
-    > $output_dir_P/$sample$kraken2_P\.kraken2 ; done
+# kraken2 \
+#     --db $kraken2_db_P \
+#     --threads 8 \
+#     --minimum-hit-groups 3  \
+#     --report-minimizer-data \
+#     --report $output_dir_P/$sample$kraken2_P\.k2report  \
+#     --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
+#     > $output_dir_P/$sample$kraken2_P\.kraken2 ; done
 
 multiqc   \
     $output_dir \
