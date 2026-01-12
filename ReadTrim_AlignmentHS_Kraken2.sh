@@ -6,7 +6,7 @@
 #SBATCH --mail-user b-barckmann@chu-montpellier.fr
 #
 #
-#SBATCH --partition fast
+#SBATCH --partition long
 #SBATCH --cpus-per-task 4
 #SBATCH --mem  128GB
 
@@ -19,7 +19,7 @@ module load samtools/1.21
 module load kraken2/2.14
 module load multiqc/1.29
 module load picard/2.23.5
-
+module load bbmap/39.00
 
 source WGS_metagenomic_analysis/config.txt
 
@@ -55,27 +55,27 @@ mkdir $output_dir_P
 echo "run fastqc, cutadapt and trimmomatic on the raw reads"
 
 for sample in "${input_list[@]}"; do
-fastqc \
-    $fastq_directory/$sample$read1_postfix.fastq.gz \
-    --outdir $output_dir &&
-fastqc \
-    $fastq_directory/$sample$read2_postfix.fastq.gz \
-    --outdir $output_dir &&
-cutadapt  \
-    -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA   -A AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT  \
-    -o $fastq_directory/$sample$read1_postfix\_3trimmed.fastq.gz \
-    -p $fastq_directory/$sample$read2_postfix\_3trimmed.fastq.gz  \
-    $fastq_directory/$sample$read1_postfix.fastq.gz  $fastq_directory/$sample$read2_postfix.fastq.gz \
-    --minimum-length 40 \
-    > $output_dir/$sample\_all_cutadapt_report.txt &&
-trimmomatic \
-    PE \
-    -threads 4 \
-    -trimlog $output_dir/$sample\trim \
-    $fastq_directory/$sample$read1_postfix\_3trimmed.fastq.gz $fastq_directory/$sample$read2_postfix\_3trimmed.fastq.gz \
-    $fastq_directory/$sample$read1_postfix\_3trimmed_q20.fastq.gz   $fastq_directory/$sample$read1_postfix\_3trimmed_q20_un.fastq.gz $fastq_directory/$sample$read2_postfix\_3trimmed_q20.fastq.gz  $fastq_directory/$sample$read2_postfix\_3trimmed_q20_un.fastq.gz \
-    SLIDINGWINDOW:4:20 \
-    MINLEN:40 &&
+# fastqc \
+#     $fastq_directory/$sample$read1_postfix.fastq.gz \
+#     --outdir $output_dir &&
+# fastqc \
+#     $fastq_directory/$sample$read2_postfix.fastq.gz \
+#     --outdir $output_dir &&
+# cutadapt  \
+#     -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA   -A AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT  \
+#     -o $fastq_directory/$sample$read1_postfix\_3trimmed.fastq.gz \
+#     -p $fastq_directory/$sample$read2_postfix\_3trimmed.fastq.gz  \
+#     $fastq_directory/$sample$read1_postfix.fastq.gz  $fastq_directory/$sample$read2_postfix.fastq.gz \
+#     --minimum-length 40 \
+#     > $output_dir/$sample\_all_cutadapt_report.txt &&
+# trimmomatic \
+#     PE \
+#     -threads 4 \
+#     -trimlog $output_dir/$sample\trim \
+#     $fastq_directory/$sample$read1_postfix\_3trimmed.fastq.gz $fastq_directory/$sample$read2_postfix\_3trimmed.fastq.gz \
+#     $fastq_directory/$sample$read1_postfix\_3trimmed_q20.fastq.gz   $fastq_directory/$sample$read1_postfix\_3trimmed_q20_un.fastq.gz $fastq_directory/$sample$read2_postfix\_3trimmed_q20.fastq.gz  $fastq_directory/$sample$read2_postfix\_3trimmed_q20_un.fastq.gz \
+#     SLIDINGWINDOW:4:20 \
+#     MINLEN:40 &&
 clumpify.sh \
     in1=$fastq_directory/$sample$read1_postfix\_3trimmed_q20.fastq.gz \
     in2=$fastq_directory/$sample$read2_postfix\_3trimmed_q20.fastq.gz \

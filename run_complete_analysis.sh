@@ -142,17 +142,17 @@ for sample in "${input_list[@]}"; do
 #     --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
 #     > $output_dir_P/$sample$kraken2_P\.kraken2 ; done
 
-multiqc   \
-    $output_dir \
-    $output_dir_E \
-    $output_dir_P \
-    --outdir $output_dir 
+# multiqc   \
+#     $output_dir \
+#     $output_dir_E \
+#     $output_dir_P \
+#     --outdir $output_dir 
 
 
 
 
-mkdir $output_dir_P\/extracted_reads
-mkdir $output_dir_E\/extracted_reads
+# mkdir $output_dir_P\/extracted_reads
+# mkdir $output_dir_E\/extracted_reads
 
 ### run the python script to extract 10 reads per genus from the kraken2 results 1. arguments are the fastq directory and the kraken2 results directory
 echo "run the python script to extract 10 reads per genus from the kraken2 results" 
