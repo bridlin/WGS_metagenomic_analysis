@@ -52,7 +52,7 @@ mkdir $output_dir_P
 
 
 ### run fastqc, cutadapt and trimmomatic on the raw reads
-echo "run fastqc, cutadapt and trimmomatic on the raw reads"
+echo "run fastqc, cutadapt, trimmomatic, clumpify on the raw reads. read alignment with bowtie, sorting out non human reads, kraken2 on non human reads"
 
 for sample in "${input_list[@]}"; do
 # fastqc \
