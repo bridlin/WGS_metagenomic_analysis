@@ -40,7 +40,7 @@ kraken2_db_P=Kraken2_db/$kraken2_P
 
 
 fastq_directory=$run\_fastq
-output_dir=kraken2-results_$run\_5prime-trimmed
+output_dir=kraken2-results_$run\_5prime-trimmed_unclumped
 # output_dir=kraken2-results_$run\_5prime-trimmed
 # output_dir=kraken2-results_$run\_5prime-trimmed_chunked
 output_dir_E=$output_dir/$kraken2_E
