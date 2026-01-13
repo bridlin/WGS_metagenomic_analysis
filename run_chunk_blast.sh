@@ -21,7 +21,7 @@ output_dir=kraken2-results_$run\_5prime-trimmed
 output_dir_E=$output_dir/$kraken2_E
 output_dir_P=$output_dir/$kraken2_P
 
-echo "run auto blast and compare results"
+echo "run read-chunking auto blast and dechunking"
 echo "run= $run"
 echo "input_list= ${input_list[@]}"
 echo "kraken2_E= $kraken2_E"    
