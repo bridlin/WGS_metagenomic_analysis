@@ -32,15 +32,15 @@ echo "output_dir_P is " $output_dir_P
 
 
 
-### batching  the reads for light blasting into 100 reads per fasta file
-echo "batching  the reads for light blasting into 100 reads per fasta file"
+# ### batching  the reads for light blasting into 100 reads per fasta file
+# echo "batching  the reads for light blasting into 100 reads per fasta file"
 
-python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_E  $run $kraken2_E
+# python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_E  $run $kraken2_E
 
-python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_P  $run $kraken2_P
+# python3 WGS_metagenomic_analysis/batch_extracted_reads.py $output_dir_P  $run $kraken2_P
 
-### run blast on the extracted batched reads
-echo "run blast on the extracted  batched reads"
+# ### run blast on the extracted batched reads
+# echo "run blast on the extracted  batched reads"
 
 cd auto_blast_folder/
 
@@ -168,6 +168,6 @@ cd ..
 # dechunking the blast results
 echo "dechunking the blast results"
 
-python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_E\
+# python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_E\
  
 python3 WGS_metagenomic_analysis/dechunk_blast_results.py  $output_dir_P\
