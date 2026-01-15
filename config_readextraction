@@ -1,5 +1,5 @@
 taxo_id_list=("5052" "5036" "38946")
-input_list=(""CasClinique8_ARN")
+input_list=("CasClinique8_ARN")
 read_directory=Benchmark_ANRS_fastq/
 output_dir=kraken2-results_Benchmark_ANRS_5prime-trimmed
 db=EuPathDB48
