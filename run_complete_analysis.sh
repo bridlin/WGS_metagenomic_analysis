@@ -12,17 +12,29 @@
 
 echo "before module loading"
 
+echo "cutadapt module loading"
 module load cutadapt/4.5
+echo "trimmomatic module loading"
 module load trimmomatic/0.39
+echo "fastqc module loading"
 module load fastqc/0.12.1
+echo "bowtie2 module loading"
 module load bowtie2/2.5.4
+echo "samtools module loading"
 module load samtools/1.21
+echo "kraken2 module loading"
 module load kraken2/2.14
+echo "multiqc module loading"
 module load multiqc/1.29
+echo "picard module loading"
 module load picard/2.23.5
+echo "python module loading"
 module load python/3.12
+echo "blast module loading"
 module load blast/2.16.0
+echo "bbmap module loading"
 module load bbmap/39.00
+echo "star module loading"
 module load star/2.7.11a
 
 echo "before sourcing"
