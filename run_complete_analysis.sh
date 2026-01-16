@@ -96,7 +96,7 @@ for sample in "${input_list[@]}"; do
 # bowtie2 \
 #     -x ../../bank/bowtie2/Homo_sapiens.GRCh38.dna.toplevel \
 #     -1 $fastq_directory/$sample$read1_postfix\_3trimmed_q20_clumped.fastq.gz -2 $fastq_directory/$sample$read2_postfix\_3trimmed_q20_clumped.fastq.gz  \
-#     --un-conc $fastq_directory/$sample\nonhuman_reads.fastq \
+#     --un-conc $fastq_directory/$sample\nonhuman_reads-rna.fastq \
 #     -S $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna.sam \
 #     2> $output_dir/$sample\_bowtie.log &&
 # samtools \
@@ -112,8 +112,8 @@ STAR \
   --outSAMtype BAM SortedByCoordinate &&
 samtools \
     fastq -f 12 \
-    -1 $fastq_directory/$sample\nonhuman_reads.1.fastq \
-    -2 $fastq_directory/$sample\nonhuman_reads.2.fastq \
+    -1 $fastq_directory/$sample\nonhuman_reads-rna.1.fastq \
+    -2 $fastq_directory/$sample\nonhuman_reads-rna.2.fastq \
     -0 /dev/null \
     -s /dev/null \
     -n $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna.sam.bam &&
@@ -139,18 +139,18 @@ rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna.sam &&
 rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna.sam.bam &&
 cutadapt  \
     -g AGATCGGAAGAGCACACGTCTGAACTCCAGTCA   -G AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT \
-    -o $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq  \
-    -p $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq  \
-    $fastq_directory/$sample\nonhuman_reads.1.fastq  $fastq_directory/$sample\nonhuman_reads.2.fastq \
+    -o $fastq_directory/$sample\nonhuman_reads-rna_5trimmed.1.fastq  \
+    -p $fastq_directory/$sample\nonhuman_reads-rna_5trimmed.2.fastq  \
+    $fastq_directory/$sample\nonhuman_reads-rna.1.fastq  $fastq_directory/$sample\nonhuman_reads-rna.2.fastq \
     --minimum-length 40 \
-    > $output_dir/$sample\nonhuman_reads_cutadapt_report.txt &&
+    > $output_dir/$sample\nonhuman_reads-rna_cutadapt_report.txt &&
 kraken2 \
     --db $kraken2_db_E \
     --threads 8 \
     --minimum-hit-groups 3  \
     --report-minimizer-data \
     --report $output_dir_E/$sample$kraken2_E\.k2report  \
-    --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
+    --paired $fastq_directory/$sample\nonhuman_reads-rna_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads-rna_5trimmed.2.fastq \
     > $output_dir_E/$sample$kraken2_E\.kraken2 &&
 kraken2 \
     --db $kraken2_db_P \
@@ -158,7 +158,7 @@ kraken2 \
     --minimum-hit-groups 3  \
     --report-minimizer-data \
     --report $output_dir_P/$sample$kraken2_P\.k2report  \
-    --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
+    --paired $fastq_directory/$sample\nonhuman_reads-rna_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads-rna_5trimmed.2.fastq \
     > $output_dir_P/$sample$kraken2_P\.kraken2 ; done
 
 multiqc   \
