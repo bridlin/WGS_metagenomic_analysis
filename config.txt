@@ -6,10 +6,6 @@ input_list=("CasClinique10_ADN"
 "CasClinique5_ADN"
 "CasClinique7_ADN"
 "CasClinique9_ADN"
-"CasClinique1_ARN"
-"CasClinique6_ARN"
-"CasClinique8_ARN"
-
 )
 
 read1_postfix="_R1"
