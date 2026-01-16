@@ -1,8 +1,5 @@
 run=Benchmark_ANRS
-input_list=("CasClinique5_ADN"
-"CasClinique7_ADN"
-"CasClinique9_ADN"
-"CasClinique1_ARN"
+input_list=( "CasClinique1_ARN"
 "CasClinique6_ARN"
 "CasClinique8_ARN"
 )

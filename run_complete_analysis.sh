@@ -22,6 +22,8 @@ module load picard/2.23.5
 module load python/3.12
 module load blast/2.16.0
 module load bbmap/39.00
+module load star/2.7.11a
+
 
 source WGS_metagenomic_analysis/config.txt
 
@@ -40,7 +42,7 @@ kraken2_db_P=Kraken2_db/$kraken2_P
 
 
 fastq_directory=$run\_fastq
-output_dir=kraken2-results_$run\_5prime-trimmed
+output_dir=kraken2-results_$run\_5prime-trimmed_RNA
 # output_dir=kraken2-results_$run\_5prime-trimmed_clumped
 # output_dir=kraken2-results_$run\_5prime-trimmed_chunked
 output_dir_E=$output_dir/$kraken2_E
@@ -101,58 +103,75 @@ for sample in "${input_list[@]}"; do
 #     view -S \
 #     -b $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam  \
 #     > $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
-# samtools \
-#     sort $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam  \
-#     -o $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam &&
-# samtools \
-#     index $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam &&
-# samtools \
-#     reheader -c 'grep -v ^@PG' $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam  \
-#     > $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered.bam &&
-# picard \
-#     CollectInsertSizeMetrics   \
-#     -I $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered.bam  \
-#     -O $output_dir/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered_insert_size_metrics.txt  \
-#     -H $output_dir/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered_insert_size_histogram.pdf  \
-#     -M 0.5  &&
-# rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered.bam &&
-# rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam &&
-# rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
-# cutadapt  \
-#     -g AGATCGGAAGAGCACACGTCTGAACTCCAGTCA   -G AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT \
-#     -o $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq  \
-#     -p $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq  \
-#     $fastq_directory/$sample\nonhuman_reads.1.fastq  $fastq_directory/$sample\nonhuman_reads.2.fastq \
-#     --minimum-length 40 \
-#     > $output_dir/$sample\nonhuman_reads_cutadapt_report.txt &&
-# kraken2 \
-#     --db $kraken2_db_E \
-#     --threads 8 \
-#     --minimum-hit-groups 3  \
-#     --report-minimizer-data \
-#     --report $output_dir_E/$sample$kraken2_E\.k2report  \
-#     --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
-#     > $output_dir_E/$sample$kraken2_E\.kraken2 &&
-# kraken2 \
-#     --db $kraken2_db_P \
-#     --threads 8 \
-#     --minimum-hit-groups 3  \
-#     --report-minimizer-data \
-#     --report $output_dir_P/$sample$kraken2_P\.k2report  \
-#     --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
-#     > $output_dir_P/$sample$kraken2_P\.kraken2 ; done
-
-# multiqc   \
-#     $output_dir \
-#     $output_dir_E \
-#     $output_dir_P \
-#     --outdir $output_dir 
+STAR \
+  --runThreadN 8 \
+  --genomeDir /shared/bank/homo_sapiens/GRCh38.p14/RefSeq_2023_10/star-2.7.11a/ \
+  --readFilesIn $fastq_directory/$sample$read1_postfix\_3trimmed_q20.fastq.gz   $fastq_directory/$sample$read2_postfix\_3trimmed_q20.fastq.gz  \
+  --readFilesCommand zcat \
+  --outFileNamePrefix $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel \
+  --outSAMtype BAM SortedByCoordinate &&
+samtools \
+    fastq -f 12 \
+    -1 $fastq_directory/$sample\nonhuman_reads.1.fastq \
+    -2 $fastq_directory/$sample\nonhuman_reads.2.fastq \
+    -0 /dev/null \
+    -s /dev/null \
+    -n $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
 
 
 
+samtools \
+    sort $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam  \
+    -o $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam &&
+samtools \
+    index $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam &&
+samtools \
+    reheader -c 'grep -v ^@PG' $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam  \
+    > $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered.bam &&
+picard \
+    CollectInsertSizeMetrics   \
+    -I $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered.bam  \
+    -O $output_dir/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered_insert_size_metrics.txt  \
+    -H $output_dir/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered_insert_size_histogram.pdf  \
+    -M 0.5  &&
+rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered.bam &&
+rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam &&
+rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
+cutadapt  \
+    -g AGATCGGAAGAGCACACGTCTGAACTCCAGTCA   -G AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT \
+    -o $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq  \
+    -p $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq  \
+    $fastq_directory/$sample\nonhuman_reads.1.fastq  $fastq_directory/$sample\nonhuman_reads.2.fastq \
+    --minimum-length 40 \
+    > $output_dir/$sample\nonhuman_reads_cutadapt_report.txt &&
+kraken2 \
+    --db $kraken2_db_E \
+    --threads 8 \
+    --minimum-hit-groups 3  \
+    --report-minimizer-data \
+    --report $output_dir_E/$sample$kraken2_E\.k2report  \
+    --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
+    > $output_dir_E/$sample$kraken2_E\.kraken2 &&
+kraken2 \
+    --db $kraken2_db_P \
+    --threads 8 \
+    --minimum-hit-groups 3  \
+    --report-minimizer-data \
+    --report $output_dir_P/$sample$kraken2_P\.k2report  \
+    --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
+    > $output_dir_P/$sample$kraken2_P\.kraken2 ; done
 
-# mkdir $output_dir_P\/extracted_reads
-# mkdir $output_dir_E\/extracted_reads
+multiqc   \
+    $output_dir \
+    $output_dir_E \
+    $output_dir_P \
+    --outdir $output_dir 
+
+
+
+
+mkdir $output_dir_P\/extracted_reads
+mkdir $output_dir_E\/extracted_reads
 
 ### run the python script to extract 10 reads per genus from the kraken2 results 1. arguments are the fastq directory and the kraken2 results directory
 echo "run the python script to extract 10 reads per genus from the kraken2 results" 
