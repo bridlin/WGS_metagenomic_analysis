@@ -22,6 +22,7 @@ module load picard/2.23.5
 module load python/3.12
 module load blast/2.16.0
 module load bbmap/39.00
+module load megahit/1.2.9
 
 source WGS_metagenomic_analysis/config.txt
 
@@ -91,6 +92,10 @@ for sample in "${input_list[@]}"; do
 # fastqc \
 #     $fastq_directory/$sample$read2_postfix\_3trimmed_q20_clumped.fastq.gz \
 #     --outdir $output_dir &&
+megahit \
+    -1 $fastq_directory/$sample$read1_postfix\_3trimmed_q20.fastq.gz \
+    -2 $fastq_directory/$sample$read2_postfix\_3trimmed_q20.fastq.gz \
+    -o $fastq_directory/$sample_Megahit_readassembly  &&
 # bowtie2 \
 #     -x ../../bank/bowtie2/Homo_sapiens.GRCh38.dna.toplevel \
 #     -1 $fastq_directory/$sample$read1_postfix\_3trimmed_q20_clumped.fastq.gz -2 $fastq_directory/$sample$read2_postfix\_3trimmed_q20_clumped.fastq.gz  \
@@ -101,6 +106,20 @@ for sample in "${input_list[@]}"; do
 #     view -S \
 #     -b $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam  \
 #     > $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
+bwa mem \
+    -t 4  \
+    /shared/bank/homo_sapiens/GRCh38.p14/RefSeq_2023_10/bwa/GCF_000001405.40_GRCh38.p14_genomic.fna    \
+    $fastq_directory/$sample_Megahit_readassembly/final.contigs.fa \
+    > $fastq_directory/$sample\_contigs_GRCh38.p14_bwa.sam &&
+samtools \
+    view -S \
+    -b $fastq_directory/$sample\_contigs_GRCh38.p14_bwa.sam  \
+    > $fastq_directory/$sample\_contigs_GRCh38.p14_bwa.sam.bam &&
+samtools \
+    fastq \
+    -f 4 \
+    $fastq_directory/$sample\_contigs_GRCh38.p14_bwa.sam.bam \
+    > $fastq_directory/$sample\_contigs_unmatched.fastq &&
 # samtools \
 #     sort $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam  \
 #     -o $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam &&
@@ -125,28 +144,28 @@ for sample in "${input_list[@]}"; do
 #     $fastq_directory/$sample\nonhuman_reads.1.fastq  $fastq_directory/$sample\nonhuman_reads.2.fastq \
 #     --minimum-length 40 \
 #     > $output_dir/$sample\nonhuman_reads_cutadapt_report.txt &&
-# kraken2 \
-#     --db $kraken2_db_E \
-#     --threads 8 \
-#     --minimum-hit-groups 3  \
-#     --report-minimizer-data \
-#     --report $output_dir_E/$sample$kraken2_E\.k2report  \
-#     --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
-#     > $output_dir_E/$sample$kraken2_E\.kraken2 &&
-# kraken2 \
-#     --db $kraken2_db_P \
-#     --threads 8 \
-#     --minimum-hit-groups 3  \
-#     --report-minimizer-data \
-#     --report $output_dir_P/$sample$kraken2_P\.k2report  \
-#     --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
-#     > $output_dir_P/$sample$kraken2_P\.kraken2 ; done
+kraken2 \
+    --db $kraken2_db_E \
+    --threads 8 \
+    --minimum-hit-groups 3  \
+    --report-minimizer-data \
+    --report $output_dir_E/$sample$kraken2_E\.k2report  \
+    $fastq_directory/$sample\_contigs_unmatched.fastq \
+    > $output_dir_E/$sample$kraken2_E\.kraken2 &&
+kraken2 \
+    --db $kraken2_db_P \
+    --threads 8 \
+    --minimum-hit-groups 3  \
+    --report-minimizer-data \
+    --report $output_dir_P/$sample$kraken2_P\.k2report  \
+    $fastq_directory/$sample\_contigs_unmatched.fastq \
+    > $output_dir_P/$sample$kraken2_P\.kraken2 ; done
 
-# multiqc   \
-#     $output_dir \
-#     $output_dir_E \
-#     $output_dir_P \
-#     --outdir $output_dir 
+multiqc   \
+    $output_dir \
+    $output_dir_E \
+    $output_dir_P \
+    --outdir $output_dir 
 
 
 
