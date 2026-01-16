@@ -95,7 +95,7 @@ for sample in "${input_list[@]}"; do
 megahit \
     -1 $fastq_directory/$sample$read1_postfix\_3trimmed_q20.fastq.gz \
     -2 $fastq_directory/$sample$read2_postfix\_3trimmed_q20.fastq.gz \
-    -o $sample_Megahit_readassembly  &&
+    -o $sample\_Megahit_readassembly  &&
 # bowtie2 \
 #     -x ../../bank/bowtie2/Homo_sapiens.GRCh38.dna.toplevel \
 #     -1 $fastq_directory/$sample$read1_postfix\_3trimmed_q20_clumped.fastq.gz -2 $fastq_directory/$sample$read2_postfix\_3trimmed_q20_clumped.fastq.gz  \
@@ -109,17 +109,17 @@ megahit \
 bwa mem \
     -t 4  \
     /shared/bank/homo_sapiens/GRCh38.p14/RefSeq_2023_10/bwa/GCF_000001405.40_GRCh38.p14_genomic.fna    \
-    $sample_Megahit_readassembly/final.contigs.fa \
-    > $sample\_contigs_GRCh38.p14_bwa.sam &&
+    $sample\_Megahit_readassembly/final.contigs.fa \
+    > $sample\_Megahit_readassembly/$sample\_contigs_GRCh38.p14_bwa.sam &&
 samtools \
     view -S \
-    -b $sample\_contigs_GRCh38.p14_bwa.sam  \
-    > $sample\_contigs_GRCh38.p14_bwa.sam.bam &&
+    -b $sample\_Megahit_readassembly/$sample\_contigs_GRCh38.p14_bwa.sam  \
+    > $sample\_Megahit_readassembly/$sample\_contigs_GRCh38.p14_bwa.sam.bam &&
 samtools \
     fastq \
     -f 4 \
-    $sample\_contigs_GRCh38.p14_bwa.sam.bam \
-    > $sample\_contigs_unmatched.fastq &&
+    $sample\_Megahit_readassembly/$sample\_contigs_GRCh38.p14_bwa.sam.bam \
+    > $sample\_Megahit_readassembly/$sample\_contigs_unmatched.fastq &&
 # samtools \
 #     sort $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam  \
 #     -o $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam &&
@@ -150,7 +150,7 @@ kraken2 \
     --minimum-hit-groups 3  \
     --report-minimizer-data \
     --report $output_dir_E/$sample$kraken2_E\.k2report  \
-    $sample\_contigs_unmatched.fastq \
+    $sample\_Megahit_readassembly/$sample\_contigs_unmatched.fastq \
     > $output_dir_E/$sample$kraken2_E\.kraken2 &&
 kraken2 \
     --db $kraken2_db_P \
@@ -158,7 +158,7 @@ kraken2 \
     --minimum-hit-groups 3  \
     --report-minimizer-data \
     --report $output_dir_P/$sample$kraken2_P\.k2report  \
-    $sample\_contigs_unmatched.fastq \
+    $sample\_Megahit_readassembly/$sample\_contigs_unmatched.fastq \
     > $output_dir_P/$sample$kraken2_P\.kraken2 ; done
 
 multiqc   \
