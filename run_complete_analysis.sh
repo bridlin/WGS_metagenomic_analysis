@@ -14,7 +14,7 @@
 module load cutadapt/4.5
 module load trimmomatic/0.39
 module load fastqc/0.12.1
-module load bowtie2/2.5.4
+module load bwa-mem2/2.2.1
 module load samtools/1.21
 module load kraken2/2.14
 module load multiqc/1.29
