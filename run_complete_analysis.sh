@@ -97,18 +97,18 @@ for sample in "${input_list[@]}"; do
 #     -x ../../bank/bowtie2/Homo_sapiens.GRCh38.dna.toplevel \
 #     -1 $fastq_directory/$sample$read1_postfix\_3trimmed_q20_clumped.fastq.gz -2 $fastq_directory/$sample$read2_postfix\_3trimmed_q20_clumped.fastq.gz  \
 #     --un-conc $fastq_directory/$sample\nonhuman_reads.fastq \
-#     -S $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam \
+#     -S $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna.sam \
 #     2> $output_dir/$sample\_bowtie.log &&
 # samtools \
 #     view -S \
-#     -b $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam  \
-#     > $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
+#     -b $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna.sam  \
+#     > $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna.sam.bam &&
 STAR \
   --runThreadN 8 \
   --genomeDir /shared/bank/homo_sapiens/GRCh38.p14/RefSeq_2023_10/star-2.7.11a/ \
   --readFilesIn $fastq_directory/$sample$read1_postfix\_3trimmed_q20.fastq.gz   $fastq_directory/$sample$read2_postfix\_3trimmed_q20.fastq.gz  \
   --readFilesCommand zcat \
-  --outFileNamePrefix $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel \
+  --outFileNamePrefix $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna \
   --outSAMtype BAM SortedByCoordinate &&
 samtools \
     fastq -f 12 \
@@ -116,27 +116,27 @@ samtools \
     -2 $fastq_directory/$sample\nonhuman_reads.2.fastq \
     -0 /dev/null \
     -s /dev/null \
-    -n $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
+    -n $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna.sam.bam &&
 
 
 
 samtools \
-    sort $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam  \
-    -o $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam &&
+    sort $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna.sam.bam  \
+    -o $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna_sorted.bam &&
 samtools \
-    index $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam &&
+    index $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna_sorted.bam &&
 samtools \
-    reheader -c 'grep -v ^@PG' $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam  \
-    > $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered.bam &&
+    reheader -c 'grep -v ^@PG' $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna_sorted.bam  \
+    > $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna_sorted_reheadered.bam &&
 picard \
     CollectInsertSizeMetrics   \
-    -I $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered.bam  \
-    -O $output_dir/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered_insert_size_metrics.txt  \
-    -H $output_dir/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered_insert_size_histogram.pdf  \
+    -I $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna_sorted_reheadered.bam  \
+    -O $output_dir/$sample\aln-pe_Homo_sapiens.GRCh38.rna_sorted_reheadered_insert_size_metrics.txt  \
+    -H $output_dir/$sample\aln-pe_Homo_sapiens.GRCh38.rna_sorted_reheadered_insert_size_histogram.pdf  \
     -M 0.5  &&
-rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted_reheadered.bam &&
-rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam &&
-rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
+rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna_sorted_reheadered.bam &&
+rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna.sam &&
+rm -f  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna.sam.bam &&
 cutadapt  \
     -g AGATCGGAAGAGCACACGTCTGAACTCCAGTCA   -G AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT \
     -o $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq  \
