@@ -12,12 +12,12 @@
 
 echo "before module loading"
 
+echo "fastqc module loading"
+module load fastqc/0.12.1
 echo "cutadapt module loading"
 module load cutadapt/4.5
 echo "trimmomatic module loading"
 module load trimmomatic/0.39
-echo "fastqc module loading"
-module load fastqc/0.12.1
 echo "bowtie2 module loading"
 module load bowtie2/2.5.4
 echo "samtools module loading"
