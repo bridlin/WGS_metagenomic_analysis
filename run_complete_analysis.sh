@@ -10,6 +10,7 @@
 #SBATCH --cpus-per-task 4
 #SBATCH --mem  128GB
 
+echo "before module loading"
 
 module load cutadapt/4.5
 module load trimmomatic/0.39
@@ -24,6 +25,7 @@ module load blast/2.16.0
 module load bbmap/39.00
 module load star/2.7.11a
 
+echo "before sourcing"
 
 source WGS_metagenomic_analysis/config.txt
 
