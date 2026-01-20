@@ -130,9 +130,9 @@ samtools \
     -2 $fastq_directory/$sample\nonhuman_reads-rna.2.fastq \
     -0 /dev/null \
     -s /dev/null \
-    -n $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rnaAligned.sortedByCoord.out.bam &&
+    -n $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna_sorted.out.bam &&
 samtools \
-    sort $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rnaAligned.sortedByCoord.out.bam  \
+    sort $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna_sorted.out.bam  \
     -o $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna_sorted.bam &&
 samtools \
     index $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna_sorted.bam &&
