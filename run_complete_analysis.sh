@@ -177,9 +177,9 @@ multiqc   \
 ### run the python script to extract 10 reads per genus from the kraken2 results 1. arguments are the fastq directory and the kraken2 results directory
 echo "run the python script to extract 10 reads per genus from the kraken2 results" 
 
-python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $output_dir_P\/
+python3 WGS_metagenomic_analysis/auto_read-Extraction.py $sample\_Megahit_readassembly/ $output_dir_P\/
 
-python3 WGS_metagenomic_analysis/auto_read-Extraction.py $fastq_directory $output_dir_E\/
+python3 WGS_metagenomic_analysis/auto_read-Extraction.py $sample\_Megahit_readassembly/ $output_dir_E\/
 
 
 
