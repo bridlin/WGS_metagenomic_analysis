@@ -58,7 +58,7 @@ mkdir $output_dir_P
 ### run fastqc, cutadapt and trimmomatic on the raw reads
 echo "run fastqc, cutadapt, trimmomatic, clumpify on the raw reads. read alignment with bowtie, sorting out non human reads, kraken2 on non human reads"
 
-for sample in "${input_list[@]}"; do
+# for sample in "${input_list[@]}"; do
 # fastqc \
 #     $fastq_directory/$sample$read1_postfix.fastq.gz \
 #     --outdir $output_dir &&
@@ -107,20 +107,20 @@ for sample in "${input_list[@]}"; do
 #     view -S \
 #     -b $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam  \
 #     > $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
-bwa mem \
-    -t 4  \
-    /shared/bank/homo_sapiens/GRCh38.p14/RefSeq_2023_10/bwa/GCF_000001405.40_GRCh38.p14_genomic.fna    \
-    $sample\_Megahit_readassembly/final.contigs.fa \
-    > $sample\_Megahit_readassembly/$sample\_contigs_GRCh38.p14_bwa.sam &&
-samtools \
-    view -S \
-    -b $sample\_Megahit_readassembly/$sample\_contigs_GRCh38.p14_bwa.sam  \
-    > $sample\_Megahit_readassembly/$sample\_contigs_GRCh38.p14_bwa.sam.bam &&
-samtools \
-    fastq \
-    -f 4 \
-    $sample\_Megahit_readassembly/$sample\_contigs_GRCh38.p14_bwa.sam.bam \
-    > $sample\_Megahit_readassembly/$sample\_contigs_unmatched.fastq &&
+# bwa mem \
+#     -t 4  \
+#     /shared/bank/homo_sapiens/GRCh38.p14/RefSeq_2023_10/bwa/GCF_000001405.40_GRCh38.p14_genomic.fna    \
+#     $sample\_Megahit_readassembly/final.contigs.fa \
+#     > $sample\_Megahit_readassembly/$sample\_contigs_GRCh38.p14_bwa.sam &&
+# samtools \
+#     view -S \
+#     -b $sample\_Megahit_readassembly/$sample\_contigs_GRCh38.p14_bwa.sam  \
+#     > $sample\_Megahit_readassembly/$sample\_contigs_GRCh38.p14_bwa.sam.bam &&
+# samtools \
+#     fastq \
+#     -f 4 \
+#     $sample\_Megahit_readassembly/$sample\_contigs_GRCh38.p14_bwa.sam.bam \
+#     > $sample\_Megahit_readassembly/$sample\_contigs_unmatched.fastq &&
 # samtools \
 #     sort $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam  \
 #     -o $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel_sorted.bam &&
@@ -145,28 +145,28 @@ samtools \
 #     $fastq_directory/$sample\nonhuman_reads.1.fastq  $fastq_directory/$sample\nonhuman_reads.2.fastq \
 #     --minimum-length 40 \
 #     > $output_dir/$sample\nonhuman_reads_cutadapt_report.txt &&
-kraken2 \
-    --db $kraken2_db_E \
-    --threads 8 \
-    --minimum-hit-groups 3  \
-    --report-minimizer-data \
-    --report $output_dir_E/$sample$kraken2_E\.k2report  \
-    $sample\_Megahit_readassembly/$sample\_contigs_unmatched.fastq \
-    > $output_dir_E/$sample$kraken2_E\.kraken2 &&
-kraken2 \
-    --db $kraken2_db_P \
-    --threads 8 \
-    --minimum-hit-groups 3  \
-    --report-minimizer-data \
-    --report $output_dir_P/$sample$kraken2_P\.k2report  \
-    $sample\_Megahit_readassembly/$sample\_contigs_unmatched.fastq \
-    > $output_dir_P/$sample$kraken2_P\.kraken2 ; done
+# kraken2 \
+#     --db $kraken2_db_E \
+#     --threads 8 \
+#     --minimum-hit-groups 3  \
+#     --report-minimizer-data \
+#     --report $output_dir_E/$sample$kraken2_E\.k2report  \
+#     $sample\_Megahit_readassembly/$sample\_contigs_unmatched.fastq \
+#     > $output_dir_E/$sample$kraken2_E\.kraken2 &&
+# kraken2 \
+#     --db $kraken2_db_P \
+#     --threads 8 \
+#     --minimum-hit-groups 3  \
+#     --report-minimizer-data \
+#     --report $output_dir_P/$sample$kraken2_P\.k2report  \
+#     $sample\_Megahit_readassembly/$sample\_contigs_unmatched.fastq \
+#     > $output_dir_P/$sample$kraken2_P\.kraken2 ; done
 
-multiqc   \
-    $output_dir \
-    $output_dir_E \
-    $output_dir_P \
-    --outdir $output_dir 
+# multiqc   \
+#     $output_dir \
+#     $output_dir_E \
+#     $output_dir_P \
+#     --outdir $output_dir 
 
 
 
