@@ -117,22 +117,23 @@ for sample in "${input_list[@]}"; do
 #     view -S \
 #     -b $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna.sam  \
 #     > $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna.sam.bam &&
-# STAR \
-#   --runThreadN 8 \
-#   --genomeDir /shared/bank/homo_sapiens/GRCh38.p14/RefSeq_2023_10/star-2.7.11a/ \
-#   --readFilesIn $fastq_directory/$sample$read1_postfix\_3trimmed_q20.fastq.gz   $fastq_directory/$sample$read2_postfix\_3trimmed_q20.fastq.gz  \
-#   --readFilesCommand zcat \
-#   --outFileNamePrefix $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna \
-#   --outSAMtype BAM SortedByCoordinate &&
+STAR \
+  --runThreadN 8 \
+  --genomeDir /shared/bank/homo_sapiens/GRCh38.p14/RefSeq_2023_10/star-2.7.11a/ \
+  --readFilesIn $fastq_directory/$sample$read1_postfix\_3trimmed_q20.fastq.gz   $fastq_directory/$sample$read2_postfix\_3trimmed_q20.fastq.gz  \
+  --readFilesCommand zcat \
+  --outFileNamePrefix $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna \
+  --outSAMtype BAM SortedByCoordinate \
+  --outReadsUnmapped fastx &&
+# samtools \
+#     fastq -f 12 \
+#     -1 $fastq_directory/$sample\nonhuman_reads-rna.1.fastq \
+#     -2 $fastq_directory/$sample\nonhuman_reads-rna.2.fastq \
+#     -0 /dev/null \
+#     -s /dev/null \
+#     -n $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rnaAligned.sortedByCoord.out.bam &&
 samtools \
-    fastq -f 12 \
-    -1 $fastq_directory/$sample\nonhuman_reads-rna.1.fastq \
-    -2 $fastq_directory/$sample\nonhuman_reads-rna.2.fastq \
-    -0 /dev/null \
-    -s /dev/null \
-    -n $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rnaAligned.sortedByCoord.out.bam &&
-samtools \
-    sort $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rnaAligned.sortedByCoord.out.out.bam  \
+    sort $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rnaAligned.sortedByCoord.out.bam  \
     -o $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna_sorted.bam &&
 samtools \
     index $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rna_sorted.bam &&
@@ -152,7 +153,7 @@ cutadapt  \
     -g AGATCGGAAGAGCACACGTCTGAACTCCAGTCA   -G AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT \
     -o $fastq_directory/$sample\nonhuman_reads-rna_5trimmed.1.fastq  \
     -p $fastq_directory/$sample\nonhuman_reads-rna_5trimmed.2.fastq  \
-    $fastq_directory/$sample\nonhuman_reads-rna.1.fastq  $fastq_directory/$sample\nonhuman_reads-rna.2.fastq \
+    $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rnaUnmapped.out.mate1.fastq  $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.rnaUnmapped.out.mate1.fastq \
     --minimum-length 40 \
     > $output_dir/$sample\nonhuman_reads-rna_cutadapt_report.txt &&
 kraken2 \
