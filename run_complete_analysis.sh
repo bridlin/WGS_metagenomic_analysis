@@ -92,10 +92,10 @@ for sample in "${input_list[@]}"; do
 # fastqc \
 #     $fastq_directory/$sample$read2_postfix\_3trimmed_q20_clumped.fastq.gz \
 #     --outdir $output_dir &&
-megahit \
-    -1 $fastq_directory/$sample$read1_postfix\_3trimmed_q20.fastq.gz \
-    -2 $fastq_directory/$sample$read2_postfix\_3trimmed_q20.fastq.gz \
-    -o $sample\_Megahit_readassembly  &&
+# megahit \
+#     -1 $fastq_directory/$sample$read1_postfix\_3trimmed_q20.fastq.gz \
+#     -2 $fastq_directory/$sample$read2_postfix\_3trimmed_q20.fastq.gz \
+#     -o $sample\_Megahit_readassembly  &&
 # bowtie2 \
 #     -x ../../bank/bowtie2/Homo_sapiens.GRCh38.dna.toplevel \
 #     -1 $fastq_directory/$sample$read1_postfix\_3trimmed_q20_clumped.fastq.gz -2 $fastq_directory/$sample$read2_postfix\_3trimmed_q20_clumped.fastq.gz  \
@@ -106,7 +106,7 @@ megahit \
 #     view -S \
 #     -b $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam  \
 #     > $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
-bwa mem \
+bwa-mem2 mem \
     -t 4  \
     /shared/bank/homo_sapiens/GRCh38.p14/RefSeq_2023_10/bwa/GCF_000001405.40_GRCh38.p14_genomic.fna    \
     $sample\_Megahit_readassembly/final.contigs.fa \
