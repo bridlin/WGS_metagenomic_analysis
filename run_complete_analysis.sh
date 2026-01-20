@@ -14,7 +14,7 @@
 module load cutadapt/4.5
 module load trimmomatic/0.39
 module load fastqc/0.12.1
-module load bwa-mem2/2.2.1
+# module load bwa-mem2/2.2.1
 module load samtools/1.21
 module load kraken2/2.14
 module load multiqc/1.29
@@ -23,6 +23,7 @@ module load python/3.12
 module load blast/2.16.0
 module load bbmap/39.00
 module load megahit/1.2.9
+module load  bwa/0.7.17
 
 source WGS_metagenomic_analysis/config.txt
 
@@ -106,7 +107,7 @@ for sample in "${input_list[@]}"; do
 #     view -S \
 #     -b $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam  \
 #     > $fastq_directory/$sample\aln-pe_Homo_sapiens.GRCh38.dna.toplevel.sam.bam &&
-bwa-mem2 mem \
+bwa mem \
     -t 4  \
     /shared/bank/homo_sapiens/GRCh38.p14/RefSeq_2023_10/bwa/GCF_000001405.40_GRCh38.p14_genomic.fna    \
     $sample\_Megahit_readassembly/final.contigs.fa \
