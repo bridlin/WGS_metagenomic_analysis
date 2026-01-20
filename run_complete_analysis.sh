@@ -14,7 +14,6 @@
 module load cutadapt/4.5
 module load trimmomatic/0.39
 module load fastqc/0.12.1
-# module load bwa-mem2/2.2.1
 module load samtools/1.21
 module load kraken2/2.14
 module load multiqc/1.29
@@ -171,8 +170,8 @@ echo "run fastqc, cutadapt, trimmomatic, clumpify on the raw reads. read alignme
 
 
 
-# mkdir $output_dir_P\/extracted_reads
-# mkdir $output_dir_E\/extracted_reads
+mkdir $output_dir_P\/extracted_reads
+mkdir $output_dir_E\/extracted_reads
 
 ### run the python script to extract 10 reads per genus from the kraken2 results 1. arguments are the fastq directory and the kraken2 results directory
 echo "run the python script to extract 10 reads per genus from the kraken2 results" 
