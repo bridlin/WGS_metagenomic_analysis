@@ -33,7 +33,7 @@ fi
 for x in "${inputlist[@]}"; do
 echo $read_directory\/$x\.1.fa &&
 echo $read_directory\/$x\.2.fa &&
-bowtie2 -x $genome_prefix /
+bowtie2 -x $genome_prefix \
     -f -p 8  \
     -1 $read_directory\/$x\.1.fa  \
     -2 $read_directory\/$x\.2.fa  \
