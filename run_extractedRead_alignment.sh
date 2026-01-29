@@ -19,10 +19,11 @@ source WGS_metagenomic_analysis/config-align.txt
 echo $read_directory
 echo $inputlist
 echo $genome_prefix
+echo $genome_fasta
 
 if [[ ! -f "${genome_prefix}.1.bt2" && ! -f "${genome_prefix}.1.bt2l" ]]; then
     echo "Bowtie2 index not found for ${genome_prefix}. Building index..."
-    bowtie2-build "$genome_prefix" "$genome_prefix" || {
+    bowtie2-build "$genome_fasta" "$genome_prefix" || {
         echo "ERROR: bowtie2-build failed"
         exit 1
     }
