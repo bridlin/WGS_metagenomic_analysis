@@ -3,5 +3,5 @@ genome_fasta=genome/Paracocci_br_PbCNH/GCA_001713695.1_Paracocci_br_PbCNH_genomi
 
 
 read_directory=case8_extracted_reads
-inputlist=("CasClinique8_ARN.tid38946_all" "CasClinique8_ARN.tid5036_all" "CasClinique8_ARN.tid5052_all" "CasClinique8_ARN.tid38946_all")
+inputlist=("CasClinique8_ARN.tid38946_all" "CasClinique8_ARN.tid5036_all" "CasClinique8_ARN.tid5052_all" "CasClinique8_ARN.tid5506_all")
 
