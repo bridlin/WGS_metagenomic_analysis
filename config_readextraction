@@ -1,4 +1,4 @@
-taxo_id_list=("4181")
+taxo_id_list=("5506")
 input_list=("CasClinique5_ADN")
 read_directory=Benchmark_ANRS_fastq
 output_dir=kraken2-results_Benchmark_ANRS_5prime-trimmed
