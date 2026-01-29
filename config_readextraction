@@ -1,5 +1,5 @@
-taxo_id_list=("5691")
-input_list=("CasClinique2_ADN")
+taxo_id_list=("670516" "1763" "1866885")
+input_list=("CasClinique6_ADN")
 read_directory=Benchmark_ANRS_fastq
 output_dir=kraken2-results_Benchmark_ANRS_5prime-trimmed
 db=PlusPF
