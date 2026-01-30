@@ -2,5 +2,5 @@ genome_prefix=genome/GCF_001291465.1_Bartonella_henselae_MVT02_genomic/GCF_00129
 genome_fasta=genome/GCF_001291465.1_Bartonella_henselae_MVT02_genomic/GCF_001291465.1_Bartonella_henselae_MVT02_genomic.fna
 
 read_directory=Benchmark_ANRS_fastq
-inputlist=("CasClinique9_ADNnonhuman_reads_5trimmed" )
+inputlist=("CasClinique9_ADN_" )
 
