@@ -1,6 +1,6 @@
 genome_prefix=genome/GCA_027945395.1_F_falc_CF00175_genomic/GCA_027945395.1_F_falc_CF00175_genomic
 genome_fasta=genome/GCA_027945395.1_F_falc_CF00175_genomic/GCA_027945395.1_F_falc_CF00175_genomic.fna
 
-read_directory=case5_extracted_reads
-inputlist=("CasClinique5_ADN.tid5506_all")
+read_directory=case8_extracted_reads
+inputlist=("CasClinique8_ARN.tid38946_all" "CasClinique8_ARN.tid5036_all" "CasClinique8_ARN.tid5052_all" "CasClinique8_ARN.tid5506_all")
 
