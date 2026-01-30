@@ -1,6 +1,6 @@
-genome_prefix=genome/Paracocci_br_PbCNH/GCA_001713695.1_Paracocci_br_PbCNH_genomic
-genome_fasta=genome/Paracocci_br_PbCNH/GCA_001713695.1_Paracocci_br_PbCNH_genomic.fna
+genome_prefix=genome/Efaecalis_GCF_022869705.1_ASM2286970v1_genomic/GCF_022869705.1_ASM2286970v1_genomic
+genome_fasta=genome/Efaecalis_GCF_022869705.1_ASM2286970v1_genomic/GCF_022869705.1_ASM2286970v1_genomic.fna
 
 read_directory=case8_extracted_reads
-inputlist=("CasClinique8_ARN.tid38946_all" "CasClinique8_ARN.tid5036_all" "CasClinique8_ARN.tid5052_all" "CasClinique8_ARN.tid5506_all")
+inputlist=("CasClinique10_ADN.tid1350_all" "CasClinique10_ADN.tid265_all")
 
