@@ -40,7 +40,7 @@ kraken2_db_P=Kraken2_db/$kraken2_P
 
 
 fastq_directory=$run\_fastq
-output_dir=kraken2-results_$run\_5prime-trimmed
+output_dir=kraken2-results_$run\_5prime-trimmed_newdb
 # output_dir=kraken2-results_$run\_5prime-trimmed_clumped
 # output_dir=kraken2-results_$run\_5prime-trimmed_chunked
 output_dir_E=$output_dir/$kraken2_E
@@ -125,34 +125,34 @@ for sample in "${input_list[@]}"; do
 #     $fastq_directory/$sample\nonhuman_reads.1.fastq  $fastq_directory/$sample\nonhuman_reads.2.fastq \
 #     --minimum-length 40 \
 #     > $output_dir/$sample\nonhuman_reads_cutadapt_report.txt &&
-# kraken2 \
-#     --db $kraken2_db_E \
-#     --threads 8 \
-#     --minimum-hit-groups 3  \
-#     --report-minimizer-data \
-#     --report $output_dir_E/$sample$kraken2_E\.k2report  \
-#     --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
-#     > $output_dir_E/$sample$kraken2_E\.kraken2 &&
-# kraken2 \
-#     --db $kraken2_db_P \
-#     --threads 8 \
-#     --minimum-hit-groups 3  \
-#     --report-minimizer-data \
-#     --report $output_dir_P/$sample$kraken2_P\.k2report  \
-#     --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
-#     > $output_dir_P/$sample$kraken2_P\.kraken2 ; done
+kraken2 \
+    --db $kraken2_db_E \
+    --threads 8 \
+    --minimum-hit-groups 3  \
+    --report-minimizer-data \
+    --report $output_dir_E/$sample$kraken2_E\.k2report  \
+    --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
+    > $output_dir_E/$sample$kraken2_E\.kraken2 &&
+kraken2 \
+    --db $kraken2_db_P \
+    --threads 8 \
+    --minimum-hit-groups 3  \
+    --report-minimizer-data \
+    --report $output_dir_P/$sample$kraken2_P\.k2report  \
+    --paired $fastq_directory/$sample\nonhuman_reads_5trimmed.1.fastq $fastq_directory/$sample\nonhuman_reads_5trimmed.2.fastq \
+    > $output_dir_P/$sample$kraken2_P\.kraken2 ; done
 
-# multiqc   \
-#     $output_dir \
-#     $output_dir_E \
-#     $output_dir_P \
-#     --outdir $output_dir 
-
-
+multiqc   \
+    $output_dir \
+    $output_dir_E \
+    $output_dir_P \
+    --outdir $output_dir 
 
 
-# mkdir $output_dir_P\/extracted_reads
-# mkdir $output_dir_E\/extracted_reads
+
+
+mkdir $output_dir_P\/extracted_reads
+mkdir $output_dir_E\/extracted_reads
 
 ### run the python script to extract 10 reads per genus from the kraken2 results 1. arguments are the fastq directory and the kraken2 results directory
 echo "run the python script to extract 10 reads per genus from the kraken2 results" 
