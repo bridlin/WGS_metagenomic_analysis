@@ -31,12 +31,12 @@ else
     echo "Bowtie2 index found for ${genome_prefix}"
 fi
 for x in "${inputlist[@]}"; do
-echo $read_directory\/$x\.1.fa &&
-echo $read_directory\/$x\.2.fa &&
+echo $read_directory\/$x\.1.fastq &&
+echo $read_directory\/$x\.2.fastq &&
 bowtie2 -x $genome_prefix \
     -f -p 8  \
-    -1 $read_directory\/$x\.1.fa  \
-    -2 $read_directory\/$x\.2.fa  \
+    -1 $read_directory\/$x\.1.fastq  \
+    -2 $read_directory\/$x\.2.fastq  \
     -S $read_directory\/$x\_aligned.sam &&
 samtools \
     view \
