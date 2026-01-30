@@ -1,6 +1,6 @@
 genome_prefix=genome/Efaecalis_GCF_022869705.1_ASM2286970v1_genomic/GCF_022869705.1_ASM2286970v1_genomic
 genome_fasta=genome/Efaecalis_GCF_022869705.1_ASM2286970v1_genomic/GCF_022869705.1_ASM2286970v1_genomic.fna
 
-read_directory=case8_extracted_reads
+read_directory=case10_extracted_reads
 inputlist=("CasClinique10_ADN.tid1350_all" "CasClinique10_ADN.tid265_all")
 
