@@ -34,7 +34,7 @@ for x in "${inputlist[@]}"; do
 echo $read_directory\/$x\.1.fastq &&
 echo $read_directory\/$x\.2.fastq &&
 bowtie2 -x $genome_prefix \
-    -f -p 8  \
+    -p 8  \
     -1 $read_directory\/$x\.1.fastq  \
     -2 $read_directory\/$x\.2.fastq  \
     -S $read_directory\/$x\_aligned.sam &&
@@ -53,3 +53,8 @@ rm -f $read_directory\/$x\_aligned.sam &&
 rm -f $read_directory\/$x\_aligned.bam ; done
 
 
+# bowtie2 -x $genome_prefix \
+#     -f -p 8  \
+#     -1 $read_directory\/$x\.1.fa  \
+#     -2 $read_directory\/$x\.2.fa  \
+#     -S $read_directory\/$x\_aligned.sam &&
