@@ -26,4 +26,11 @@ The script run_complete_analysis.sh will run the complete pipeline.
 
 ### Parameters for the analysis need to be provided in the config.txt file, that has to be in the same working directory as the script :
 
+run=                       # the name of the run
+input_list=                # the sample names as list
 
+read1_postfix="_R1"        # the postfix of the read names, the part between sample name and file extention
+read2_postfix="_R2"
+
+kraken2_E=EuPathDB48       # name of Kraken DB 1
+kraken2_P=PlusPF           # name of Kraken DB 2
