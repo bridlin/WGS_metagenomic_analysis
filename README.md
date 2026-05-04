@@ -5,16 +5,22 @@ This repository contains scripts and files used to analyze shotgun metagenomic s
 
 The scripts are made to run on a HPC under slurm (Roscoff Bioinformatics platform ABiMS (http://abims.sb-roscoff.fr)).
 
-The  run_whole_analysis.sh will run the complete pipeline.
+The script run_complete_analysis.sh will run the complete pipeline.
 
-
-
-## The first script qc_mqpping.sh uses raw paired-end stranded sequencing reads from SNS-seq experiments and performs quality check, adapter and quality trimming and read mapping.
+## outline of the whole analysis
 - quality control of the provided fastq files (fastqc 0.11.9)
 - trimming of tail and adapter sequences (cutadapt 4.0)
 - quality trimming with q20 threshold (trimmomatic 0.39)
 - alignment against provided indexed human genome to sepetate non-human reads (bowtie2 2.4.1)
-- 
+- analysing insert size with Picard
+- taxonomic classification of non-human reads using kraken2
+- extracting all genus-level classifications from kraken2 report
+- extractin 10 reads per genus level classification for secondary validation with blast
+- chunking of the extracted reads in 100 read chunks for faster blasting
+- chunk remote blasting agains nt NCBI database with output format 6
+- parsing of blast results and automatic comparison with kraken2 results
+- generation of table with validated results
+  
 
 ## Parameters
 
